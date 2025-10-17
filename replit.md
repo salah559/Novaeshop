@@ -6,7 +6,25 @@ DZ Digital Market is a Next.js-based digital marketplace application designed fo
 
 ## Recent Changes
 
-**October 17, 2025 - Migrated from Vercel to Replit**
+**October 17, 2025 - Major Feature Enhancements**
+- ✅ **Customer Order Tracking**: Added `/orders` page allowing customers to view all their orders (pending/confirmed/rejected) with status indicators and rejection reasons
+- ✅ **Enhanced Admin Dashboard**: Upgraded `/admin` with comprehensive statistics dashboard showing:
+  - Real-time stats: pending orders, confirmed, rejected, total sales, and today's orders
+  - Advanced order filtering by status (All, Pending, Confirmed, Rejected)
+  - Order rejection capability with reason field stored in Firestore
+  - Improved UI with status badges and color-coded indicators
+- ✅ **Product Search & Filter System**: Enhanced `/products` page with:
+  - Real-time search by product name
+  - Category filtering
+  - Price sorting (Low to High / High to Low)
+  - Responsive grid layout improvements
+- ✅ **How to Buy Guide**: Created comprehensive `/how-to-buy` FAQ page with step-by-step purchase instructions in Arabic
+- ✅ **Bug Fixes**:
+  - Fixed undefined crash in `pages/admin/products.tsx` with optional chaining for product descriptions
+  - Fixed order query logic to merge both userId and email-based results (supports legacy orders)
+- 🧹 **Code Cleanup**: Removed temporary test files and outdated documentation
+
+**October 17, 2025 - Initial Migration from Vercel to Replit**
 - Updated Next.js development and production scripts to bind to 0.0.0.0:5000 for Replit compatibility
 - Added TypeScript path aliases configuration (@/*) in tsconfig.json
 - Created styles/globals.css for global styling
