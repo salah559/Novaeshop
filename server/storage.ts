@@ -1,15 +1,15 @@
-import { db } from './db';
+import { db } from './firestore';
 import { 
-  users, products, orders, purchases, messages,
   type User, type Product, type Order, type Purchase, type Message,
   type InsertUser, type InsertProduct, type InsertOrder, type InsertPurchase, type InsertMessage
 } from '@shared/schema';
-import { eq, desc, sql } from 'drizzle-orm';
+import { FieldValue } from 'firebase-admin/firestore';
 
 export interface IStorage {
   // Users
   getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByFirebaseUid(firebaseUid: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   
   // Products
@@ -36,98 +36,172 @@ export interface IStorage {
   createMessage(message: InsertMessage): Promise<Message>;
 }
 
-export class DbStorage implements IStorage {
+export class FirestoreStorage implements IStorage {
+  // =============== USERS ===============
+  
   async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
+    const doc = await db.collection('users').doc(id).get();
+    if (!doc.exists) return undefined;
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as User;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
-    return user;
+    const snapshot = await db.collection('users').where('email', '==', email).limit(1).get();
+    if (snapshot.empty) return undefined;
+    const doc = snapshot.docs[0];
+    return { id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() } as User;
+  }
+
+  async getUserByFirebaseUid(firebaseUid: string): Promise<User | undefined> {
+    const snapshot = await db.collection('users').where('firebaseUid', '==', firebaseUid).limit(1).get();
+    if (snapshot.empty) return undefined;
+    const doc = snapshot.docs[0];
+    return { id: doc.id, ...doc.data(), createdAt: doc.data().createdAt?.toDate() } as User;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db.insert(users).values(insertUser).returning();
-    return user;
+    const docRef = await db.collection('users').add({
+      ...insertUser,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+    const doc = await docRef.get();
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as User;
   }
 
+  // =============== PRODUCTS ===============
+
   async getAllProducts(): Promise<Product[]> {
-    return await db.select().from(products).orderBy(desc(products.createdAt));
+    const snapshot = await db.collection('products').orderBy('createdAt', 'desc').get();
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate()
+    })) as Product[];
   }
 
   async getProductById(id: string): Promise<Product | undefined> {
-    const [product] = await db.select().from(products).where(eq(products.id, id));
-    return product;
+    const doc = await db.collection('products').doc(id).get();
+    if (!doc.exists) return undefined;
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as Product;
   }
 
   async getFeaturedProducts(): Promise<Product[]> {
-    return await db.select().from(products)
-      .where(eq(products.isFeatured, 1))
-      .orderBy(desc(products.createdAt))
-      .limit(3);
+    const snapshot = await db.collection('products')
+      .where('isFeatured', '==', 1)
+      .orderBy('createdAt', 'desc')
+      .limit(3)
+      .get();
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate()
+    })) as Product[];
   }
 
   async getBestSellers(): Promise<Product[]> {
-    return await db.select().from(products)
-      .orderBy(desc(products.soldCount))
-      .limit(4);
+    const snapshot = await db.collection('products')
+      .orderBy('soldCount', 'desc')
+      .limit(6)
+      .get();
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate()
+    })) as Product[];
   }
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
-    const [product] = await db.insert(products).values(insertProduct).returning();
-    return product;
+    const docRef = await db.collection('products').add({
+      ...insertProduct,
+      soldCount: 0,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+    const doc = await docRef.get();
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as Product;
   }
 
   async deleteProduct(id: string): Promise<void> {
-    await db.delete(products).where(eq(products.id, id));
+    await db.collection('products').doc(id).delete();
   }
 
   async updateProductSoldCount(id: string): Promise<void> {
-    await db.update(products)
-      .set({ soldCount: sql`${products.soldCount} + 1` })
-      .where(eq(products.id, id));
+    await db.collection('products').doc(id).update({
+      soldCount: FieldValue.increment(1)
+    });
   }
 
+  // =============== ORDERS ===============
+
   async getAllOrders(): Promise<Order[]> {
-    return await db.select().from(orders).orderBy(desc(orders.createdAt));
+    const snapshot = await db.collection('orders').orderBy('createdAt', 'desc').get();
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate()
+    })) as Order[];
   }
 
   async getOrderById(id: string): Promise<Order | undefined> {
-    const [order] = await db.select().from(orders).where(eq(orders.id, id));
-    return order;
+    const doc = await db.collection('orders').doc(id).get();
+    if (!doc.exists) return undefined;
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as Order;
   }
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
-    const [order] = await db.insert(orders).values(insertOrder).returning();
-    return order;
+    const docRef = await db.collection('orders').add({
+      ...insertOrder,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+    const doc = await docRef.get();
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as Order;
   }
 
   async updateOrderStatus(id: string, status: string): Promise<void> {
-    await db.update(orders)
-      .set({ status })
-      .where(eq(orders.id, id));
+    await db.collection('orders').doc(id).update({ status });
   }
 
+  // =============== PURCHASES ===============
+
   async getPurchasesByUserId(userId: string): Promise<Purchase[]> {
-    return await db.select().from(purchases)
-      .where(eq(purchases.userId, userId))
-      .orderBy(desc(purchases.createdAt));
+    const snapshot = await db.collection('purchases')
+      .where('userId', '==', userId)
+      .orderBy('createdAt', 'desc')
+      .get();
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate()
+    })) as Purchase[];
   }
 
   async createPurchase(insertPurchase: InsertPurchase): Promise<Purchase> {
-    const [purchase] = await db.insert(purchases).values(insertPurchase).returning();
-    return purchase;
+    const docRef = await db.collection('purchases').add({
+      ...insertPurchase,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+    const doc = await docRef.get();
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as Purchase;
   }
 
+  // =============== MESSAGES ===============
+
   async getAllMessages(): Promise<Message[]> {
-    return await db.select().from(messages).orderBy(desc(messages.createdAt));
+    const snapshot = await db.collection('messages').orderBy('createdAt', 'desc').get();
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+      createdAt: doc.data().createdAt?.toDate()
+    })) as Message[];
   }
 
   async createMessage(insertMessage: InsertMessage): Promise<Message> {
-    const [message] = await db.insert(messages).values(insertMessage).returning();
-    return message;
+    const docRef = await db.collection('messages').add({
+      ...insertMessage,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+    const doc = await docRef.get();
+    return { id: doc.id, ...doc.data(), createdAt: doc.data()?.createdAt?.toDate() } as Message;
   }
 }
 
-export const storage = new DbStorage();
+export const storage = new FirestoreStorage();

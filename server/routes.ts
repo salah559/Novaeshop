@@ -4,9 +4,6 @@ import express from "express";
 import { storage } from "./storage";
 import multer from "multer";
 import path from "path";
-import { db } from "./db";
-import { products } from "@shared/schema";
-import { eq } from "drizzle-orm";
 
 // Configure multer for file uploads
 const uploadDir = path.join(process.cwd(), 'uploads');
