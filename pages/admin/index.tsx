@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, query, where, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore';
 import { isAdmin } from '@/lib/adminCheck';
+import Link from 'next/link';
 
 export default function Admin(){
   const [orders, setOrders] = useState<any[]>([]);
@@ -133,6 +134,37 @@ export default function Admin(){
           backgroundClip: 'text'
         }}>لوحة الأدمن</h2>
         <p style={{color: '#c0c0c0'}}>إدارة الطلبات والمدفوعات</p>
+      </div>
+
+      <div style={{
+        display: 'flex',
+        gap: 15,
+        marginBottom: 30,
+        justifyContent: 'center',
+        flexWrap: 'wrap'
+      }}>
+        <div style={{
+          padding: '12px 24px',
+          background: '#00ff88',
+          border: '1px solid #00ff88',
+          borderRadius: 8,
+          color: '#0a0f14',
+          fontWeight: 600
+        }}>
+          📦 الطلبات
+        </div>
+        <Link href="/admin/products" style={{
+          padding: '12px 24px',
+          background: 'rgba(255, 255, 255, 0.05)',
+          border: '1px solid rgba(0, 255, 136, 0.3)',
+          borderRadius: 8,
+          color: '#c0c0c0',
+          fontWeight: 600,
+          textDecoration: 'none',
+          transition: 'all 0.3s ease'
+        }}>
+          🛍️ المنتجات
+        </Link>
       </div>
 
       {loading ? (

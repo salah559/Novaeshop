@@ -2,13 +2,18 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { auth, signInWithGoogle, logout } from '@/lib/firebaseClient';
 import { useLanguage } from '@/lib/LanguageContext';
+import { isAdmin } from '@/lib/adminCheck';
 
 export default function Header(){
   const [user, setUser] = useState<any>(null);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(()=> {
-    const unsub = auth.onAuthStateChanged(u => setUser(u));
+    const unsub = auth.onAuthStateChanged(u => {
+      setUser(u);
+      setIsAdminUser(isAdmin(u?.email));
+    });
     return () => unsub();
   },[]);
 
@@ -100,7 +105,7 @@ export default function Header(){
             borderRadius: 8,
             transition: 'all 0.3s ease'
           }}>{t('contact')}</Link>
-          {user && user.email === 'admin@dzmarket.dz' && (
+          {isAdminUser && (
             <Link href="/admin" style={{
               color: '#00ff88',
               fontWeight: 600,

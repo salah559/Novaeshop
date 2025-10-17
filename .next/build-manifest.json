@@ -22,6 +22,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/admin/products": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/products.js"
+    ],
     "/cart": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -31,11 +36,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/checkout.js"
-    ],
-    "/mypurchases": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/mypurchases.js"
     ]
   },
   "ampFirstPages": []
