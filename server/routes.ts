@@ -79,10 +79,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userId: 'guest', // TODO: Get from session
         productIds: JSON.parse(productIds),
         totalPrice: parseInt(totalPrice),
-        paymentImageUrl,
+        paymentImageUrl: paymentImageUrl || undefined,
         fullName,
         email,
-        phone: phone || null,
+        phone: phone || undefined,
         status: 'pending',
       });
 
@@ -131,7 +131,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         email,
         subject,
         message,
-        fileUrl: null, // TODO: Handle file uploads
+        fileUrl: undefined, // TODO: Handle file uploads
       });
 
       res.json(newMessage);
