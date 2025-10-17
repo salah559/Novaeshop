@@ -145,3 +145,131 @@ class AuthManager {
 
 // Create global auth instance
 export const authManager = new AuthManager();
+// Authentication Manager
+import { auth, db } from './firebase-config.js';
+import { 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider,
+    signOut,
+    onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+class AuthManager {
+    constructor() {
+        this.currentUser = null;
+        this.isAdmin = false;
+        this.init();
+    }
+
+    init() {
+        if (!auth) {
+            console.warn('Firebase Auth not initialized');
+            return;
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            this.currentUser = user;
+            
+            if (user) {
+                // Check if admin
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                this.isAdmin = userDoc.data()?.isAdmin || false;
+                
+                this.updateUI(true);
+            } else {
+                this.isAdmin = false;
+                this.updateUI(false);
+            }
+        });
+    }
+
+    updateUI(isLoggedIn) {
+        const userName = document.getElementById('userName');
+        const loginItem = document.querySelector('.login-item');
+        const purchasesItem = document.querySelector('.purchases-item');
+        const adminItem = document.querySelector('.admin-item');
+        const logoutItem = document.querySelector('.logout-item');
+
+        if (isLoggedIn && this.currentUser) {
+            userName.textContent = this.currentUser.displayName || this.currentUser.email;
+            loginItem.style.display = 'none';
+            purchasesItem.style.display = 'flex';
+            logoutItem.style.display = 'flex';
+            
+            if (this.isAdmin) {
+                adminItem.style.display = 'flex';
+            }
+        } else {
+            userName.textContent = 'تسجيل الدخول';
+            loginItem.style.display = 'flex';
+            purchasesItem.style.display = 'none';
+            adminItem.style.display = 'none';
+            logoutItem.style.display = 'none';
+        }
+    }
+
+    async login(email, password) {
+        try {
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            return { success: true, user: result.user };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async signup(email, password, name) {
+        try {
+            const result = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, 'users', result.user.uid), {
+                name,
+                email,
+                createdAt: new Date().toISOString(),
+                isAdmin: false
+            });
+            return { success: true, user: result.user };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async loginWithGoogle() {
+        try {
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            
+            const userDoc = await getDoc(doc(db, 'users', result.user.uid));
+            if (!userDoc.exists()) {
+                await setDoc(doc(db, 'users', result.user.uid), {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    createdAt: new Date().toISOString(),
+                    isAdmin: false
+                });
+            }
+            
+            return { success: true, user: result.user };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async logout() {
+        try {
+            await signOut(auth);
+            return { success: true };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+}
+
+export const authManager = new AuthManager();
+
+// Logout button handler
+document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+    await authManager.logout();
+    window.location.href = '/';
+});
