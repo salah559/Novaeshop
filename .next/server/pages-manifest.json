@@ -2,5 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/cart": "pages/cart.js",
+  "/products": "pages/products.js",
+  "/checkout": "pages/checkout.js",
+  "/admin": "pages/admin.js",
+  "/admin/products": "pages/admin/products.js"
 }
