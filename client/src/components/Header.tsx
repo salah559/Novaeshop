@@ -59,26 +59,11 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer hover-elevate px-3 py-2 rounded-lg transition-all" data-testid="link-home">
-            <div className="relative w-auto h-12 flex items-center justify-center overflow-hidden">
-              {/* صورة اللوڨو */}
-              <div className="absolute inset-0 flex items-center justify-center animate-[fadeOutRotate_6s_ease-in-out_infinite]">
-                <img 
-                  src="/logo.png" 
-                  alt="E-Nova Logo" 
-                  className="h-12 w-auto object-contain animate-[scaleOut_6s_ease-in-out_infinite]"
-                />
-              </div>
-              
-              {/* النص الكامل */}
-              <div className="flex items-center justify-center animate-[fadeInScale_6s_ease-in-out_infinite]">
-                <div className="text-2xl font-bold bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent whitespace-nowrap px-2">
-                  E-Nova
-                </div>
-              </div>
-              
-              {/* تأثير التوهج */}
-              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-lg animate-[pulse_6s_ease-in-out_infinite]"></div>
-            </div>
+            <img 
+              src="/enova-logo.png" 
+              alt="E-Nova Logo" 
+              className="h-12 w-auto object-contain"
+            />
           </div>
         </Link>
 
