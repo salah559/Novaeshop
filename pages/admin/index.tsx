@@ -1,19 +1,42 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { auth, db } from '@/lib/firebaseClient';
+import { collection, query, where, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore';
+import { isAdmin } from '@/lib/adminCheck';
 
 export default function Admin(){
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(()=> {
-    loadOrders();
+    const unsub = auth.onAuthStateChanged(u => {
+      setUser(u);
+      const authorized = u ? isAdmin(u.email) : false;
+      setIsAuthorized(authorized);
+      if (authorized) {
+        loadOrders();
+      } else {
+        setLoading(false);
+      }
+    });
+    return () => unsub();
   },[]);
 
   async function loadOrders(){
     setLoading(true);
     try{
-      const res = await axios.get('/api/admin/list-orders');
-      setOrders(res.data || []);
+      const q = query(
+        collection(db, 'orders'), 
+        where('status', '==', 'pending')
+      );
+      const snap = await getDocs(q);
+      const ordersList = snap.docs.map(d => ({id: d.id, ...d.data()}));
+      setOrders(ordersList.sort((a: any, b: any) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB.getTime() - dateA.getTime();
+      }));
     }catch(e){
       console.error(e);
       alert('حدث خطأ في تحميل الطلبات');
@@ -22,17 +45,74 @@ export default function Admin(){
     }
   }
 
-  async function confirm(id: string){
-    if(!confirm('هل أنت متأكد من تأكيد هذا الطلب؟')) return;
+  async function confirm(orderId: string){
+    if(!window.confirm('هل أنت متأكد من تأكيد هذا الطلب؟')) return;
     
     try {
-      await axios.post('/api/admin/confirm-order',{orderId:id});
+      const order = orders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const items = order.items || [];
+      
+      for (const item of items) {
+        const productSnap = await getDocs(query(collection(db, 'products'), where('__name__', '==', item.id)));
+        if (productSnap.empty) continue;
+        
+        const productData = productSnap.docs[0].data();
+        
+        await addDoc(collection(db, 'purchases'), {
+          userId: order.userId || null,
+          productId: item.id,
+          name: productData.name || item.name,
+          downloadUrl: productData.fileUrl || null,
+          createdAt: new Date()
+        });
+      }
+      
+      await updateDoc(doc(db, 'orders', orderId), {
+        status: 'confirmed',
+        confirmedAt: new Date()
+      });
+      
       alert('✅ تم تأكيد الطلب بنجاح');
       loadOrders();
     } catch(e) {
       alert('❌ حدث خطأ في تأكيد الطلب');
       console.error(e);
     }
+  }
+
+  if (!user || !isAuthorized) {
+    return (
+      <div>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: 40,
+          padding: '30px 20px',
+          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
+          borderRadius: 16
+        }}>
+          <h2 style={{
+            fontSize: '2.5em',
+            marginBottom: 10,
+            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>غير مصرح</h2>
+        </div>
+        <div className="card" style={{
+          textAlign: 'center',
+          padding: 60,
+          maxWidth: 600,
+          margin: '0 auto'
+        }}>
+          <div style={{fontSize: '4em', marginBottom: 20}}>🚫</div>
+          <h3 style={{color: '#00ff88', marginBottom: 15}}>وصول محظور</h3>
+          <p style={{color: '#c0c0c0'}}>هذه الصفحة مخصصة للمدراء فقط</p>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -17,9 +17,32 @@ export default function MyPurchases(){
   },[]);
 
   async function load(uid: string){
-    const q = query(collection(db, 'purchases'), where('userId','==',uid));
-    const snap = await getDocs(q);
-    setPurchases(snap.docs.map(d=>({id:d.id, ...d.data()})));
+    const ordersQuery = query(collection(db, 'orders'), where('userId','==',uid));
+    const purchasesQuery = query(collection(db, 'purchases'), where('userId','==',uid));
+    
+    const [ordersSnap, purchasesSnap] = await Promise.all([
+      getDocs(ordersQuery),
+      getDocs(purchasesQuery)
+    ]);
+    
+    const orders = ordersSnap.docs.map(d=>({
+      id: d.id,
+      ...d.data(),
+      type: 'order'
+    }));
+    
+    const purchases = purchasesSnap.docs.map(d=>({
+      id: d.id,
+      ...d.data(),
+      type: 'purchase'
+    }));
+    
+    setPurchases([...orders, ...purchases].sort((a: any, b: any) => {
+      const dateA = a.createdAt?.toDate?.() || new Date(0);
+      const dateB = b.createdAt?.toDate?.() || new Date(0);
+      return dateB.getTime() - dateA.getTime();
+    }));
+    
     setLoading(false);
   }
 
@@ -109,32 +132,104 @@ export default function MyPurchases(){
           ) : (
             purchases.map(p=>(
               <div key={p.id} className="card" style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: 20,
-                flexWrap: 'wrap'
+                background: p.type === 'order' 
+                  ? 'linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)'
+                  : 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
+                border: p.type === 'order'
+                  ? '1px solid rgba(255, 193, 7, 0.3)'
+                  : '1px solid rgba(0, 255, 136, 0.3)'
               }}>
-                <div style={{flex: 1}}>
-                  <h3 style={{color: '#fff', marginBottom: 8}}>{p.name}</h3>
-                  <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>
-                    تم الشراء: {p.createdAt?.toDate?.()?.toLocaleDateString('ar-DZ') || 'غير محدد'}
-                  </p>
-                </div>
-                <a 
-                  className="btn" 
-                  href={p.downloadUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 8
-                  }}
-                >
-                  <span>تحميل</span>
-                  <span>⬇️</span>
-                </a>
+                {p.type === 'order' ? (
+                  <>
+                    <div style={{marginBottom: 20}}>
+                      <div style={{
+                        display: 'inline-block',
+                        background: 'rgba(255, 193, 7, 0.2)',
+                        color: '#ffc107',
+                        padding: '6px 16px',
+                        borderRadius: 20,
+                        fontSize: '0.85em',
+                        fontWeight: 600,
+                        marginBottom: 15
+                      }}>
+                        ⏳ قيد المراجعة
+                      </div>
+                      <h3 style={{color: '#fff', marginBottom: 12}}>طلبية #{p.id.substring(0, 8)}</h3>
+                      <div style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 8}}>
+                        <strong>المنتجات:</strong>
+                      </div>
+                      {p.items && p.items.map((item: any, idx: number) => (
+                        <div key={idx} style={{
+                          color: '#c0c0c0',
+                          fontSize: '0.9em',
+                          marginBottom: 4,
+                          paddingRight: 15
+                        }}>
+                          • {item.name} - {item.price} دج
+                        </div>
+                      ))}
+                      <div style={{
+                        marginTop: 12,
+                        padding: '12px 0',
+                        borderTop: '1px solid rgba(255, 193, 7, 0.2)',
+                        color: '#ffc107',
+                        fontWeight: 700,
+                        fontSize: '1.1em'
+                      }}>
+                        المجموع: {p.total} دج
+                      </div>
+                      <p style={{color: '#c0c0c0', fontSize: '0.85em', marginTop: 8}}>
+                        📅 تاريخ الطلب: {p.createdAt?.toDate?.()?.toLocaleDateString('ar-DZ') || 'غير محدد'}
+                      </p>
+                    </div>
+                    <div style={{
+                      background: 'rgba(255, 193, 7, 0.1)',
+                      border: '1px solid rgba(255, 193, 7, 0.3)',
+                      borderRadius: 8,
+                      padding: '12px 16px',
+                      textAlign: 'center',
+                      color: '#ffc107'
+                    }}>
+                      جاري مراجعة طلبك، سيتم تفعيله قريباً
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{flex: 1}}>
+                      <div style={{
+                        display: 'inline-block',
+                        background: 'rgba(0, 255, 136, 0.2)',
+                        color: '#00ff88',
+                        padding: '6px 16px',
+                        borderRadius: 20,
+                        fontSize: '0.85em',
+                        fontWeight: 600,
+                        marginBottom: 12
+                      }}>
+                        ✅ مؤكد
+                      </div>
+                      <h3 style={{color: '#fff', marginBottom: 8}}>{p.name}</h3>
+                      <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>
+                        تم الشراء: {p.createdAt?.toDate?.()?.toLocaleDateString('ar-DZ') || 'غير محدد'}
+                      </p>
+                    </div>
+                    <a 
+                      className="btn" 
+                      href={p.downloadUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        marginTop: 15
+                      }}
+                    >
+                      <span>تحميل</span>
+                      <span>⬇️</span>
+                    </a>
+                  </>
+                )}
               </div>
             ))
           )}

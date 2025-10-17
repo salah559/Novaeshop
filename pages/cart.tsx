@@ -51,19 +51,44 @@ export default function Cart(){
                   padding: '20px 0',
                   borderBottom: idx < items.length - 1 ? '1px solid rgba(0, 255, 136, 0.1)' : 'none'
                 }}>
-                  <div>
+                  <div style={{flex: 1}}>
                     <h4 style={{color: '#fff', marginBottom: 8}}>{it.name}</h4>
-                    <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>منتج رقمي</p>
+                    <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>كمية: 1</p>
                   </div>
                   <div style={{
-                    background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.1) 100%)',
-                    padding: '8px 20px',
-                    borderRadius: 8,
-                    color: '#00ff88',
-                    fontWeight: 700,
-                    fontSize: '1.1em'
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 15
                   }}>
-                    {it.price} دج
+                    <div style={{
+                      background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.1) 100%)',
+                      padding: '8px 20px',
+                      borderRadius: 8,
+                      color: '#00ff88',
+                      fontWeight: 700,
+                      fontSize: '1.1em'
+                    }}>
+                      {it.price} دج
+                    </div>
+                    <button
+                      onClick={() => {
+                        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                        const updated = cart.filter((_:any, i:number) => i !== idx);
+                        localStorage.setItem('cart', JSON.stringify(updated));
+                        window.location.reload();
+                      }}
+                      style={{
+                        background: 'rgba(255, 0, 0, 0.1)',
+                        border: '1px solid rgba(255, 0, 0, 0.3)',
+                        borderRadius: 8,
+                        padding: '8px 12px',
+                        color: '#ff4444',
+                        cursor: 'pointer',
+                        fontSize: '1.1em'
+                      }}
+                    >
+                      🗑️
+                    </button>
                   </div>
                 </div>
               ))}

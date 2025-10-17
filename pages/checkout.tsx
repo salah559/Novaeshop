@@ -83,12 +83,31 @@ export default function Checkout(){
           padding: 20,
           marginBottom: 30
         }}>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>📱 معلومات الدفع</h3>
-          <p style={{color: '#c0c0c0', lineHeight: 1.8}}>
-            • قم بتحويل المبلغ عبر بريدي موب<br/>
-            • التقط صورة واضحة لإيصال الدفع<br/>
-            • أرفق الصورة في النموذج أدناه<br/>
-            • سيتم مراجعة الطلب وتفعيله خلال ساعات
+          <h3 style={{color: '#00ff88', marginBottom: 15}}>📱 تعليمات الدفع</h3>
+          <p style={{color: '#c0c0c0', lineHeight: 1.8, marginBottom: 20}}>
+            1. قم بتحويل المبلغ عبر بريدي موب<br/>
+            2. التقط صورة واضحة لوصل الإرسال (إيصال الدفع)<br/>
+            3. أرسل صورة الوصل من إيميلك إلى:<br/>
+          </p>
+          <div style={{
+            background: 'rgba(0, 0, 0, 0.4)',
+            border: '2px solid rgba(0, 255, 136, 0.4)',
+            borderRadius: 8,
+            padding: '15px 20px',
+            textAlign: 'center',
+            marginBottom: 20
+          }}>
+            <div style={{color: '#888', fontSize: '0.85em', marginBottom: 5}}>إيميل الإرسال:</div>
+            <div style={{
+              color: '#00ff88',
+              fontSize: '1.2em',
+              fontWeight: 700,
+              fontFamily: 'monospace'
+            }}>novawebdv@gmail.com</div>
+          </div>
+          <p style={{color: '#c0c0c0', lineHeight: 1.8, fontSize: '0.95em'}}>
+            ⚠️ مهم: يجب إرسال الوصل من نفس الإيميل الذي ستدخله في النموذج أدناه<br/>
+            ✅ سيتم مراجعة الطلب وتفعيله خلال ساعات
           </p>
         </div>
 
@@ -100,7 +119,7 @@ export default function Checkout(){
               marginBottom: 10,
               fontWeight: 600,
               fontSize: '1.1em'
-            }}>البريد الإلكتروني</label>
+            }}>البريد الإلكتروني (نفس الإيميل الذي سترسل منه الوصل)</label>
             <input 
               type="email"
               value={email} 
@@ -117,6 +136,9 @@ export default function Checkout(){
                 fontSize: '1rem'
               }}
             />
+            <small style={{color: '#888', fontSize: '0.85em', marginTop: 8, display: 'block'}}>
+              تأكد أن هذا هو نفس الإيميل الذي ستستخدمه لإرسال صورة الوصل إلى novawebdv@gmail.com
+            </small>
           </div>
 
           <div style={{marginBottom: 30}}>
@@ -126,7 +148,7 @@ export default function Checkout(){
               marginBottom: 10,
               fontWeight: 600,
               fontSize: '1.1em'
-            }}>صورة إيصال الدفع</label>
+            }}>صورة وصل الإرسال (للتأكيد)</label>
             <div style={{
               position: 'relative',
               border: '2px dashed rgba(0, 255, 136, 0.3)',
