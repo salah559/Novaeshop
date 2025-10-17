@@ -29,7 +29,9 @@ export default function Login() {
         title: 'تم تسجيل الدخول بنجاح',
         description: 'مرحباً بك في DZ Digital Market',
       });
-      setLocation('/');
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/';
+      sessionStorage.removeItem('redirectAfterLogin');
+      setLocation(redirectPath);
     } catch (error: any) {
       toast({
         title: 'خطأ في تسجيل الدخول',
@@ -51,7 +53,9 @@ export default function Login() {
         title: 'تم إنشاء الحساب بنجاح',
         description: 'مرحباً بك في DZ Digital Market',
       });
-      setLocation('/');
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/';
+      sessionStorage.removeItem('redirectAfterLogin');
+      setLocation(redirectPath);
     } catch (error: any) {
       toast({
         title: 'خطأ في إنشاء الحساب',
@@ -72,7 +76,9 @@ export default function Login() {
         title: 'تم تسجيل الدخول بنجاح',
         description: 'مرحباً بك في DZ Digital Market',
       });
-      setLocation('/');
+      const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/';
+      sessionStorage.removeItem('redirectAfterLogin');
+      setLocation(redirectPath);
     } catch (error: any) {
       toast({
         title: 'خطأ في تسجيل الدخول',

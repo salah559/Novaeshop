@@ -1,12 +1,25 @@
 import { Link, useLocation } from 'wouter';
-import { ShoppingCart, User, Home, Package, MessageSquare, LogIn } from 'lucide-react';
+import { ShoppingCart, User, Home, Package, MessageSquare, LogIn, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCartStore } from '@/lib/cart-store';
+import { useAuth } from '@/lib/auth-context';
+import { useToast } from '@/hooks/use-toast';
 
 export function Header() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const cartItems = useCartStore((state) => state.items);
+  const { user, signOut } = useAuth();
+  const { toast } = useToast();
 
   const navItems = [
     { path: '/', label: 'الرئيسية', icon: Home },
@@ -14,6 +27,32 @@ export function Header() {
     { path: '/purchases', label: 'مشترياتي', icon: User },
     { path: '/contact', label: 'تواصل معنا', icon: MessageSquare },
   ];
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: 'تم تسجيل الخروج',
+        description: 'نراك قريباً',
+      });
+      setLocation('/');
+    } catch (error) {
+      toast({
+        title: 'خطأ',
+        description: 'حدث خطأ أثناء تسجيل الخروج',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const getUserInitials = () => {
+    if (!user?.displayName) return user?.email?.charAt(0).toUpperCase() || 'U';
+    const names = user.displayName.split(' ');
+    if (names.length >= 2) {
+      return names[0].charAt(0) + names[1].charAt(0);
+    }
+    return user.displayName.charAt(0).toUpperCase();
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -57,12 +96,47 @@ export function Header() {
             </Button>
           </Link>
 
-          <Link href="/login">
-            <Button variant="default" className="gap-2" data-testid="button-login">
-              <LogIn className="w-4 h-4" />
-              <span className="hidden sm:inline">تسجيل الدخول</span>
-            </Button>
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full" data-testid="button-user-menu">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {getUserInitials()}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">{user.displayName || 'مستخدم'}</p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setLocation('/purchases')} data-testid="menu-item-purchases">
+                  <User className="ml-2 h-4 w-4" />
+                  <span>مشترياتي</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut} data-testid="menu-item-signout">
+                  <LogOut className="ml-2 h-4 w-4" />
+                  <span>تسجيل الخروج</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href="/login">
+              <Button variant="default" className="gap-2" data-testid="button-login">
+                <LogIn className="w-4 h-4" />
+                <span className="hidden sm:inline">تسجيل الدخول</span>
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
 
