@@ -10,6 +10,19 @@ export default function Header(){
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(()=> {
+    // Check for redirect result on component mount
+    import('@/lib/firebaseClient').then(({ handleRedirectResult }) => {
+      handleRedirectResult()
+        .then((result) => {
+          if (result) {
+            console.log('تم تسجيل الدخول بنجاح:', result.user.email);
+          }
+        })
+        .catch((error) => {
+          console.error('خطأ في تسجيل الدخول:', error);
+        });
+    });
+
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
       setIsAdminUser(isAdmin(u?.email));
