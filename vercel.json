@@ -1,29 +1,36 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["public/**"]
-      }
-    }
+  "public": true,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "routes": [
+  "headers": [
     {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/server/index.ts"
+      "source": "/css/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "src": "/(.*)",
-      "dest": "/public/$1"
+      "source": "/js/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
