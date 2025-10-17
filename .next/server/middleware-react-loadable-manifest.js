@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"../components/Header.tsx -> @/lib/firebaseClient\":{\"id\":\"../components/Header.tsx -> @/lib/firebaseClient\",\"files\":[]}}"
+self.__REACT_LOADABLE_MANIFEST="{\"../lib/firebaseClient.ts -> firebase/auth\":{\"id\":\"../lib/firebaseClient.ts -> firebase/auth\",\"files\":[]}}"

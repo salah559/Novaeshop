@@ -1,6 +1,6 @@
 {
-  "../components/Header.tsx -> @/lib/firebaseClient": {
-    "id": "../components/Header.tsx -> @/lib/firebaseClient",
+  "../lib/firebaseClient.ts -> firebase/auth": {
+    "id": "../lib/firebaseClient.ts -> firebase/auth",
     "files": []
   }
 }
