@@ -1,6 +1,6 @@
 // Firebase client initialization (for browser)
 import { initializeApp, getApps } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithRedirect, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getRedirectResult } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -23,7 +23,11 @@ export const db = getFirestore();
 export const storage = getStorage();
 
 export async function signInWithGoogle() {
-  return signInWithPopup(auth, provider);
+  return signInWithRedirect(auth, provider);
+}
+
+export async function handleRedirectResult() {
+  return getRedirectResult(auth);
 }
 
 export async function signInEmail(email: string, password: string) {
