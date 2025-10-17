@@ -9,7 +9,7 @@ FirebaseError: Firebase: Error (auth/unauthorized-domain)
 
 ## النطاق الحالي لتطبيقك
 ```
-52c7dc5d-76c2-481c-8ad4-7619b144ba33-00-38zlf3z0pxasc.riker.replit.dev
+78b5c4a4-4104-4363-9fe8-ed4c366114aa-00-2lslul1ksm5zk.spock.replit.dev
 ```
 
 ## الحل: إضافة النطاق في Firebase Console
@@ -32,7 +32,7 @@ FirebaseError: Firebase: Error (auth/unauthorized-domain)
    - اضغط على زر **Add domain** (إضافة نطاق)
    - الصق النطاق التالي:
    ```
-   52c7dc5d-76c2-481c-8ad4-7619b144ba33-00-38zlf3z0pxasc.riker.replit.dev
+   78b5c4a4-4104-4363-9fe8-ed4c366114aa-00-2lslul1ksm5zk.spock.replit.dev
    ```
    - اضغط **Add** أو **إضافة**
 
