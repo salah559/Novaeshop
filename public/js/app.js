@@ -2,15 +2,6 @@
 import { cart } from './cart.js';
 import { authManager } from './auth.js';
 
-// Initialize AOS
-document.addEventListener('DOMContentLoaded', () => {
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
-    });
-});
-
 // Mobile menu toggle
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navLinks = document.getElementById('navLinks');

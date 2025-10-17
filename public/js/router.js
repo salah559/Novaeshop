@@ -42,11 +42,6 @@ export function loadRoute() {
         route();
         app.style.opacity = '1';
         
-        // Initialize AOS
-        if (window.AOS) {
-            AOS.refresh();
-        }
-        
         // Scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 200);

@@ -1,9 +1,10 @@
 // Environment configuration for static site
+// Replace these with your actual Firebase credentials
 window.ENV = {
-    VITE_FIREBASE_API_KEY: 'YOUR_API_KEY',
-    VITE_FIREBASE_AUTH_DOMAIN: 'YOUR_AUTH_DOMAIN',
-    VITE_FIREBASE_PROJECT_ID: 'YOUR_PROJECT_ID',
-    VITE_FIREBASE_STORAGE_BUCKET: 'YOUR_STORAGE_BUCKET',
-    VITE_FIREBASE_MESSAGING_SENDER_ID: 'YOUR_SENDER_ID',
-    VITE_FIREBASE_APP_ID: 'YOUR_APP_ID'
+    VITE_FIREBASE_API_KEY: 'AIzaSyDemo-Key-Replace-With-Your-Real-Key',
+    VITE_FIREBASE_AUTH_DOMAIN: 'your-project.firebaseapp.com',
+    VITE_FIREBASE_PROJECT_ID: 'your-project-id',
+    VITE_FIREBASE_STORAGE_BUCKET: 'your-project.appspot.com',
+    VITE_FIREBASE_MESSAGING_SENDER_ID: '123456789',
+    VITE_FIREBASE_APP_ID: '1:123456789:web:abc123def456'
 };

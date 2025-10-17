@@ -12,9 +12,23 @@ const firebaseConfig = {
     appId: window.ENV?.VITE_FIREBASE_APP_ID || ""
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// Initialize Firebase only if config is provided
+let app = null;
+let auth = null;
+let db = null;
 
+try {
+    if (firebaseConfig.apiKey && firebaseConfig.projectId) {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+        console.log('Firebase initialized successfully');
+    } else {
+        console.warn('Firebase config missing. Please add Firebase credentials to _config.js');
+    }
+} catch (error) {
+    console.error('Firebase initialization failed:', error);
+}
+
+export { auth, db };
 export default app;

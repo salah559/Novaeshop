@@ -70,6 +70,11 @@ function renderCategories() {
 }
 
 async function loadFeaturedProducts() {
+    if (!db) {
+        document.getElementById('featuredProducts').innerHTML = '<p class="text-center">قم بإعداد Firebase لعرض المنتجات</p>';
+        return;
+    }
+    
     try {
         const q = query(
             collection(db, 'products'), 
@@ -88,6 +93,11 @@ async function loadFeaturedProducts() {
 }
 
 async function loadBestSellers() {
+    if (!db) {
+        document.getElementById('bestSellers').innerHTML = '<p class="text-center">قم بإعداد Firebase لعرض المنتجات</p>';
+        return;
+    }
+    
     try {
         const q = query(
             collection(db, 'products'),
