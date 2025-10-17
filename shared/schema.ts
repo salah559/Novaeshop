@@ -1,108 +1,94 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Users table
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
-  role: text("role").notNull().default("user"), // 'user' or 'admin'
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// User schema
+export const insertUserSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  firebaseUid: z.string(), // Firebase Auth UID
+  role: z.enum(["user", "admin"]).default("user"),
 });
 
-export const insertUserSchema = createInsertSchema(users).omit({
-  id: true,
-  createdAt: true,
+export const userSchema = insertUserSchema.extend({
+  id: z.string(),
+  createdAt: z.date(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export type User = z.infer<typeof userSchema>;
 
-// Products table
-export const products = pgTable("products", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  price: integer("price").notNull(), // Price in DZD
-  category: text("category").notNull(), // 'courses', 'videos', 'books', 'wordpress', 'chatgpt', 'packs'
-  imageUrl: text("image_url").notNull(),
-  downloadUrl: text("download_url").notNull(), // Direct download link
-  isFeatured: integer("is_featured").notNull().default(0), // 1 for featured, 0 for normal
-  soldCount: integer("sold_count").notNull().default(0), // Track sales
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// Product schema
+export const insertProductSchema = z.object({
+  name: z.string().min(1),
+  description: z.string().min(1),
+  price: z.number().int().positive(), // Price in DZD
+  category: z.enum(["courses", "videos", "books", "wordpress", "chatgpt", "packs"]),
+  imageUrl: z.string().url(),
+  downloadUrl: z.string().url(), // Direct download link
+  isFeatured: z.number().int().min(0).max(1).default(0), // 1 for featured, 0 for normal
 });
 
-export const insertProductSchema = createInsertSchema(products).omit({
-  id: true,
-  createdAt: true,
-  soldCount: true,
+export const productSchema = insertProductSchema.extend({
+  id: z.string(),
+  soldCount: z.number().int().default(0), // Track sales
+  createdAt: z.date(),
 });
 
 export type InsertProduct = z.infer<typeof insertProductSchema>;
-export type Product = typeof products.$inferSelect;
+export type Product = z.infer<typeof productSchema>;
 
-// Orders table
-export const orders = pgTable("orders", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
-  productIds: text("product_ids").array().notNull(), // Array of product IDs
-  totalPrice: integer("total_price").notNull(),
-  paymentImageUrl: text("payment_image_url"), // URL to uploaded payment receipt
-  fullName: text("full_name").notNull(),
-  email: text("email").notNull(),
-  phone: text("phone"),
-  status: text("status").notNull().default("pending"), // 'pending', 'confirmed', 'rejected'
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// Order schema
+export const insertOrderSchema = z.object({
+  userId: z.string(),
+  productIds: z.array(z.string()).min(1), // Array of product IDs
+  totalPrice: z.number().int().positive(),
+  paymentImageUrl: z.string().optional(), // URL to uploaded payment receipt
+  fullName: z.string().min(1),
+  email: z.string().email(),
+  phone: z.string().optional(),
+  status: z.enum(["pending", "confirmed", "rejected"]).default("pending"),
 });
 
-export const insertOrderSchema = createInsertSchema(orders).omit({
-  id: true,
-  createdAt: true,
+export const orderSchema = insertOrderSchema.extend({
+  id: z.string(),
+  createdAt: z.date(),
 });
 
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
-export type Order = typeof orders.$inferSelect;
+export type Order = z.infer<typeof orderSchema>;
 
-// Purchases table (after order confirmation)
-export const purchases = pgTable("purchases", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
-  productId: varchar("product_id").notNull().references(() => products.id),
-  orderId: varchar("order_id").notNull().references(() => orders.id),
-  downloadUrl: text("download_url").notNull(),
-  status: text("status").notNull().default("active"), // 'active'
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// Purchase schema (after order confirmation)
+export const insertPurchaseSchema = z.object({
+  userId: z.string(),
+  productId: z.string(),
+  orderId: z.string(),
+  downloadUrl: z.string().url(),
+  status: z.enum(["active"]).default("active"),
 });
 
-export const insertPurchaseSchema = createInsertSchema(purchases).omit({
-  id: true,
-  createdAt: true,
+export const purchaseSchema = insertPurchaseSchema.extend({
+  id: z.string(),
+  createdAt: z.date(),
 });
 
 export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;
-export type Purchase = typeof purchases.$inferSelect;
+export type Purchase = z.infer<typeof purchaseSchema>;
 
-// Messages table (contact form)
-export const messages = pgTable("messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  subject: text("subject").notNull(),
-  message: text("message").notNull(),
-  fileUrl: text("file_url"), // Optional attachment
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+// Message schema (contact form)
+export const insertMessageSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  subject: z.string().min(1),
+  message: z.string().min(1),
+  fileUrl: z.string().optional(), // Optional attachment
 });
 
-export const insertMessageSchema = createInsertSchema(messages).omit({
-  id: true,
-  createdAt: true,
+export const messageSchema = insertMessageSchema.extend({
+  id: z.string(),
+  createdAt: z.date(),
 });
 
 export type InsertMessage = z.infer<typeof insertMessageSchema>;
-export type Message = typeof messages.$inferSelect;
+export type Message = z.infer<typeof messageSchema>;
 
 // Category options
 export const categories = [
