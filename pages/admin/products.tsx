@@ -434,7 +434,7 @@ export default function AdminProducts(){
                 {product.name}
               </h3>
               <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 15, lineHeight: 1.6}}>
-                {product.description.substring(0, 100)}...
+                {product.description?.substring(0, 100) || 'لا يوجد وصف'}...
               </p>
               <div style={{
                 display: 'flex',

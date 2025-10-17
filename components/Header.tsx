@@ -84,6 +84,13 @@ export default function Header(){
             borderRadius: 8,
             transition: 'all 0.3s ease'
           }}>{t('products')}</Link>
+          <Link href="/how-to-buy" style={{
+            color: '#e0e0e0',
+            fontWeight: 500,
+            padding: '8px 16px',
+            borderRadius: 8,
+            transition: 'all 0.3s ease'
+          }}>كيف تشتري؟</Link>
           <Link href="/cart" style={{
             color: '#e0e0e0',
             fontWeight: 500,
@@ -91,6 +98,15 @@ export default function Header(){
             borderRadius: 8,
             transition: 'all 0.3s ease'
           }}>{t('cart')}</Link>
+          {user && (
+            <Link href="/orders" style={{
+              color: '#e0e0e0',
+              fontWeight: 500,
+              padding: '8px 16px',
+              borderRadius: 8,
+              transition: 'all 0.3s ease'
+            }}>طلباتي</Link>
+          )}
           <Link href="/mypurchases" style={{
             color: '#e0e0e0',
             fontWeight: 500,
