@@ -1,15 +1,28 @@
 
-# DZ Digital Market - Starter (Next.js + Supabase)
+# DZ Digital Market (Next.js + Firebase)
 
-هذا مشروع هيكلي (skeleton) لموقع بيع المنتجات الرقمية مبني بـ Next.js (TypeScript) ومربوط بـ Supabase.
-المشروع يحتوي على صفحات: Home, Products, Product Detail, Cart, Checkout (رفع إثبات الدفع), MyPurchases, Contact, Admin panel (basic API hooks).
+This is a starter template tailored to run on Vercel and use Firebase Authentication (Google + Email), Firestore for data, and Firebase Storage for receipts & product files.
 
-## تعليمات سريعة
-1. انسخ `.env.example` إلى `.env.local` واملأ متغيرات Supabase.
-2. تثبيت الحزم: `npm install`
-3. تشغيل المشروع في وضع التطوير: `npm run dev`
+## Quick start
 
-## ملاحظات
-- هذا قالب مبدئي. ستحتاج لتوصيل الواجهات مع Supabase، إعداد صلاحيات Storage، وتهيئة جداول SQL في Supabase.
-- ملفات الـ backend الخاصة بالتأكيد على الطلبات يجب أن تستخدم `SUPABASE_SERVICE_ROLE_KEY` ويجب تشغيلها من Server-side (API routes).
+1. Copy `.env.example` to `.env.local` and fill Firebase client vars and `FIREBASE_SERVICE_ACCOUNT`.
+   - On Vercel, add env vars in the project settings. For `FIREBASE_SERVICE_ACCOUNT` use a stringified JSON or store service account JSON in Vercel secrets and reference it.
+2. Install:
+   ```
+   npm install
+   ```
+3. Run dev:
+   ```
+   npm run dev
+   ```
+4. Deploy to Vercel (connect repo) — Vercel will build and use env vars.
+
+## Notes
+- Client-side Firebase config is in `lib/firebaseClient.ts`.
+- Server-side admin operations (confirm order) use `lib/firebaseAdmin.ts` via API routes in `pages/api/admin`.
+- This is a starter skeleton: you must create Firestore collections:
+  - `products` (fields: name, description, price, category, imageUrl, filePath)
+  - `orders` (userId, items: [{id,name,price}], total, paymentImageUrl, email, status)
+  - `purchases` (userId, productId, downloadUrl)
+- Storage: use bucket configured in Firebase console.
 

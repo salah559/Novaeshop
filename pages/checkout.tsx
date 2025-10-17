@@ -1,22 +1,44 @@
 
-import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { useState, useEffect } from 'react';
+import { auth, db, storage } from '@/lib/firebaseClient';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc } from 'firebase/firestore';
 
 export default function Checkout(){
-  const [file, setFile] = useState<File|null>(null);
+  const [file, setFile] = useState(null);
   const [email, setEmail] = useState('');
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(()=> {
+    const unsub = auth.onAuthStateChanged(u=> setUser(u));
+    return ()=>unsub();
+  },[]);
 
   async function handleSubmit(e:any){
     e.preventDefault();
-    if(!file){ alert('Please attach payment proof'); return; }
-    // simple upload example (client-side) - for production use server-side signed uploads
-    const fileName = `receipts/${Date.now()}_${(file as any).name}`;
-    const { data, error } = await supabase.storage.from('uploads').upload(fileName, file);
-    if(error){ alert('Upload failed'); console.error(error); return; }
-    const publicUrl = supabase.storage.from('uploads').getPublicUrl(fileName).data.publicUrl;
-    // create order entry - requires API or direct insert if using anon key (for demo only)
-    alert('تم رفع الإيصال. سيتم معاينته من قبل الأدمن. (هذه نسخة تجريبية)');
-    console.log({publicUrl, email});
+    if(!file) return alert('أرفق صورة الإيصال');
+    // get cart
+    const items = JSON.parse(localStorage.getItem('cart')||'[]');
+    const total = items.reduce((s:any,i:any)=>s+(i.price||0),0);
+    // upload receipt
+    const path = `receipts/${Date.now()}_${(file as any).name}`;
+    const storageRef = ref(storage, path);
+    const blob = file as any;
+    await uploadBytes(storageRef, blob);
+    const url = await getDownloadURL(storageRef);
+    // create order in Firestore
+    await addDoc(collection(db, 'orders'), {
+      userId: user?.uid || null,
+      items,
+      total,
+      paymentImageUrl: url,
+      email: email || user?.email || null,
+      status: 'pending',
+      createdAt: new Date()
+    });
+    alert('تم إرسال الطلب. سيتم مراجعته من قبل الأدمن.');
+    localStorage.removeItem('cart');
+    window.location.href = '/mypurchases';
   }
 
   return (

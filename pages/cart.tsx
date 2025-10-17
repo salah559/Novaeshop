@@ -1,15 +1,15 @@
 
 import Link from 'next/link';
-
 export default function Cart(){
-  // Simple mock cart
-  const items = [{id:'prod-1', name:'Pack 15M', price:20000}];
-  const total = items.reduce((s,i)=>s+i.price,0);
+  // For demo: cart stored in localStorage (you'll wire real cart)
+  const items = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('cart')||'[]') : [];
+  const total = items.reduce((s,i)=>s+(i.price||0),0);
   return (
     <div>
       <h2>السلة</h2>
       <div className="card">
-        {items.map(it=>(
+        {items.length===0 && <div>السلة فارغة</div>}
+        {items.map((it:any)=>(
           <div key={it.id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
             <div>{it.name}</div>
             <div>{it.price} دج</div>

@@ -1,18 +1,28 @@
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { db, storage } from '@/lib/firebaseClient';
+import { collection, addDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function Contact(){
   const [name,setName]=useState('');
   const [email,setEmail]=useState('');
   const [message,setMessage]=useState('');
-  const [file,setFile]=useState<File|null>(null);
+  const [file,setFile]=useState<any|null>(null);
 
   async function handleSubmit(e:any){
     e.preventDefault();
-    // for demo simply alert
-    alert('تم إرسال الرسالة. هذه نسخة تجريبية.');
-    console.log({name,email,message,file});
+    let fileUrl = null;
+    if(file){
+      const path = `messages/${Date.now()}_${file.name}`;
+      const storageRef = ref(storage, path);
+      await uploadBytes(storageRef, file);
+      fileUrl = await getDownloadURL(storageRef);
+    }
+    await addDoc(collection(db,'messages'), {
+      name, email, message, fileUrl, createdAt: new Date()
+    });
+    alert('تم إرسال الرسالة.');
   }
 
   return (
