@@ -60,7 +60,7 @@ export function Header() {
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer hover-elevate px-3 py-2 rounded-lg transition-all" data-testid="link-home">
             <div className="text-2xl font-bold bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent">
-              DZ Digital
+              E-Nova
             </div>
           </div>
         </Link>
