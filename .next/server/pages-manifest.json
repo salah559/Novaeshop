@@ -5,5 +5,5 @@
   "/": "pages/index.js",
   "/admin": "pages/admin.js",
   "/contact": "pages/contact.js",
-  "/api/admin/list-orders": "pages/api/admin/list-orders.js"
+  "/products": "pages/products.js"
 }
