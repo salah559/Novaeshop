@@ -20,7 +20,7 @@ export default function Cart(){
           <strong>المجموع</strong>
           <strong>{total} دج</strong>
         </div>
-        <Link href="/checkout"><a className="btn" style={{marginTop:12}}>تابع الدفع</a></Link>
+        <Link href="/checkout" className="btn" style={{marginTop:12}}>تابع الدفع</Link>
       </div>
     </div>
   );

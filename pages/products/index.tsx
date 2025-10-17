@@ -24,7 +24,7 @@ export default function Products(){
             <h3>{p.name}</h3>
             <p>{p.price} دج</p>
             <div style={{display:'flex',gap:8}}>
-              <Link href={`/products/${p.id}`}><a className="btn">تفاصيل</a></Link>
+              <Link href={`/products/${p.id}`} className="btn">تفاصيل</Link>
             </div>
           </div>
         ))}

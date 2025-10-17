@@ -6,7 +6,7 @@ export default function Home(){
       <section className="card" style={{padding:24,marginBottom:20}}>
         <h2>مرحباً في DZ Digital Market</h2>
         <p>بيع وشراء منتجات رقمية. الدفع يدوي عبر بريدي موب، والتوثيق عبر Firebase.</p>
-        <Link href="/products"><a className="btn">تصفح المنتجات</a></Link>
+        <Link href="/products" className="btn">تصفح المنتجات</Link>
       </section>
     </div>
   );

@@ -19,11 +19,11 @@ export default function Header(){
         </div>
       </div>
       <nav>
-        <Link href="/"><a style={{marginRight:12}}>الرئيسية</a></Link>
-        <Link href="/products"><a style={{marginRight:12}}>المنتجات</a></Link>
-        <Link href="/mypurchases"><a style={{marginRight:12}}>مشترياتي</a></Link>
-        <Link href="/contact"><a style={{marginRight:12}}>تواصل</a></Link>
-        <Link href="/admin"><a style={{marginRight:12}}>لوحة الأدمن</a></Link>
+        <Link href="/" style={{marginRight:12}}>الرئيسية</Link>
+        <Link href="/products" style={{marginRight:12}}>المنتجات</Link>
+        <Link href="/mypurchases" style={{marginRight:12}}>مشترياتي</Link>
+        <Link href="/contact" style={{marginRight:12}}>تواصل</Link>
+        <Link href="/admin" style={{marginRight:12}}>لوحة الأدمن</Link>
         {user ? (
           <>
             <span style={{marginRight:8}}>{user.email}</span>
