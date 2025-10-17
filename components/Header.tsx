@@ -6,12 +6,12 @@ import { useLanguage } from '@/lib/LanguageContext';
 export default function Header(){
   const [user, setUser] = useState<any>(null);
   const { language, setLanguage, t } = useLanguage();
-  
+
   useEffect(()=> {
     const unsub = auth.onAuthStateChanged(u => setUser(u));
     return () => unsub();
   },[]);
-  
+
   return (
     <header style={{
       padding: '20px 0',
@@ -52,11 +52,13 @@ export default function Header(){
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
-            }}>DZ Digital Market</h1>
-            <small style={{color: '#00ff88', fontWeight: 500}}>الدفع ببريدي موب - منصة رقمية متقدمة</small>
+            }}>
+              {t('siteName')}
+            </h1>
+            <small style={{color: '#00ff88', fontWeight: 500}}>{t('tagline')}</small>
           </div>
         </div>
-        
+
         <nav style={{
           display: 'flex',
           alignItems: 'center',
@@ -69,56 +71,45 @@ export default function Header(){
             padding: '8px 16px',
             borderRadius: 8,
             transition: 'all 0.3s ease'
-          }}>الرئيسية</Link>
+          }}>{t('home')}</Link>
           <Link href="/products" style={{
             color: '#e0e0e0',
             fontWeight: 500,
             padding: '8px 16px',
             borderRadius: 8,
             transition: 'all 0.3s ease'
-          }}>المنتجات</Link>
+          }}>{t('products')}</Link>
+          <Link href="/cart" style={{
+            color: '#e0e0e0',
+            fontWeight: 500,
+            padding: '8px 16px',
+            borderRadius: 8,
+            transition: 'all 0.3s ease'
+          }}>{t('cart')}</Link>
           <Link href="/mypurchases" style={{
             color: '#e0e0e0',
             fontWeight: 500,
             padding: '8px 16px',
             borderRadius: 8,
             transition: 'all 0.3s ease'
-          }}>مشترياتي</Link>
+          }}>{t('myPurchases')}</Link>
           <Link href="/contact" style={{
             color: '#e0e0e0',
             fontWeight: 500,
             padding: '8px 16px',
             borderRadius: 8,
             transition: 'all 0.3s ease'
-          }}>تواصل</Link>
-          <Link href="/admin" style={{
-            color: '#e0e0e0',
-            fontWeight: 500,
-            padding: '8px 16px',
-            borderRadius: 8,
-            transition: 'all 0.3s ease'
-
-            }}>
-              {t('siteName')}
-            </h1>
-            <p style={{margin: 0, color: '#c0c0c0', fontSize: '0.9em'}}>Digital Marketplace</p>
-          </div>
-        </div>
-
-        <nav style={{display: 'flex', alignItems: 'center', gap: 25, flexWrap: 'wrap'}}>
-          <Link href="/" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500, transition: 'color 0.3s'}}>{t('home')}</Link>
-          <Link href="/products" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500, transition: 'color 0.3s'}}>{t('products')}</Link>
-          <Link href="/cart" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500, transition: 'color 0.3s'}}>{t('cart')}</Link>
-          {user && (
-            <>
-              <Link href="/mypurchases" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500}}>{t('myPurchases')}</Link>
-              {user.email === 'admin@dzmarket.dz' && (
-                <Link href="/admin" style={{color: '#00ff88', textDecoration: 'none', fontWeight: 600}}>{t('admin')}</Link>
-              )}
-            </>
+          }}>{t('contact')}</Link>
+          {user && user.email === 'admin@dzmarket.dz' && (
+            <Link href="/admin" style={{
+              color: '#00ff88',
+              fontWeight: 600,
+              padding: '8px 16px',
+              borderRadius: 8,
+              transition: 'all 0.3s ease'
+            }}>{t('admin')}</Link>
           )}
-          <Link href="/contact" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500}}>{t('contact')}</Link>
-          
+
           <div style={{display: 'flex', gap: 8, marginLeft: 10}}>
             <button 
               onClick={() => setLanguage('ar')}
@@ -165,23 +156,6 @@ export default function Header(){
           </div>
 
           {user ? (
-            <button onClick={logout} className="btn" style={{padding: '10px 24px', fontSize: '0.95em'}}>
-              {t('logout')}
-            </button>
-          ) : (
-            <button onClick={signInWithGoogle} className="btn" style={{padding: '10px 24px', fontSize: '0.95em'}}>
-              {t('login')}
-            </button>
-          )}
-        </nav>
-      </div>
-    </header>
-  );
-}
-
-          }}>لوحة الأدمن</Link>
-          
-          {user ? (
             <div style={{display: 'flex', alignItems: 'center', gap: 12}}>
               <span style={{
                 color: '#00ff88',
@@ -190,21 +164,22 @@ export default function Header(){
                 borderRadius: 6,
                 fontSize: '0.9em'
               }}>{user.email}</span>
-              <button onClick={()=>logout()} style={{
+              <button onClick={logout} style={{
                 padding: '10px 20px',
                 background: 'linear-gradient(135deg, rgba(255, 0, 0, 0.2) 0%, rgba(200, 0, 0, 0.2) 100%)',
                 color: '#ff6b6b',
                 borderRadius: 8,
                 fontWeight: 600,
                 border: '1px solid rgba(255, 0, 0, 0.3)',
-                transition: 'all 0.3s ease'
-              }}>خروج</button>
+                transition: 'all 0.3s ease',
+                cursor: 'pointer'
+              }}>{t('logout')}</button>
             </div>
           ) : (
-            <button onClick={()=>signInWithGoogle()} className="btn" style={{
+            <button onClick={signInWithGoogle} className="btn" style={{
               padding: '10px 24px',
               fontSize: '0.9em'
-            }}>تسجيل Google</button>
+            }}>{t('login')}</button>
           )}
         </nav>
       </div>
