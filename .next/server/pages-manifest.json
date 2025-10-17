@@ -5,5 +5,8 @@
   "/cart": "pages/cart.js",
   "/checkout": "pages/checkout.js",
   "/mypurchases": "pages/mypurchases.js",
+  "/": "pages/index.js",
+  "/products": "pages/products.js",
+  "/admin": "pages/admin.js",
   "/admin/products": "pages/admin/products.js"
 }
