@@ -59,15 +59,21 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer hover-elevate px-3 py-2 rounded-lg transition-all group" data-testid="link-home">
-            <div className="relative w-10 h-10 flex items-center justify-center">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/60 rounded-lg opacity-100 group-hover:opacity-0 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white font-bold text-xl">EN</span>
+            <div className="relative w-auto h-10 flex items-center justify-center overflow-hidden">
+              {/* اللوڨو */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/60 rounded-lg opacity-100 group-hover:opacity-0 group-hover:scale-75 group-hover:rotate-180 transition-all duration-500 ease-out flex items-center justify-center w-10">
+                <span className="text-white font-bold text-xl group-hover:scale-0 transition-transform duration-300">EN</span>
               </div>
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="text-2xl font-bold bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent whitespace-nowrap">
+              
+              {/* النص الكامل */}
+              <div className="flex items-center justify-center opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 ease-out delay-100">
+                <div className="text-2xl font-bold bg-gradient-to-br from-primary to-primary/60 bg-clip-text text-transparent whitespace-nowrap px-2">
                   E-Nova
                 </div>
               </div>
+              
+              {/* تأثير التوهج */}
+              <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 rounded-lg"></div>
             </div>
           </div>
         </Link>
