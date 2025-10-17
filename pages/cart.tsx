@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Cart(){
   // For demo: cart stored in localStorage (you'll wire real cart)
   const items = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('cart')||'[]') : [];
-  const total = items.reduce((s,i)=>s+(i.price||0),0);
+  const total = items.reduce((s: number, i: any)=>s+(i.price||0),0);
   return (
     <div>
       <h2>السلة</h2>
