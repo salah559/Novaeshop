@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeOutRotate {
+  0%, 40% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50%, 90% {
+    opacity: 0;
+    transform: scale(0.75) rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+@keyframes scaleOut {
+  0%, 40% {
+    transform: scale(1);
+  }
+  50%, 100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes fadeInScale {
+  0%, 40% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50%, 90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(0,0,0, .10);
