@@ -59,10 +59,14 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/">
           <div className="flex items-center gap-2 cursor-pointer hover-elevate px-3 py-2 rounded-lg transition-all" data-testid="link-home">
-            <div className="relative w-auto h-10 flex items-center justify-center overflow-hidden">
-              {/* اللوڨو */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/60 rounded-lg flex items-center justify-center w-10 animate-[fadeOutRotate_6s_ease-in-out_infinite]">
-                <span className="text-white font-bold text-xl animate-[scaleOut_6s_ease-in-out_infinite]">EN</span>
+            <div className="relative w-auto h-12 flex items-center justify-center overflow-hidden">
+              {/* صورة اللوڨو */}
+              <div className="absolute inset-0 flex items-center justify-center animate-[fadeOutRotate_6s_ease-in-out_infinite]">
+                <img 
+                  src="/logo.png" 
+                  alt="E-Nova Logo" 
+                  className="h-12 w-auto object-contain animate-[scaleOut_6s_ease-in-out_infinite]"
+                />
               </div>
               
               {/* النص الكامل */}

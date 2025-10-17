@@ -21,7 +21,6 @@ import NotFound from "@/pages/not-found";
 function Router() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
       <main className="flex-1">
         <Switch>
           <Route path="/" component={Home} />
@@ -58,6 +57,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthProvider>
+          <Header />
           <Router />
           <Toaster />
         </AuthProvider>
