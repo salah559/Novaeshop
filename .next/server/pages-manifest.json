@@ -4,6 +4,6 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/admin": "pages/admin.js",
-  "/api/admin/list-orders": "pages/api/admin/list-orders.js",
-  "/contact": "pages/contact.js"
+  "/contact": "pages/contact.js",
+  "/products": "pages/products.js"
 }
