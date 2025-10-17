@@ -29,10 +29,8 @@ export function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.path}>
-                  <Link href={link.path}>
-                    <a className="text-muted-foreground hover:text-primary transition-colors text-sm">
-                      {link.label}
-                    </a>
+                  <Link href={link.path} className="text-muted-foreground hover:text-primary transition-colors text-sm block">
+                    {link.label}
                   </Link>
                 </li>
               ))}
