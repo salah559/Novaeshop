@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { auth, signInWithGoogle, logout } from '@/lib/firebaseClient';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function Header(){
   const [user, setUser] = useState<any>(null);
+  const { language, setLanguage, t } = useLanguage();
+  
   useEffect(()=> {
     const unsub = auth.onAuthStateChanged(u => setUser(u));
     return () => unsub();
@@ -94,6 +97,88 @@ export default function Header(){
             padding: '8px 16px',
             borderRadius: 8,
             transition: 'all 0.3s ease'
+
+            }}>
+              {t('siteName')}
+            </h1>
+            <p style={{margin: 0, color: '#c0c0c0', fontSize: '0.9em'}}>Digital Marketplace</p>
+          </div>
+        </div>
+
+        <nav style={{display: 'flex', alignItems: 'center', gap: 25, flexWrap: 'wrap'}}>
+          <Link href="/" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500, transition: 'color 0.3s'}}>{t('home')}</Link>
+          <Link href="/products" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500, transition: 'color 0.3s'}}>{t('products')}</Link>
+          <Link href="/cart" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500, transition: 'color 0.3s'}}>{t('cart')}</Link>
+          {user && (
+            <>
+              <Link href="/mypurchases" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500}}>{t('myPurchases')}</Link>
+              {user.email === 'admin@dzmarket.dz' && (
+                <Link href="/admin" style={{color: '#00ff88', textDecoration: 'none', fontWeight: 600}}>{t('admin')}</Link>
+              )}
+            </>
+          )}
+          <Link href="/contact" style={{color: '#e0e0e0', textDecoration: 'none', fontWeight: 500}}>{t('contact')}</Link>
+          
+          <div style={{display: 'flex', gap: 8, marginLeft: 10}}>
+            <button 
+              onClick={() => setLanguage('ar')}
+              style={{
+                padding: '6px 12px',
+                background: language === 'ar' ? '#00ff88' : 'transparent',
+                color: language === 'ar' ? '#0a0f14' : '#c0c0c0',
+                border: '1px solid rgba(0, 255, 136, 0.3)',
+                borderRadius: 6,
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '0.9em'
+              }}>
+              ع
+            </button>
+            <button 
+              onClick={() => setLanguage('en')}
+              style={{
+                padding: '6px 12px',
+                background: language === 'en' ? '#00ff88' : 'transparent',
+                color: language === 'en' ? '#0a0f14' : '#c0c0c0',
+                border: '1px solid rgba(0, 255, 136, 0.3)',
+                borderRadius: 6,
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '0.9em'
+              }}>
+              EN
+            </button>
+            <button 
+              onClick={() => setLanguage('fr')}
+              style={{
+                padding: '6px 12px',
+                background: language === 'fr' ? '#00ff88' : 'transparent',
+                color: language === 'fr' ? '#0a0f14' : '#c0c0c0',
+                border: '1px solid rgba(0, 255, 136, 0.3)',
+                borderRadius: 6,
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: '0.9em'
+              }}>
+              FR
+            </button>
+          </div>
+
+          {user ? (
+            <button onClick={logout} className="btn" style={{padding: '10px 24px', fontSize: '0.95em'}}>
+              {t('logout')}
+            </button>
+          ) : (
+            <button onClick={signInWithGoogle} className="btn" style={{padding: '10px 24px', fontSize: '0.95em'}}>
+              {t('login')}
+            </button>
+          )}
+        </nav>
+      </div>
+    </header>
+  );
+}
+
           }}>لوحة الأدمن</Link>
           
           {user ? (

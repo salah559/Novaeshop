@@ -1,6 +1,10 @@
+
 import Link from 'next/link';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function Home(){
+  const { t } = useLanguage();
+  
   return (
     <div>
       <section style={{
@@ -23,7 +27,7 @@ export default function Home(){
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
             lineHeight: 1.2
-          }}>مرحباً في DZ Digital Market</h1>
+          }}>{t('welcomeTitle')}</h1>
           
           <p style={{
             fontSize: '1.3em',
@@ -31,9 +35,9 @@ export default function Home(){
             marginBottom: 30,
             lineHeight: 1.8
           }}>
-            منصة رقمية متقدمة لبيع وشراء المنتجات الرقمية في الجزائر
+            {t('welcomeSubtitle')}
             <br/>
-            <span style={{color: '#00ff88'}}>الدفع عبر بريدي موب - آمن وسريع</span>
+            <span style={{color: '#00ff88'}}>{t('paymentInfo')}</span>
           </p>
           
           <div style={{
@@ -48,7 +52,7 @@ export default function Home(){
               padding: '16px 40px',
               boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
             }}>
-              تصفح المنتجات
+              {t('browseProducts')}
             </Link>
             <Link href="/contact" style={{
               display: 'inline-block',
@@ -61,7 +65,7 @@ export default function Home(){
               fontSize: '1.1em',
               transition: 'all 0.3s ease'
             }}>
-              تواصل معنا
+              {t('contactUs')}
             </Link>
           </div>
         </div>
@@ -86,9 +90,9 @@ export default function Home(){
             fontSize: '2.5em',
             boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
           }}>🛍️</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>منتجات رقمية متنوعة</h3>
+          <h3 style={{color: '#00ff88', marginBottom: 15}}>{t('diverseProducts')}</h3>
           <p style={{color: '#c0c0c0', lineHeight: 1.6}}>
-            مجموعة واسعة من المنتجات الرقمية عالية الجودة
+            {t('diverseProductsDesc')}
           </p>
         </div>
 
@@ -105,9 +109,9 @@ export default function Home(){
             fontSize: '2.5em',
             boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
           }}>💳</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>دفع آمن ببريدي موب</h3>
+          <h3 style={{color: '#00ff88', marginBottom: 15}}>{t('securePayment')}</h3>
           <p style={{color: '#c0c0c0', lineHeight: 1.6}}>
-            نظام دفع محلي آمن وموثوق عبر بريدي موب
+            {t('securePaymentDesc')}
           </p>
         </div>
 
@@ -124,9 +128,9 @@ export default function Home(){
             fontSize: '2.5em',
             boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
           }}>⚡</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>تسليم فوري</h3>
+          <h3 style={{color: '#00ff88', marginBottom: 15}}>{t('instantDelivery')}</h3>
           <p style={{color: '#c0c0c0', lineHeight: 1.6}}>
-            احصل على منتجاتك فوراً بعد تأكيد الدفع
+            {t('instantDeliveryDesc')}
           </p>
         </div>
       </section>
@@ -137,7 +141,7 @@ export default function Home(){
         border: '2px solid rgba(0, 255, 136, 0.3)',
         textAlign: 'center'
       }}>
-        <h2 style={{marginBottom: 20}}>كيف يعمل الموقع؟</h2>
+        <h2 style={{marginBottom: 20}}>{t('howItWorks')}</h2>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
@@ -150,8 +154,8 @@ export default function Home(){
               color: '#00ff88',
               marginBottom: 10
             }}>1</div>
-            <h4 style={{color: '#fff', marginBottom: 10}}>اختر المنتج</h4>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>تصفح المنتجات واختر ما يناسبك</p>
+            <h4 style={{color: '#fff', marginBottom: 10}}>{t('step1')}</h4>
+            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>{t('step1Desc')}</p>
           </div>
           <div>
             <div style={{
@@ -159,8 +163,8 @@ export default function Home(){
               color: '#00ff88',
               marginBottom: 10
             }}>2</div>
-            <h4 style={{color: '#fff', marginBottom: 10}}>ادفع ببريدي موب</h4>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>قم بالدفع وارفع إيصال الدفع</p>
+            <h4 style={{color: '#fff', marginBottom: 10}}>{t('step2')}</h4>
+            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>{t('step2Desc')}</p>
           </div>
           <div>
             <div style={{
@@ -168,8 +172,8 @@ export default function Home(){
               color: '#00ff88',
               marginBottom: 10
             }}>3</div>
-            <h4 style={{color: '#fff', marginBottom: 10}}>احصل على منتجك</h4>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>بعد التأكيد، حمّل منتجك فوراً</p>
+            <h4 style={{color: '#fff', marginBottom: 10}}>{t('step3')}</h4>
+            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>{t('step3Desc')}</p>
           </div>
         </div>
       </section>
