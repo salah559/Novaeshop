@@ -18,6 +18,13 @@ if (!getApps().length) {
 }
 
 export const auth = getAuth();
+
+// Configure persistence to use localStorage instead of sessionStorage
+import { browserLocalPersistence, setPersistence } from 'firebase/auth';
+setPersistence(auth, browserLocalPersistence).catch((error) => {
+  console.error('Error setting persistence:', error);
+});
+
 export const provider = new GoogleAuthProvider();
 export const db = getFirestore();
 export const storage = getStorage();
