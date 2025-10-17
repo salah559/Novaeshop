@@ -30,20 +30,20 @@ export default function Header(){
         gap: 20,
         flexWrap: 'wrap'
       }}>
-        <div style={{display: 'flex', alignItems: 'center', gap: 16}}>
-          <div style={{
-            width: 56,
-            height: 56,
-            background: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
-            borderRadius: 12,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 800,
-            fontSize: '1.5em',
-            color: '#0a0f14',
-            boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
-          }}>DZ</div>
+        <Link href="/" style={{display: 'flex', alignItems: 'center', gap: 16, textDecoration: 'none'}}>
+          <img 
+            src="/enova-logo.png" 
+            alt="Enova" 
+            style={{
+              width: 70,
+              height: 70,
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 15px rgba(0, 255, 136, 0.4))'
+            }}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
+          />
           <div>
             <h1 style={{
               margin: 0,
@@ -57,7 +57,7 @@ export default function Header(){
             </h1>
             <small style={{color: '#00ff88', fontWeight: 500}}>{t('tagline')}</small>
           </div>
-        </div>
+        </Link>
 
         <nav style={{
           display: 'flex',

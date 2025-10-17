@@ -2,7 +2,8 @@
 export const translations = {
   ar: {
     // Header
-    siteName: 'DZ Digital Market',
+    siteName: 'Enova',
+    tagline: 'متجرك الرقمي',
     home: 'الرئيسية',
     products: 'المنتجات',
     cart: 'السلة',
@@ -13,7 +14,7 @@ export const translations = {
     logout: 'تسجيل الخروج',
     
     // Home page
-    welcomeTitle: 'مرحباً في DZ Digital Market',
+    welcomeTitle: 'مرحباً في Enova',
     welcomeSubtitle: 'منصة رقمية متقدمة لبيع وشراء المنتجات الرقمية في الجزائر',
     paymentInfo: 'الدفع عبر بريدي موب - آمن وسريع',
     browseProducts: 'تصفح المنتجات',
@@ -52,7 +53,8 @@ export const translations = {
   
   en: {
     // Header
-    siteName: 'DZ Digital Market',
+    siteName: 'Enova',
+    tagline: 'Your Digital Store',
     home: 'Home',
     products: 'Products',
     cart: 'Cart',
@@ -63,7 +65,7 @@ export const translations = {
     logout: 'Logout',
     
     // Home page
-    welcomeTitle: 'Welcome to DZ Digital Market',
+    welcomeTitle: 'Welcome to Enova',
     welcomeSubtitle: 'Advanced digital platform for buying and selling digital products in Algeria',
     paymentInfo: 'Payment via Baridi Mob - Safe and Fast',
     browseProducts: 'Browse Products',
@@ -102,7 +104,8 @@ export const translations = {
   
   fr: {
     // Header
-    siteName: 'DZ Digital Market',
+    siteName: 'Enova',
+    tagline: 'Votre Magasin Numérique',
     home: 'Accueil',
     products: 'Produits',
     cart: 'Panier',
@@ -113,7 +116,7 @@ export const translations = {
     logout: 'Déconnexion',
     
     // Home page
-    welcomeTitle: 'Bienvenue sur DZ Digital Market',
+    welcomeTitle: 'Bienvenue sur Enova',
     welcomeSubtitle: 'Plateforme numérique avancée pour acheter et vendre des produits numériques en Algérie',
     paymentInfo: 'Paiement via Baridi Mob - Sûr et Rapide',
     browseProducts: 'Parcourir les Produits',
