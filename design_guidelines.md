@@ -132,7 +132,7 @@ Use Tailwind units: 2, 4, 6, 8, 12, 16, 20, 24 primarily
 ### Home Page:
 - Full-width hero with animated gradient
 - Featured packs section: 3-column grid
-- "Most Sold" products: 4-column grid with real data from Supabase
+- "Most Sold" products: 4-column grid with real data from Firebase
 - "Current Offers": Highlighted with discount badges
 - All sections properly spaced with py-16 to py-20
 
