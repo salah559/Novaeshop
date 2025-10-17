@@ -30,7 +30,18 @@ export const db = getFirestore();
 export const storage = getStorage();
 
 export async function signInWithGoogle() {
-  return signInWithRedirect(auth, provider);
+  try {
+    // Try popup first (works better in most environments)
+    const { signInWithPopup } = await import('firebase/auth');
+    return await signInWithPopup(auth, provider);
+  } catch (popupError: any) {
+    // If popup is blocked or fails, fallback to redirect
+    console.log('Popup blocked, using redirect...', popupError);
+    if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/cancelled-popup-request') {
+      return signInWithRedirect(auth, provider);
+    }
+    throw popupError;
+  }
 }
 
 export async function handleRedirectResult() {
