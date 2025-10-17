@@ -1,1 +1,6 @@
-{}
+{
+  "../components/Header.tsx -> @/lib/firebaseClient": {
+    "id": "../components/Header.tsx -> @/lib/firebaseClient",
+    "files": []
+  }
+}
