@@ -1,0 +1,47 @@
+
+:root{
+  --green-start: #baf2a8;
+  --green-end: rgba(0,0,0,0.35);
+  --text: #0b2f1f;
+  --muted: rgba(255,255,255,0.85);
+}
+
+html,body,#__next {
+  height:100%;
+}
+
+body {
+  margin:0;
+  font-family: 'Tajawal', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg, var(--green-start) 0%, var(--green-end) 100%);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.container {
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px;
+}
+
+/* Simple card */
+.card {
+  background: rgba(255,255,255,0.9);
+  border-radius:12px;
+  padding:16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.btn {
+  background: linear-gradient(90deg, #7fe07a, #4bd36a);
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
