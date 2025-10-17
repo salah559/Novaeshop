@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "منصة جزائرية لبيع المنتجات الرقمية",
   "scripts": {
-    "dev": "npx http-server public -p 5000 -c-1",
-    "start": "npx http-server public -p 5000 -c-1"
+    "dev": "npx http-server . -p 5000 -c-1",
+    "start": "npx http-server . -p 5000 -c-1"
   },
   "keywords": [
     "digital",
