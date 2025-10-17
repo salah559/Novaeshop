@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { auth, db, storage } from '@/lib/firebaseClient';
+import { auth, db, storage, signInWithGoogle } from '@/lib/firebaseClient';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc } from 'firebase/firestore';
 
@@ -8,9 +8,16 @@ export default function Checkout(){
   const [email, setEmail] = useState('');
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(()=> {
-    const unsub = auth.onAuthStateChanged(u=> setUser(u));
+    const unsub = auth.onAuthStateChanged(u=> {
+      setUser(u);
+      if (u?.email) {
+        setEmail(u.email);
+      }
+      setCheckingAuth(false);
+    });
     return ()=>unsub();
   },[]);
 
@@ -50,6 +57,68 @@ export default function Checkout(){
     } finally {
       setLoading(false);
     }
+  }
+
+  if (checkingAuth) {
+    return (
+      <div style={{textAlign: 'center', padding: '100px 20px'}}>
+        <div style={{fontSize: '3em', marginBottom: 20}}>⏳</div>
+        <p style={{color: '#c0c0c0'}}>جاري التحميل...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: 40,
+          padding: '30px 20px',
+          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
+          borderRadius: 16
+        }}>
+          <h2 style={{
+            fontSize: '2.5em',
+            marginBottom: 10,
+            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text'
+          }}>تسجيل الدخول مطلوب</h2>
+          <p style={{color: '#c0c0c0'}}>يجب عليك تسجيل الدخول لمتابعة عملية الدفع</p>
+        </div>
+
+        <div className="card" style={{
+          maxWidth: 600,
+          margin: '0 auto',
+          textAlign: 'center'
+        }}>
+          <div style={{fontSize: '4em', marginBottom: 30}}>🔐</div>
+          <h3 style={{color: '#00ff88', marginBottom: 20, fontSize: '1.5em'}}>
+            للمتابعة إلى الدفع
+          </h3>
+          <p style={{color: '#c0c0c0', marginBottom: 30, lineHeight: 1.8}}>
+            يجب عليك تسجيل الدخول أولاً لضمان حماية مشترياتك وتتبع طلباتك بسهولة.
+            سيتم ربط طلبك بحسابك لتتمكن من الوصول إليه في أي وقت.
+          </p>
+          <button 
+            onClick={signInWithGoogle} 
+            className="btn"
+            style={{
+              fontSize: '1.2em',
+              padding: '16px 40px',
+              boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
+            }}
+          >
+            🔑 تسجيل الدخول بواسطة Google
+          </button>
+          <p style={{color: '#888', marginTop: 20, fontSize: '0.9em'}}>
+            سريع وآمن - نستخدم Google للمصادقة
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -126,18 +195,20 @@ export default function Checkout(){
               onChange={e=>setEmail(e.target.value)}
               placeholder="example@email.com"
               required
+              readOnly={!!user?.email}
               style={{
                 width: '100%',
                 padding: '14px 16px',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: user?.email ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(0, 255, 136, 0.3)',
                 borderRadius: 8,
                 color: '#fff',
-                fontSize: '1rem'
+                fontSize: '1rem',
+                cursor: user?.email ? 'not-allowed' : 'text'
               }}
             />
-            <small style={{color: '#888', fontSize: '0.85em', marginTop: 8, display: 'block'}}>
-              تأكد أن هذا هو نفس الإيميل الذي ستستخدمه لإرسال صورة الوصل إلى novawebdv@gmail.com
+            <small style={{color: user?.email ? '#00ff88' : '#888', fontSize: '0.85em', marginTop: 8, display: 'block'}}>
+              {user?.email ? '✓ تم تسجيل الدخول بنجاح - استخدم هذا الإيميل لإرسال صورة الوصل إلى novawebdv@gmail.com' : 'تأكد أن هذا هو نفس الإيميل الذي ستستخدمه لإرسال صورة الوصل إلى novawebdv@gmail.com'}
             </small>
           </div>
 
