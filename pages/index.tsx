@@ -7,7 +7,7 @@ export default function Home(){
   
   return (
     <div>
-      <section style={{
+      <section className="animate-fadeIn" style={{
         padding: 'clamp(40px, 10vw, 80px) 0',
         textAlign: 'center',
         background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
@@ -82,8 +82,8 @@ export default function Home(){
         gap: 'clamp(15px, 4vw, 30px)',
         marginTop: 'clamp(30px, 8vw, 60px)'
       }}>
-        <div className="card" style={{textAlign: 'center'}}>
-          <div style={{
+        <div className="card animate-fadeInUp animate-delay-1 shadow-glow-hover" style={{textAlign: 'center'}}>
+          <div className="animate-float" style={{
             width: 'clamp(60px, 15vw, 80px)',
             height: 'clamp(60px, 15vw, 80px)',
             margin: '0 auto clamp(15px, 3vw, 20px)',
@@ -93,7 +93,8 @@ export default function Home(){
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: 'clamp(2em, 5vw, 2.5em)',
-            boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
+            boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)',
+            animationDelay: '0.2s'
           }}>🛍️</div>
           <h3 style={{color: '#00ff88', marginBottom: 'clamp(10px, 2vw, 15px)', fontSize: 'clamp(1.1em, 3vw, 1.3em)'}}>{t('diverseProducts')}</h3>
           <p style={{color: '#c0c0c0', lineHeight: 1.6, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>
@@ -101,8 +102,8 @@ export default function Home(){
           </p>
         </div>
 
-        <div className="card" style={{textAlign: 'center'}}>
-          <div style={{
+        <div className="card animate-fadeInUp animate-delay-2 shadow-glow-hover" style={{textAlign: 'center'}}>
+          <div className="animate-float" style={{
             width: 'clamp(60px, 15vw, 80px)',
             height: 'clamp(60px, 15vw, 80px)',
             margin: '0 auto clamp(15px, 3vw, 20px)',
@@ -120,8 +121,8 @@ export default function Home(){
           </p>
         </div>
 
-        <div className="card" style={{textAlign: 'center'}}>
-          <div style={{
+        <div className="card animate-fadeInUp animate-delay-3 shadow-glow-hover" style={{textAlign: 'center'}}>
+          <div className="animate-float" style={{
             width: 'clamp(60px, 15vw, 80px)',
             height: 'clamp(60px, 15vw, 80px)',
             margin: '0 auto clamp(15px, 3vw, 20px)',
@@ -131,7 +132,8 @@ export default function Home(){
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: 'clamp(2em, 5vw, 2.5em)',
-            boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
+            boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)',
+            animationDelay: '0.5s'
           }}>⚡</div>
           <h3 style={{color: '#00ff88', marginBottom: 'clamp(10px, 2vw, 15px)', fontSize: 'clamp(1.1em, 3vw, 1.3em)'}}>{t('instantDelivery')}</h3>
           <p style={{color: '#c0c0c0', lineHeight: 1.6, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>
@@ -140,7 +142,7 @@ export default function Home(){
         </div>
       </section>
 
-      <section className="card" style={{
+      <section className="card animate-fadeInUp shadow-glow" style={{
         marginTop: 'clamp(30px, 8vw, 60px)',
         background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
         border: '2px solid rgba(0, 255, 136, 0.3)',
