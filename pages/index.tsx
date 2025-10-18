@@ -8,20 +8,20 @@ export default function Home(){
   return (
     <div>
       <section style={{
-        padding: '80px 0',
+        padding: 'clamp(40px, 10vw, 80px) 0',
         textAlign: 'center',
         background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 24,
-        marginBottom: 40
+        borderRadius: 'clamp(16px, 3vw, 24px)',
+        marginBottom: 'clamp(20px, 5vw, 40px)'
       }}>
         <div style={{
           maxWidth: 800,
           margin: '0 auto',
-          padding: '0 20px'
+          padding: '0 clamp(15px, 3vw, 20px)'
         }}>
           <h1 style={{
-            fontSize: '3.5em',
-            marginBottom: 20,
+            fontSize: 'clamp(2em, 8vw, 3.5em)',
+            marginBottom: 'clamp(15px, 3vw, 20px)',
             background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -30,10 +30,10 @@ export default function Home(){
           }}>{t('welcomeTitle')}</h1>
           
           <p style={{
-            fontSize: '1.3em',
+            fontSize: 'clamp(1em, 3.5vw, 1.3em)',
             color: '#e0e0e0',
-            marginBottom: 30,
-            lineHeight: 1.8
+            marginBottom: 'clamp(20px, 4vw, 30px)',
+            lineHeight: 1.6
           }}>
             {t('welcomeSubtitle')}
             <br/>
@@ -42,28 +42,33 @@ export default function Home(){
           
           <div style={{
             display: 'flex',
-            gap: 20,
+            gap: 'clamp(10px, 3vw, 20px)',
             justifyContent: 'center',
             flexWrap: 'wrap',
-            marginTop: 40
-          }}>
+            marginTop: 'clamp(20px, 5vw, 40px)',
+            flexDirection: 'row'
+          }} className="hero-buttons">
             <Link href="/products" className="btn" style={{
-              fontSize: '1.1em',
-              padding: '16px 40px',
-              boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
+              fontSize: 'clamp(0.9em, 2.5vw, 1.1em)',
+              padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 40px)',
+              boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)',
+              display: 'inline-block',
+              minWidth: 'clamp(140px, 40vw, 200px)'
             }}>
               {t('browseProducts')}
             </Link>
             <Link href="/contact" style={{
               display: 'inline-block',
-              padding: '16px 40px',
+              padding: 'clamp(12px, 3vw, 16px) clamp(24px, 6vw, 40px)',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid rgba(0, 255, 136, 0.3)',
               borderRadius: 8,
               color: '#00ff88',
               fontWeight: 600,
-              fontSize: '1.1em',
-              transition: 'all 0.3s ease'
+              fontSize: 'clamp(0.9em, 2.5vw, 1.1em)',
+              transition: 'all 0.3s ease',
+              minWidth: 'clamp(140px, 40vw, 200px)',
+              textAlign: 'center'
             }}>
               {t('contactUs')}
             </Link>
@@ -73,110 +78,123 @@ export default function Home(){
 
       <section style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: 30,
-        marginTop: 60
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))',
+        gap: 'clamp(15px, 4vw, 30px)',
+        marginTop: 'clamp(30px, 8vw, 60px)'
       }}>
         <div className="card" style={{textAlign: 'center'}}>
           <div style={{
-            width: 80,
-            height: 80,
-            margin: '0 auto 20px',
+            width: 'clamp(60px, 15vw, 80px)',
+            height: 'clamp(60px, 15vw, 80px)',
+            margin: '0 auto clamp(15px, 3vw, 20px)',
             background: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2.5em',
+            fontSize: 'clamp(2em, 5vw, 2.5em)',
             boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
           }}>🛍️</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>{t('diverseProducts')}</h3>
-          <p style={{color: '#c0c0c0', lineHeight: 1.6}}>
+          <h3 style={{color: '#00ff88', marginBottom: 'clamp(10px, 2vw, 15px)', fontSize: 'clamp(1.1em, 3vw, 1.3em)'}}>{t('diverseProducts')}</h3>
+          <p style={{color: '#c0c0c0', lineHeight: 1.6, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>
             {t('diverseProductsDesc')}
           </p>
         </div>
 
         <div className="card" style={{textAlign: 'center'}}>
           <div style={{
-            width: 80,
-            height: 80,
-            margin: '0 auto 20px',
+            width: 'clamp(60px, 15vw, 80px)',
+            height: 'clamp(60px, 15vw, 80px)',
+            margin: '0 auto clamp(15px, 3vw, 20px)',
             background: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2.5em',
+            fontSize: 'clamp(2em, 5vw, 2.5em)',
             boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
           }}>💳</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>{t('securePayment')}</h3>
-          <p style={{color: '#c0c0c0', lineHeight: 1.6}}>
+          <h3 style={{color: '#00ff88', marginBottom: 'clamp(10px, 2vw, 15px)', fontSize: 'clamp(1.1em, 3vw, 1.3em)'}}>{t('securePayment')}</h3>
+          <p style={{color: '#c0c0c0', lineHeight: 1.6, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>
             {t('securePaymentDesc')}
           </p>
         </div>
 
         <div className="card" style={{textAlign: 'center'}}>
           <div style={{
-            width: 80,
-            height: 80,
-            margin: '0 auto 20px',
+            width: 'clamp(60px, 15vw, 80px)',
+            height: 'clamp(60px, 15vw, 80px)',
+            margin: '0 auto clamp(15px, 3vw, 20px)',
             background: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2.5em',
+            fontSize: 'clamp(2em, 5vw, 2.5em)',
             boxShadow: '0 0 30px rgba(0, 255, 136, 0.5)'
           }}>⚡</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>{t('instantDelivery')}</h3>
-          <p style={{color: '#c0c0c0', lineHeight: 1.6}}>
+          <h3 style={{color: '#00ff88', marginBottom: 'clamp(10px, 2vw, 15px)', fontSize: 'clamp(1.1em, 3vw, 1.3em)'}}>{t('instantDelivery')}</h3>
+          <p style={{color: '#c0c0c0', lineHeight: 1.6, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>
             {t('instantDeliveryDesc')}
           </p>
         </div>
       </section>
 
       <section className="card" style={{
-        marginTop: 60,
+        marginTop: 'clamp(30px, 8vw, 60px)',
         background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
         border: '2px solid rgba(0, 255, 136, 0.3)',
         textAlign: 'center'
       }}>
-        <h2 style={{marginBottom: 20}}>{t('howItWorks')}</h2>
+        <h2 style={{marginBottom: 'clamp(15px, 3vw, 20px)', fontSize: 'clamp(1.5em, 5vw, 2em)'}}>{t('howItWorks')}</h2>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: 30,
-          marginTop: 40
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))',
+          gap: 'clamp(20px, 4vw, 30px)',
+          marginTop: 'clamp(20px, 5vw, 40px)'
         }}>
           <div>
             <div style={{
-              fontSize: '2.5em',
+              fontSize: 'clamp(2em, 6vw, 2.5em)',
               color: '#00ff88',
-              marginBottom: 10
+              marginBottom: 'clamp(8px, 2vw, 10px)'
             }}>1</div>
-            <h4 style={{color: '#fff', marginBottom: 10}}>{t('step1')}</h4>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>{t('step1Desc')}</p>
+            <h4 style={{color: '#fff', marginBottom: 'clamp(8px, 2vw, 10px)', fontSize: 'clamp(1em, 3vw, 1.2em)'}}>{t('step1')}</h4>
+            <p style={{color: '#c0c0c0', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{t('step1Desc')}</p>
           </div>
           <div>
             <div style={{
-              fontSize: '2.5em',
+              fontSize: 'clamp(2em, 6vw, 2.5em)',
               color: '#00ff88',
-              marginBottom: 10
+              marginBottom: 'clamp(8px, 2vw, 10px)'
             }}>2</div>
-            <h4 style={{color: '#fff', marginBottom: 10}}>{t('step2')}</h4>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>{t('step2Desc')}</p>
+            <h4 style={{color: '#fff', marginBottom: 'clamp(8px, 2vw, 10px)', fontSize: 'clamp(1em, 3vw, 1.2em)'}}>{t('step2')}</h4>
+            <p style={{color: '#c0c0c0', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{t('step2Desc')}</p>
           </div>
           <div>
             <div style={{
-              fontSize: '2.5em',
+              fontSize: 'clamp(2em, 6vw, 2.5em)',
               color: '#00ff88',
-              marginBottom: 10
+              marginBottom: 'clamp(8px, 2vw, 10px)'
             }}>3</div>
-            <h4 style={{color: '#fff', marginBottom: 10}}>{t('step3')}</h4>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>{t('step3Desc')}</p>
+            <h4 style={{color: '#fff', marginBottom: 'clamp(8px, 2vw, 10px)', fontSize: 'clamp(1em, 3vw, 1.2em)'}}>{t('step3')}</h4>
+            <p style={{color: '#c0c0c0', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{t('step3Desc')}</p>
           </div>
         </div>
       </section>
+
+      <style jsx>{`
+        @media (max-width: 480px) {
+          .hero-buttons {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          
+          .hero-buttons a {
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
 }

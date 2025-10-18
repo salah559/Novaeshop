@@ -179,3 +179,65 @@ input::placeholder, textarea::placeholder {
 .pulse-animation {
   animation: pulse-glow 2s infinite;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: clamp(1.8em, 6vw, 2.5em);
+  }
+
+  h2 {
+    font-size: clamp(1.4em, 5vw, 2em);
+  }
+
+  h3 {
+    font-size: clamp(1.1em, 4vw, 1.5em);
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9em;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  input, textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: clamp(1.5em, 7vw, 2em);
+  }
+
+  h2 {
+    font-size: clamp(1.2em, 5.5vw, 1.6em);
+  }
+
+  h3 {
+    font-size: clamp(1em, 4.5vw, 1.3em);
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.85em;
+  }
+
+  .card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+}

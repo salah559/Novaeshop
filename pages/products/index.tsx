@@ -59,33 +59,33 @@ export default function Products(){
     <div>
       <div style={{
         textAlign: 'center',
-        marginBottom: 40,
-        padding: '40px 20px',
+        marginBottom: 'clamp(20px, 5vw, 40px)',
+        padding: 'clamp(20px, 5vw, 40px) clamp(15px, 3vw, 20px)',
         background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 16
+        borderRadius: 'clamp(12px, 3vw, 16px)'
       }}>
         <h2 style={{
-          fontSize: '2.5em',
-          marginBottom: 15,
+          fontSize: 'clamp(1.8em, 6vw, 2.5em)',
+          marginBottom: 'clamp(10px, 2vw, 15px)',
           background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
         }}>المنتجات الرقمية</h2>
-        <p style={{color: '#c0c0c0', fontSize: '1.1em'}}>اختر من مجموعتنا المتنوعة من المنتجات الرقمية عالية الجودة</p>
+        <p style={{color: '#c0c0c0', fontSize: 'clamp(0.95em, 2.5vw, 1.1em)'}}>اختر من مجموعتنا المتنوعة من المنتجات الرقمية عالية الجودة</p>
       </div>
 
       {/* Search and Filter Section */}
       <div style={{
-        marginBottom: 40,
+        marginBottom: 'clamp(20px, 5vw, 40px)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 20
-      }}>
+        gap: 'clamp(12px, 3vw, 20px)'
+      }} className="filters-section">
         {/* Search Bar */}
         <div style={{
           display: 'flex',
-          gap: 15,
+          gap: 'clamp(10px, 2vw, 15px)',
           flexWrap: 'wrap'
         }}>
           <input
@@ -95,13 +95,13 @@ export default function Products(){
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               flex: 1,
-              minWidth: 250,
-              padding: '14px 20px',
+              minWidth: 'min(250px, 100%)',
+              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 20px)',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '2px solid rgba(0, 255, 136, 0.3)',
-              borderRadius: 12,
+              borderRadius: 'clamp(8px, 2vw, 12px)',
               color: '#fff',
-              fontSize: '1rem',
+              fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
               transition: 'all 0.3s ease'
             }}
           />
@@ -110,14 +110,15 @@ export default function Products(){
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             style={{
-              padding: '14px 20px',
+              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 20px)',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '2px solid rgba(0, 255, 136, 0.3)',
-              borderRadius: 12,
+              borderRadius: 'clamp(8px, 2vw, 12px)',
               color: '#fff',
-              fontSize: '1rem',
+              fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
               cursor: 'pointer',
-              minWidth: 150
+              minWidth: 'min(150px, 100%)',
+              flex: 1
             }}
           >
             <option value="all">كل الفئات</option>
@@ -130,14 +131,15 @@ export default function Products(){
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             style={{
-              padding: '14px 20px',
+              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 20px)',
               background: 'rgba(255, 255, 255, 0.05)',
               border: '2px solid rgba(0, 255, 136, 0.3)',
-              borderRadius: 12,
+              borderRadius: 'clamp(8px, 2vw, 12px)',
               color: '#fff',
-              fontSize: '1rem',
+              fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
               cursor: 'pointer',
-              minWidth: 150
+              minWidth: 'min(150px, 100%)',
+              flex: 1
             }}
           >
             <option value="default">الترتيب الافتراضي</option>
@@ -181,8 +183,8 @@ export default function Products(){
       ) : (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: 25
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
+          gap: 'clamp(15px, 3vw, 25px)'
         }}>
           {filteredProducts.length === 0 && (
             <div className="card" style={{
@@ -287,6 +289,17 @@ export default function Products(){
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+          .filters-section > div {
+            flex-direction: column;
+          }
+          
+          .filters-section input,
+          .filters-section select {
+            width: 100%;
+          }
         }
       `}</style>
     </div>
