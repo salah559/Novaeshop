@@ -7,6 +7,12 @@ DZ Digital Market is a Next.js-based digital marketplace application designed fo
 ## Recent Changes
 
 **October 19, 2025 - UI/UX Improvements**
+- ✅ **Mobile Header Refinement**: Optimized mobile navigation UX in Header component
+  - Always-visible login button on mobile (displayed alongside hamburger menu)
+  - Fixed mobile menu overlay issue (eliminated blank strip when menu collapsed)
+  - Dynamic maxHeight/padding/pointerEvents based on menu state
+  - Smooth animations with proper state transitions
+  - Improved visual hierarchy: Logo (left) → Language + Login + Hamburger (right, always visible)
 - ✅ **Dropdown Language Selector**: Converted three separate language buttons (AR/EN/FR) into a single elegant dropdown menu in Header
   - Space-efficient design with globe icon and current language display
   - Smooth dropdown animation with hover effects
