@@ -8,6 +8,7 @@ export default function Header(){
   const [user, setUser] = useState<any>(null);
   const [isAdminUser, setIsAdminUser] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(()=> {
@@ -178,49 +179,144 @@ export default function Header(){
             }} onClick={() => setMobileMenuOpen(false)}>{t('admin')}</Link>
           )}
 
-          <div style={{display: 'flex', gap: 6, marginLeft: 10}}>
+          <div style={{position: 'relative', marginLeft: 10}}>
             <button 
-              onClick={() => setLanguage('ar')}
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
               style={{
-                padding: '6px 10px',
-                background: language === 'ar' ? '#00ff88' : 'transparent',
-                color: language === 'ar' ? '#0a0f14' : '#c0c0c0',
+                padding: '8px 14px',
+                background: 'rgba(0, 255, 136, 0.1)',
+                color: '#00ff88',
                 border: '1px solid rgba(0, 255, 136, 0.3)',
-                borderRadius: 6,
+                borderRadius: 8,
                 cursor: 'pointer',
                 fontWeight: 600,
-                fontSize: 'clamp(0.8em, 2vw, 0.9em)'
+                fontSize: 'clamp(0.85em, 2vw, 0.95em)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                transition: 'all 0.3s ease'
               }}>
-              ع
+              🌐 {language === 'ar' ? 'عربي' : language === 'en' ? 'English' : 'Français'}
+              <span style={{
+                fontSize: '0.7em',
+                transform: langMenuOpen ? 'rotate(180deg)' : 'none',
+                transition: 'transform 0.3s ease'
+              }}>▼</span>
             </button>
-            <button 
-              onClick={() => setLanguage('en')}
-              style={{
-                padding: '6px 10px',
-                background: language === 'en' ? '#00ff88' : 'transparent',
-                color: language === 'en' ? '#0a0f14' : '#c0c0c0',
+            
+            {langMenuOpen && (
+              <div style={{
+                position: 'absolute',
+                top: '100%',
+                right: 0,
+                marginTop: 8,
+                background: 'rgba(10, 15, 20, 0.98)',
+                backdropFilter: 'blur(20px)',
                 border: '1px solid rgba(0, 255, 136, 0.3)',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontWeight: 600,
-                fontSize: 'clamp(0.8em, 2vw, 0.9em)'
+                borderRadius: 8,
+                overflow: 'hidden',
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
+                minWidth: 150,
+                zIndex: 1000
               }}>
-              EN
-            </button>
-            <button 
-              onClick={() => setLanguage('fr')}
-              style={{
-                padding: '6px 10px',
-                background: language === 'fr' ? '#00ff88' : 'transparent',
-                color: language === 'fr' ? '#0a0f14' : '#c0c0c0',
-                border: '1px solid rgba(0, 255, 136, 0.3)',
-                borderRadius: 6,
-                cursor: 'pointer',
-                fontWeight: 600,
-                fontSize: 'clamp(0.8em, 2vw, 0.9em)'
-              }}>
-              FR
-            </button>
+                <button 
+                  onClick={() => {
+                    setLanguage('ar');
+                    setLangMenuOpen(false);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: language === 'ar' ? 'rgba(0, 255, 136, 0.2)' : 'transparent',
+                    color: language === 'ar' ? '#00ff88' : '#c0c0c0',
+                    border: 'none',
+                    textAlign: 'right',
+                    cursor: 'pointer',
+                    fontWeight: language === 'ar' ? 600 : 500,
+                    fontSize: '0.95em',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8
+                  }}
+                  onMouseEnter={(e) => {
+                    if (language !== 'ar') {
+                      e.currentTarget.style.background = 'rgba(0, 255, 136, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (language !== 'ar') {
+                      e.currentTarget.style.background = 'transparent';
+                    }
+                  }}>
+                  {language === 'ar' && '✓'} عربي
+                </button>
+                <button 
+                  onClick={() => {
+                    setLanguage('en');
+                    setLangMenuOpen(false);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: language === 'en' ? 'rgba(0, 255, 136, 0.2)' : 'transparent',
+                    color: language === 'en' ? '#00ff88' : '#c0c0c0',
+                    border: 'none',
+                    textAlign: 'right',
+                    cursor: 'pointer',
+                    fontWeight: language === 'en' ? 600 : 500,
+                    fontSize: '0.95em',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8
+                  }}
+                  onMouseEnter={(e) => {
+                    if (language !== 'en') {
+                      e.currentTarget.style.background = 'rgba(0, 255, 136, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (language !== 'en') {
+                      e.currentTarget.style.background = 'transparent';
+                    }
+                  }}>
+                  {language === 'en' && '✓'} English
+                </button>
+                <button 
+                  onClick={() => {
+                    setLanguage('fr');
+                    setLangMenuOpen(false);
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: language === 'fr' ? 'rgba(0, 255, 136, 0.2)' : 'transparent',
+                    color: language === 'fr' ? '#00ff88' : '#c0c0c0',
+                    border: 'none',
+                    textAlign: 'right',
+                    cursor: 'pointer',
+                    fontWeight: language === 'fr' ? 600 : 500,
+                    fontSize: '0.95em',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8
+                  }}
+                  onMouseEnter={(e) => {
+                    if (language !== 'fr') {
+                      e.currentTarget.style.background = 'rgba(0, 255, 136, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (language !== 'fr') {
+                      e.currentTarget.style.background = 'transparent';
+                    }
+                  }}>
+                  {language === 'fr' && '✓'} Français
+                </button>
+              </div>
+            )}
           </div>
 
           {user ? (

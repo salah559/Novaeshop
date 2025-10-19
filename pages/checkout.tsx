@@ -149,35 +149,124 @@ export default function Checkout(){
           background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%)',
           border: '1px solid rgba(0, 255, 136, 0.3)',
           borderRadius: 12,
-          padding: 20,
+          padding: 24,
           marginBottom: 30
         }}>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>📱 تعليمات الدفع</h3>
-          <p style={{color: '#c0c0c0', lineHeight: 1.8, marginBottom: 20}}>
-            1. قم بتحويل المبلغ عبر بريدي موب<br/>
-            2. التقط صورة واضحة لوصل الإرسال (إيصال الدفع)<br/>
-            3. أرسل صورة الوصل من إيميلك إلى:<br/>
-          </p>
-          <div style={{
-            background: 'rgba(0, 0, 0, 0.4)',
-            border: '2px solid rgba(0, 255, 136, 0.4)',
-            borderRadius: 8,
-            padding: '15px 20px',
-            textAlign: 'center',
-            marginBottom: 20
-          }}>
-            <div style={{color: '#888', fontSize: '0.85em', marginBottom: 5}}>إيميل الإرسال:</div>
+          <h3 style={{color: '#00ff88', marginBottom: 20, fontSize: '1.3em', display: 'flex', alignItems: 'center', gap: 10}}>
+            <span style={{fontSize: '1.3em'}}>💳</span> خطوات إتمام الطلب
+          </h3>
+          
+          <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
             <div style={{
-              color: '#00ff88',
-              fontSize: '1.2em',
-              fontWeight: 700,
-              fontFamily: 'monospace'
-            }}>novawebdv@gmail.com</div>
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(0, 255, 136, 0.2)',
+              borderRadius: 10,
+              padding: 16,
+              borderLeft: '4px solid #00ff88'
+            }}>
+              <div style={{color: '#00ff88', fontWeight: 600, marginBottom: 8, fontSize: '1.05em'}}>
+                <span style={{
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  borderRadius: '50%',
+                  width: 28,
+                  height: 28,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: 8,
+                  fontSize: '0.9em'
+                }}>1</span>
+                قم بتحويل المبلغ عبر بريدي موب
+              </div>
+              <p style={{color: '#c0c0c0', margin: 0, paddingRight: 36, lineHeight: 1.6, marginBottom: 12}}>
+                حول المبلغ الكامل للطلب باستخدام تطبيق بريدي موب
+              </p>
+              <div style={{
+                background: 'rgba(0, 0, 0, 0.4)',
+                border: '2px dashed rgba(0, 255, 136, 0.3)',
+                borderRadius: 8,
+                padding: '12px 16px',
+                marginRight: 36
+              }}>
+                <div style={{color: '#888', fontSize: '0.85em', marginBottom: 4}}>📱 حساب بريدي موب:</div>
+                <div style={{
+                  color: '#00ff88',
+                  fontSize: '1.15em',
+                  fontWeight: 700,
+                  fontFamily: 'monospace',
+                  direction: 'ltr',
+                  textAlign: 'right'
+                }}>0123456789</div>
+                <div style={{color: '#888', fontSize: '0.8em', marginTop: 4}}>⚠️ تأكد من إدخال الرقم بشكل صحيح</div>
+              </div>
+            </div>
+
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(0, 255, 136, 0.2)',
+              borderRadius: 10,
+              padding: 16,
+              borderLeft: '4px solid #00ff88'
+            }}>
+              <div style={{color: '#00ff88', fontWeight: 600, marginBottom: 8, fontSize: '1.05em'}}>
+                <span style={{
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  borderRadius: '50%',
+                  width: 28,
+                  height: 28,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: 8,
+                  fontSize: '0.9em'
+                }}>2</span>
+                التقط صورة واضحة لإيصال الدفع
+              </div>
+              <p style={{color: '#c0c0c0', margin: 0, paddingRight: 36, lineHeight: 1.6}}>
+                تأكد من وضوح جميع التفاصيل في الصورة (المبلغ، التاريخ، رقم العملية)
+              </p>
+            </div>
+
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(0, 255, 136, 0.2)',
+              borderRadius: 10,
+              padding: 16,
+              borderLeft: '4px solid #00ff88'
+            }}>
+              <div style={{color: '#00ff88', fontWeight: 600, marginBottom: 8, fontSize: '1.05em'}}>
+                <span style={{
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  borderRadius: '50%',
+                  width: 28,
+                  height: 28,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: 8,
+                  fontSize: '0.9em'
+                }}>3</span>
+                ارفع صورة الإيصال في النموذج أدناه
+              </div>
+              <p style={{color: '#c0c0c0', margin: 0, paddingRight: 36, lineHeight: 1.6}}>
+                املأ البيانات المطلوبة وارفع صورة الإيصال
+              </p>
+            </div>
           </div>
-          <p style={{color: '#c0c0c0', lineHeight: 1.8, fontSize: '0.95em'}}>
-            ⚠️ مهم: يجب إرسال الوصل من نفس الإيميل الذي ستدخله في النموذج أدناه<br/>
-            ✅ سيتم مراجعة الطلب وتفعيله خلال ساعات
-          </p>
+
+          <div style={{
+            marginTop: 20,
+            padding: 16,
+            background: 'rgba(57, 255, 20, 0.05)',
+            border: '1px solid rgba(57, 255, 20, 0.2)',
+            borderRadius: 8
+          }}>
+            <p style={{color: '#c0c0c0', margin: 0, lineHeight: 1.7, fontSize: '0.95em'}}>
+              ✅ <strong style={{color: '#00ff88'}}>سيتم مراجعة طلبك خلال 24 ساعة</strong><br/>
+              📧 ستصلك رسالة تأكيد عبر البريد الإلكتروني بمجرد الموافقة<br/>
+              📦 بعد التأكيد، يمكنك تحميل المنتجات من صفحة "مشترياتي"
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -208,7 +297,7 @@ export default function Checkout(){
               }}
             />
             <small style={{color: user?.email ? '#00ff88' : '#888', fontSize: '0.85em', marginTop: 8, display: 'block'}}>
-              {user?.email ? '✓ تم تسجيل الدخول بنجاح - استخدم هذا الإيميل لإرسال صورة الوصل إلى novawebdv@gmail.com' : 'تأكد أن هذا هو نفس الإيميل الذي ستستخدمه لإرسال صورة الوصل إلى novawebdv@gmail.com'}
+              {user?.email ? '✓ تم تسجيل الدخول بنجاح - سنرسل لك التأكيد على هذا الإيميل' : 'سيتم إرسال تأكيد الطلب إلى هذا البريد الإلكتروني'}
             </small>
           </div>
 
