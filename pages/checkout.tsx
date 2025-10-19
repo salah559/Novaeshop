@@ -196,7 +196,7 @@ export default function Checkout(){
                   fontFamily: 'monospace',
                   direction: 'ltr',
                   textAlign: 'right'
-                }}>0123456789</div>
+                }}>004191270393</div>
                 <div style={{color: '#888', fontSize: '0.8em', marginTop: 4}}>⚠️ تأكد من إدخال الرقم بشكل صحيح</div>
               </div>
             </div>
