@@ -6,6 +6,21 @@ DZ Digital Market is a Next.js-based digital marketplace application designed fo
 
 ## Recent Changes
 
+**October 19, 2025 - UI/UX Improvements**
+- ✅ **Dropdown Language Selector**: Converted three separate language buttons (AR/EN/FR) into a single elegant dropdown menu in Header
+  - Space-efficient design with globe icon and current language display
+  - Smooth dropdown animation with hover effects
+  - Auto-close on language selection
+  - Visual checkmark indicator for active language
+  - Mobile-responsive with consistent styling
+- ✅ **Enhanced Checkout Flow**: Redesigned checkout page with step-by-step visual guide
+  - Clear numbered steps (1: Transfer payment, 2: Take photo, 3: Upload receipt)
+  - Added Baridi Mob account number display in highlighted box
+  - Improved instruction clarity with better visual hierarchy
+  - Removed confusing external email instructions
+  - Better feedback messaging for signed-in users
+  - Streamlined user experience for payment submission
+
 **October 18, 2025 - Mobile Responsive Design Enhancements**
 - ✅ **Hamburger Menu Navigation**: Implemented responsive mobile menu in Header component
   - Animated hamburger icon (3-line to X transformation)
