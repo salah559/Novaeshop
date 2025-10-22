@@ -12,10 +12,10 @@ export default function LoginPage() {
   const router = useRouter();
   const { t } = useLanguage();
   const [user, setUser] = useState<any>(null);
-  
+
   const [authMode, setAuthMode] = useState<AuthMode>('signin');
   const [authMethod, setAuthMethod] = useState<AuthMethod>('email');
-  
+
   // Form states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,12 +42,12 @@ export default function LoginPage() {
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     if (authMode === 'signup' && password !== confirmPassword) {
       setError(t('passwordMismatch'));
       return;
     }
-    
+
     setLoading(true);
     try {
       if (authMode === 'signin') {
@@ -57,7 +57,21 @@ export default function LoginPage() {
       }
       // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
     } catch (err: any) {
-      setError(err.message || t('authError'));
+      let errorMessage = t('authError'); // Default error message
+      if (err.code === 'auth/email-already-in-use') {
+        errorMessage = 'هذا البريد الإلكتروني مستخدم بالفعل. يرجى تسجيل الدخول أو استخدام بريد إلكتروني آخر.';
+      } else if (err.code === 'auth/weak-password') {
+        errorMessage = 'كلمة المرور ضعيفة جداً. يجب أن تكون 6 أحرف على الأقل.';
+      } else if (err.code === 'auth/invalid-email') {
+        errorMessage = 'البريد الإلكتروني غير صالح. تأكد من كتابته بشكل صحيح.';
+      } else if (err.code === 'auth/user-not-found') {
+        errorMessage = 'لا يوجد حساب بهذا البريد الإلكتروني. يرجى التسجيل أولاً.';
+      } else if (err.code === 'auth/wrong-password') {
+        errorMessage = 'كلمة المرور غير صحيحة.';
+      } else if (err.code === 'auth/invalid-credential') {
+        errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      }
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -67,7 +81,7 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
       if (phoneStep === 'input') {
         // تنظيف reCAPTCHA القديم إذا كان موجوداً
@@ -85,7 +99,7 @@ export default function LoginPage() {
         if (container) {
           container.innerHTML = '';
         }
-        
+
         // إعداد reCAPTCHA جديد
         (window as any).recaptchaVerifier = new RecaptchaVerifier(
           'recaptcha-container',
@@ -97,10 +111,10 @@ export default function LoginPage() {
           },
           auth
         );
-        
+
         const appVerifier = (window as any).recaptchaVerifier;
         const fullPhone = countryCode + phone;
-        
+
         console.log('Sending code to:', fullPhone);
         const result = await signInWithPhoneNumber(auth, fullPhone, appVerifier);
         setConfirmationResult(result);
@@ -134,7 +148,7 @@ export default function LoginPage() {
   const handleGoogleAuth = async () => {
     setError('');
     setLoading(true);
-    
+
     try {
       await signInWithGoogle();
     } catch (err: any) {
