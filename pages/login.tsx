@@ -51,9 +51,19 @@ export default function LoginPage() {
     setLoading(true);
     try {
       if (authMode === 'signin') {
-        await signInEmail(email, password);
+        const userCredential = await signInEmail(email, password);
+        // التحقق من أن البريد مؤكد
+        if (!userCredential.user.emailVerified) {
+          await auth.signOut();
+          setError('يرجى تأكيد بريدك الإلكتروني أولاً. تحقق من صندوق الوارد الخاص بك.');
+          return;
+        }
       } else {
         await registerEmail(email, password);
+        await auth.signOut(); // تسجيل الخروج مؤقتاً
+        setError('✅ تم إرسال رابط التأكيد إلى بريدك الإلكتروني. يرجى التحقق من صندوق الوارد وتأكيد حسابك قبل تسجيل الدخول.');
+        setAuthMode('signin'); // التبديل لوضع تسجيل الدخول
+        return;
       }
       // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
     } catch (err: any) {
@@ -236,7 +246,11 @@ export default function LoginPage() {
             </button>
           </div> */}
 
-          {error && <div className="auth-error">{error}</div>}
+          {error && (
+            <div className={error.startsWith('✅') ? 'auth-success' : 'auth-error'}>
+              {error}
+            </div>
+          )}
 
           {/* Email Authentication */}
           {/* authMethod === 'email' && */ (
@@ -527,6 +541,17 @@ export default function LoginPage() {
           background: rgba(255, 0, 0, 0.1);
           border: 1px solid rgba(255, 0, 0, 0.3);
           color: #ff6b6b;
+          padding: 12px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+          font-size: 0.9em;
+          text-align: center;
+        }
+
+        .auth-success {
+          background: rgba(0, 255, 136, 0.1);
+          border: 1px solid rgba(0, 255, 136, 0.3);
+          color: #00ff88;
           padding: 12px;
           border-radius: 8px;
           margin-bottom: 20px;

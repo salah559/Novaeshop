@@ -53,7 +53,11 @@ export async function signInEmail(email: string, password: string) {
 }
 
 export async function registerEmail(email: string, password: string) {
-  return createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  // إرسال بريد التحقق
+  const { sendEmailVerification } = await import('firebase/auth');
+  await sendEmailVerification(userCredential.user);
+  return userCredential;
 }
 
 export async function logout() {
