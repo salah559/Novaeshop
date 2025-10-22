@@ -16,11 +16,28 @@ export default function VerifyEmailPage() {
   const [canResend, setCanResend] = useState(true);
   const [countdown, setCountdown] = useState(0);
 
+  // منع التنقل إلى صفحات أخرى
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      // السماح فقط بالانتقال إلى صفحة تسجيل الدخول أو البقاء في نفس الصفحة
+      if (url !== '/login' && url !== '/verify-email') {
+        router.events.emit('routeChangeError');
+        throw 'Route change aborted.';
+      }
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
       if (!currentUser) {
         // إذا لم يكن هناك مستخدم، توجيه لصفحة تسجيل الدخول
-        router.push('/login');
+        router.replace('/login');
         return;
       }
 
@@ -29,7 +46,7 @@ export default function VerifyEmailPage() {
       
       if (currentUser.emailVerified) {
         // إذا كان البريد مؤكداً، توجيه للصفحة الرئيسية
-        router.push('/');
+        router.replace('/');
       } else {
         setUser(currentUser);
       }
@@ -89,7 +106,12 @@ export default function VerifyEmailPage() {
 
   const handleLogout = async () => {
     await auth.signOut();
-    router.push('/login');
+    router.replace('/login');
+  };
+
+  const handleBackToLogin = async () => {
+    await auth.signOut();
+    router.replace('/login');
   };
 
   if (!user) {
@@ -116,6 +138,10 @@ export default function VerifyEmailPage() {
   return (
     <div className="verify-page">
       <div className="verify-container">
+        <button onClick={handleBackToLogin} className="back-to-login-btn">
+          ← العودة لتسجيل الدخول
+        </button>
+        
         <div className="verify-card">
           {/* أيقونة البريد */}
           <div className="email-icon">
@@ -174,10 +200,7 @@ export default function VerifyEmailPage() {
             💡 لم تستلم البريد؟ تحقق من مجلد البريد المزعج (Spam)
           </div>
 
-          {/* زر تسجيل الخروج */}
-          <button onClick={handleLogout} className="logout-btn">
-            تسجيل الخروج
-          </button>
+          
         </div>
       </div>
 
@@ -190,6 +213,28 @@ export default function VerifyEmailPage() {
           align-items: center;
           justify-content: center;
           position: relative;
+        }
+
+        .back-to-login-btn {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          padding: 12px 24px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(0, 255, 136, 0.3);
+          border-radius: 12px;
+          color: var(--electric-green);
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 0.95rem;
+          z-index: 10;
+        }
+
+        .back-to-login-btn:hover {
+          background: rgba(0, 255, 136, 0.1);
+          border-color: var(--electric-green);
+          transform: translateX(-5px);
         }
 
         .verify-page::before {
@@ -328,25 +373,6 @@ export default function VerifyEmailPage() {
           margin-bottom: 30px;
         }
 
-        .logout-btn {
-          width: 100%;
-          padding: 14px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          border-radius: 12px;
-          color: rgba(255, 255, 255, 0.7);
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-size: 0.95rem;
-        }
-
-        .logout-btn:hover {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(255, 255, 255, 0.4);
-          color: #fff;
-        }
-
         @keyframes fadeInUp {
           from {
             opacity: 0;
@@ -380,6 +406,13 @@ export default function VerifyEmailPage() {
 
           .email-display {
             font-size: 0.95rem;
+          }
+
+          .back-to-login-btn {
+            top: 15px;
+            left: 15px;
+            padding: 10px 18px;
+            font-size: 0.85rem;
           }
         }
       `}</style>
