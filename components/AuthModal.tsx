@@ -310,6 +310,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           z-index: 1000;
           padding: 20px;
           animation: fadeIn 0.3s ease-out;
+          overflow-y: auto;
         }
 
         .modal-container {
@@ -319,13 +320,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           padding: 40px;
           max-width: 480px;
           width: 100%;
-          max-height: 90vh;
+          max-height: 85vh;
           overflow-y: auto;
           box-shadow: 
             0 20px 60px rgba(0, 0, 0, 0.5),
             0 0 40px rgba(0, 255, 136, 0.2);
           position: relative;
           animation: scaleIn 0.3s ease-out;
+          margin: auto;
         }
 
         .modal-close {
