@@ -3,14 +3,12 @@ import { useEffect, useState } from 'react';
 import { auth, logout } from '@/lib/firebaseClient';
 import { useLanguage } from '@/lib/LanguageContext';
 import { isAdmin } from '@/lib/adminCheck';
-import AuthModal from './AuthModal';
 
 export default function Header(){
   const [user, setUser] = useState<any>(null);
   const [isAdminUser, setIsAdminUser] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(()=> {
@@ -292,17 +290,18 @@ export default function Header(){
               <span className="auth-text">{t('logout')}</span>
             </button>
           ) : (
-            <button 
-              onClick={() => setAuthModalOpen(true)} 
+            <Link 
+              href="/login"
               className="auth-btn btn"
               style={{
                 padding: '7px 14px',
                 fontSize: '0.85em',
                 whiteSpace: 'nowrap',
-                boxShadow: '0 0 20px rgba(0, 255, 136, 0.3)'
+                boxShadow: '0 0 20px rgba(0, 255, 136, 0.3)',
+                display: 'inline-block'
               }}>
               <span className="auth-text">{t('login')}</span>
-            </button>
+            </Link>
           )}
 
           {/* Mobile Menu Button */}
@@ -460,8 +459,6 @@ export default function Header(){
           }} onClick={() => setMobileMenuOpen(false)}>{t('admin')}</Link>
         )}
       </nav>
-
-      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
 
       <style jsx>{`
         @media (max-width: 768px) {
