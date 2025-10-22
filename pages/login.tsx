@@ -206,8 +206,8 @@ export default function LoginPage() {
             {authMode === 'signin' ? t('welcomeBack') : t('createAccount')}
           </h1>
 
-          {/* Auth Method Selection */}
-          <div className="auth-method-selector">
+          {/* Auth Method Selection - Phone disabled until billing enabled */}
+          {/* <div className="auth-method-selector">
             <button
               className={`method-btn ${authMethod === 'email' ? 'active' : ''}`}
               onClick={() => switchAuthMethod('email')}
@@ -220,12 +220,12 @@ export default function LoginPage() {
             >
               📱 {t('phone')}
             </button>
-          </div>
+          </div> */}
 
           {error && <div className="auth-error">{error}</div>}
 
           {/* Email Authentication */}
-          {authMethod === 'email' && (
+          {/* authMethod === 'email' && */ (
             <form onSubmit={handleEmailAuth} className="auth-form">
               <div className="form-group">
                 <label>{t('emailAddress')}</label>
@@ -271,10 +271,10 @@ export default function LoginPage() {
                 {loading ? t('loading') : authMode === 'signin' ? t('signIn') : t('signUp')}
               </button>
             </form>
-          )}
+          ) /* } */}
 
-          {/* Phone Authentication */}
-          {authMethod === 'phone' && (
+          {/* Phone Authentication - Disabled until Firebase billing enabled */}
+          {/* authMethod === 'phone' && (
             <form onSubmit={handlePhoneAuth} className="auth-form">
               {phoneStep === 'input' ? (
                 <>
@@ -350,7 +350,7 @@ export default function LoginPage() {
                 </>
               )}
             </form>
-          )}
+          ) */}
 
           {/* Divider */}
           <div className="auth-divider">
