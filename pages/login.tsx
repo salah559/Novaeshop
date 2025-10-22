@@ -70,23 +70,38 @@ export default function LoginPage() {
     
     try {
       if (phoneStep === 'input') {
-        // إعداد reCAPTCHA
-        if (!(window as any).recaptchaVerifier) {
-          (window as any).recaptchaVerifier = new RecaptchaVerifier(
-            'recaptcha-container',
-            {
-              size: 'invisible',
-              callback: () => {
-                // reCAPTCHA solved
-              }
-            },
-            auth
-          );
+        // تنظيف reCAPTCHA القديم إذا كان موجوداً
+        if ((window as any).recaptchaVerifier) {
+          try {
+            (window as any).recaptchaVerifier.clear();
+          } catch (e) {
+            console.log('Error clearing recaptcha:', e);
+          }
+          (window as any).recaptchaVerifier = null;
         }
+
+        // تنظيف العنصر من DOM
+        const container = document.getElementById('recaptcha-container');
+        if (container) {
+          container.innerHTML = '';
+        }
+        
+        // إعداد reCAPTCHA جديد
+        (window as any).recaptchaVerifier = new RecaptchaVerifier(
+          'recaptcha-container',
+          {
+            size: 'invisible',
+            callback: () => {
+              // reCAPTCHA solved
+            }
+          },
+          auth
+        );
         
         const appVerifier = (window as any).recaptchaVerifier;
         const fullPhone = countryCode + phone;
         
+        console.log('Sending code to:', fullPhone);
         const result = await signInWithPhoneNumber(auth, fullPhone, appVerifier);
         setConfirmationResult(result);
         setPhoneStep('verify');
@@ -103,9 +118,14 @@ export default function LoginPage() {
       setError(err.message || t('authError'));
       // إعادة تعيين reCAPTCHA في حالة الخطأ
       if ((window as any).recaptchaVerifier) {
-        (window as any).recaptchaVerifier.clear();
+        try {
+          (window as any).recaptchaVerifier.clear();
+        } catch (e) {
+          console.log('Error clearing recaptcha:', e);
+        }
         (window as any).recaptchaVerifier = null;
       }
+      setPhoneStep('input');
     } finally {
       setLoading(false);
     }
@@ -144,8 +164,17 @@ export default function LoginPage() {
     resetForm();
     // تنظيف reCAPTCHA
     if ((window as any).recaptchaVerifier) {
-      (window as any).recaptchaVerifier.clear();
+      try {
+        (window as any).recaptchaVerifier.clear();
+      } catch (e) {
+        console.log('Error clearing recaptcha:', e);
+      }
       (window as any).recaptchaVerifier = null;
+    }
+    // تنظيف العنصر من DOM
+    const container = document.getElementById('recaptcha-container');
+    if (container) {
+      container.innerHTML = '';
     }
   };
 
