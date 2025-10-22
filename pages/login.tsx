@@ -54,15 +54,14 @@ export default function LoginPage() {
         const userCredential = await signInEmail(email, password);
         // التحقق من أن البريد مؤكد
         if (!userCredential.user.emailVerified) {
-          await auth.signOut();
-          setError('يرجى تأكيد بريدك الإلكتروني أولاً. تحقق من صندوق الوارد الخاص بك.');
+          // توجيه المستخدم لصفحة التحقق
+          router.push('/verify-email');
           return;
         }
       } else {
         await registerEmail(email, password);
-        await auth.signOut(); // تسجيل الخروج مؤقتاً
-        setError('✅ تم إرسال رابط التأكيد إلى بريدك الإلكتروني. يرجى التحقق من صندوق الوارد وتأكيد حسابك قبل تسجيل الدخول.');
-        setAuthMode('signin'); // التبديل لوضع تسجيل الدخول
+        // توجيه المستخدم لصفحة التحقق
+        router.push('/verify-email');
         return;
       }
       // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
