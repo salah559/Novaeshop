@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
 import { auth, signInEmail, registerEmail, signInWithGoogle } from '@/lib/firebaseClient';
+import { RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from 'firebase/auth';
 
 type AuthMode = 'signin' | 'signup';
 type AuthMethod = 'email' | 'phone';
@@ -23,6 +24,7 @@ export default function LoginPage() {
   const [countryCode, setCountryCode] = useState('+213');
   const [verificationCode, setVerificationCode] = useState('');
   const [phoneStep, setPhoneStep] = useState<'input' | 'verify'>('input');
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -48,13 +50,12 @@ export default function LoginPage() {
     
     setLoading(true);
     try {
-      // TODO: Implement Firebase email authentication
-      console.log(`${authMode} with email:`, email);
-      // if (authMode === 'signin') {
-      //   await signInEmail(email, password);
-      // } else {
-      //   await registerEmail(email, password);
-      // }
+      if (authMode === 'signin') {
+        await signInEmail(email, password);
+      } else {
+        await registerEmail(email, password);
+      }
+      // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
     } catch (err: any) {
       setError(err.message || t('authError'));
     } finally {
@@ -69,15 +70,38 @@ export default function LoginPage() {
     
     try {
       if (phoneStep === 'input') {
-        // TODO: Send verification code via Firebase
-        console.log('Sending code to:', countryCode + phone);
+        // إعداد reCAPTCHA
+        if (!(window as any).recaptchaVerifier) {
+          (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+            size: 'invisible',
+            callback: () => {
+              // reCAPTCHA solved
+            }
+          });
+        }
+        
+        const appVerifier = (window as any).recaptchaVerifier;
+        const fullPhone = countryCode + phone;
+        
+        const result = await signInWithPhoneNumber(auth, fullPhone, appVerifier);
+        setConfirmationResult(result);
         setPhoneStep('verify');
       } else {
-        // TODO: Verify code with Firebase
-        console.log('Verifying code:', verificationCode);
+        // التحقق من الكود
+        if (!confirmationResult) {
+          setError('حدث خطأ، يرجى المحاولة مرة أخرى');
+          return;
+        }
+        await confirmationResult.confirm(verificationCode);
+        // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
       }
     } catch (err: any) {
       setError(err.message || t('authError'));
+      // إعادة تعيين reCAPTCHA في حالة الخطأ
+      if ((window as any).recaptchaVerifier) {
+        (window as any).recaptchaVerifier.clear();
+        (window as any).recaptchaVerifier = null;
+      }
     } finally {
       setLoading(false);
     }
@@ -114,6 +138,11 @@ export default function LoginPage() {
   const switchAuthMethod = (method: AuthMethod) => {
     setAuthMethod(method);
     resetForm();
+    // تنظيف reCAPTCHA
+    if ((window as any).recaptchaVerifier) {
+      (window as any).recaptchaVerifier.clear();
+      (window as any).recaptchaVerifier = null;
+    }
   };
 
   return (
@@ -294,6 +323,9 @@ export default function LoginPage() {
           <div className="auth-divider">
             <span>{t('or')}</span>
           </div>
+
+          {/* reCAPTCHA Container (مخفي) */}
+          <div id="recaptcha-container"></div>
 
           {/* Google Sign In */}
           <button
