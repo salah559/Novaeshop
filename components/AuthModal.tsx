@@ -331,14 +331,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         .modal-close {
           position: absolute;
           top: 20px;
-          ${language === 'ar' ? 'left: 20px' : 'right: 20px'};
+          right: 20px;
           background: rgba(255, 255, 255, 0.1);
           border: 1px solid rgba(255, 255, 255, 0.2);
           color: #fff;
-          width: 36px;
-          height: 36px;
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
-          font-size: 20px;
+          font-size: 18px;
           cursor: pointer;
           display: flex;
           align-items: center;
