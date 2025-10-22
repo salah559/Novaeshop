@@ -72,12 +72,16 @@ export default function LoginPage() {
       if (phoneStep === 'input') {
         // إعداد reCAPTCHA
         if (!(window as any).recaptchaVerifier) {
-          (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-            size: 'invisible',
-            callback: () => {
-              // reCAPTCHA solved
-            }
-          });
+          (window as any).recaptchaVerifier = new RecaptchaVerifier(
+            'recaptcha-container',
+            {
+              size: 'invisible',
+              callback: () => {
+                // reCAPTCHA solved
+              }
+            },
+            auth
+          );
         }
         
         const appVerifier = (window as any).recaptchaVerifier;
