@@ -66,20 +66,70 @@ export default function LoginPage() {
       }
       // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
     } catch (err: any) {
-      let errorMessage = t('authError'); // Default error message
-      if (err.code === 'auth/email-already-in-use') {
-        errorMessage = 'هذا البريد الإلكتروني مستخدم بالفعل. يرجى تسجيل الدخول أو استخدام بريد إلكتروني آخر.';
-      } else if (err.code === 'auth/weak-password') {
-        errorMessage = 'كلمة المرور ضعيفة جداً. يجب أن تكون 6 أحرف على الأقل.';
-      } else if (err.code === 'auth/invalid-email') {
-        errorMessage = 'البريد الإلكتروني غير صالح. تأكد من كتابته بشكل صحيح.';
-      } else if (err.code === 'auth/user-not-found') {
-        errorMessage = 'لا يوجد حساب بهذا البريد الإلكتروني. يرجى التسجيل أولاً.';
-      } else if (err.code === 'auth/wrong-password') {
-        errorMessage = 'كلمة المرور غير صحيحة.';
-      } else if (err.code === 'auth/invalid-credential') {
-        errorMessage = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      console.error('Auth error:', err.code, err.message);
+      
+      let errorMessage = '';
+      
+      // رسائل خطأ دقيقة بناءً على كود الخطأ
+      switch (err.code) {
+        case 'auth/email-already-in-use':
+          errorMessage = '⚠️ هذا البريد الإلكتروني مُستخدم بالفعل. يرجى تسجيل الدخول أو استخدام بريد آخر.';
+          break;
+        
+        case 'auth/weak-password':
+          errorMessage = '🔒 كلمة المرور ضعيفة! يجب أن تكون 6 أحرف على الأقل.';
+          break;
+        
+        case 'auth/invalid-email':
+          errorMessage = '📧 البريد الإلكتروني غير صالح. تأكد من كتابته بشكل صحيح (مثال: user@example.com)';
+          break;
+        
+        case 'auth/user-not-found':
+          errorMessage = '❌ لا يوجد حساب بهذا البريد الإلكتروني. يرجى إنشاء حساب جديد أولاً.';
+          break;
+        
+        case 'auth/wrong-password':
+          errorMessage = '🔑 كلمة المرور غير صحيحة. حاول مرة أخرى أو استخدم "نسيت كلمة المرور".';
+          break;
+        
+        case 'auth/invalid-credential':
+          errorMessage = '⚠️ البريد الإلكتروني أو كلمة المرور غير صحيحة. تحقق من المعلومات المُدخلة.';
+          break;
+        
+        case 'auth/too-many-requests':
+          errorMessage = '⏳ تم حظر هذا الحساب مؤقتاً بسبب محاولات تسجيل دخول كثيرة. حاول لاحقاً.';
+          break;
+        
+        case 'auth/user-disabled':
+          errorMessage = '🚫 تم تعطيل هذا الحساب. تواصل مع الدعم الفني.';
+          break;
+        
+        case 'auth/operation-not-allowed':
+          errorMessage = '⚠️ طريقة تسجيل الدخول هذه غير مفعلة. تواصل مع الدعم الفني.';
+          break;
+        
+        case 'auth/network-request-failed':
+          errorMessage = '📡 فشل الاتصال بالإنترنت. تحقق من اتصالك وحاول مرة أخرى.';
+          break;
+        
+        case 'auth/invalid-login-credentials':
+          errorMessage = '⚠️ بيانات تسجيل الدخول غير صحيحة. تحقق من البريد وكلمة المرور.';
+          break;
+        
+        case 'auth/missing-password':
+          errorMessage = '🔑 يرجى إدخال كلمة المرور.';
+          break;
+        
+        case 'auth/missing-email':
+          errorMessage = '📧 يرجى إدخال البريد الإلكتروني.';
+          break;
+        
+        default:
+          // رسالة افتراضية مع تفاصيل الخطأ
+          errorMessage = `❌ حدث خطأ: ${err.message || 'خطأ غير معروف'}`;
+          console.error('Unhandled auth error:', err);
       }
+      
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -138,7 +188,45 @@ export default function LoginPage() {
         // سيتم توجيه المستخدم تلقائياً للصفحة الرئيسية عبر useEffect
       }
     } catch (err: any) {
-      setError(err.message || t('authError'));
+      console.error('Phone auth error:', err.code, err.message);
+      
+      let errorMessage = '';
+      
+      switch (err.code) {
+        case 'auth/invalid-phone-number':
+          errorMessage = '📱 رقم الهاتف غير صحيح. تأكد من إدخال الرقم بشكل صحيح.';
+          break;
+        
+        case 'auth/missing-phone-number':
+          errorMessage = '📱 يرجى إدخال رقم الهاتف.';
+          break;
+        
+        case 'auth/quota-exceeded':
+          errorMessage = '⏳ تم تجاوز الحد المسموح للرسائل. حاول لاحقاً.';
+          break;
+        
+        case 'auth/invalid-verification-code':
+          errorMessage = '🔢 رمز التحقق غير صحيح. تحقق من الرمز وحاول مرة أخرى.';
+          break;
+        
+        case 'auth/code-expired':
+          errorMessage = '⏰ انتهت صلاحية رمز التحقق. اطلب رمزاً جديداً.';
+          break;
+        
+        case 'auth/too-many-requests':
+          errorMessage = '⏳ محاولات كثيرة جداً. حاول بعد قليل.';
+          break;
+        
+        case 'auth/captcha-check-failed':
+          errorMessage = '🤖 فشل التحقق من reCAPTCHA. أعد تحميل الصفحة وحاول مرة أخرى.';
+          break;
+        
+        default:
+          errorMessage = `❌ حدث خطأ: ${err.message || 'خطأ غير معروف'}`;
+      }
+      
+      setError(errorMessage);
+      
       // إعادة تعيين reCAPTCHA في حالة الخطأ
       if ((window as any).recaptchaVerifier) {
         try {
@@ -161,7 +249,36 @@ export default function LoginPage() {
     try {
       await signInWithGoogle();
     } catch (err: any) {
-      setError(err.message || t('authError'));
+      console.error('Google auth error:', err.code, err.message);
+      
+      let errorMessage = '';
+      
+      switch (err.code) {
+        case 'auth/popup-closed-by-user':
+          errorMessage = '⚠️ تم إغلاق نافذة تسجيل الدخول. حاول مرة أخرى.';
+          break;
+        
+        case 'auth/popup-blocked':
+          errorMessage = '🚫 تم حظر النافذة المنبثقة. سمح بالنوافذ المنبثقة وحاول مرة أخرى.';
+          break;
+        
+        case 'auth/cancelled-popup-request':
+          errorMessage = '⚠️ تم إلغاء طلب تسجيل الدخول.';
+          break;
+        
+        case 'auth/account-exists-with-different-credential':
+          errorMessage = '📧 يوجد حساب بنفس البريد الإلكتروني بطريقة تسجيل دخول مختلفة.';
+          break;
+        
+        case 'auth/network-request-failed':
+          errorMessage = '📡 فشل الاتصال بالإنترنت. تحقق من اتصالك.';
+          break;
+        
+        default:
+          errorMessage = `❌ حدث خطأ في تسجيل الدخول بـ Google: ${err.message || 'خطأ غير معروف'}`;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
