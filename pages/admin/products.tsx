@@ -22,7 +22,9 @@ export default function AdminProducts() {
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
+      console.log('Current user email:', u?.email);
       const isAdminUser = u ? isAdmin(u.email) : false;
+      console.log('Is admin:', isAdminUser, 'Email:', u?.email);
       setAuthorized(isAdminUser);
       if (isAdminUser) {
         loadProducts();
@@ -151,6 +153,7 @@ export default function AdminProducts() {
           <div style={{fontSize: '4em', marginBottom: 20}}>🚫</div>
           <h3 style={{color: '#39ff14', marginBottom: 15}}>وصول محظور</h3>
           <p style={{color: '#c0c0c0'}}>هذه الصفحة للمدراء فقط</p>
+          {user && <p style={{color: '#ffd700', marginTop: 20, fontSize: '0.9em'}}>البريد المسجل: <strong>{user.email}</strong></p>}
         </div>
       </div>
     );
