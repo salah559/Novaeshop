@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { IncomingForm } from 'formidable';
 import fs from 'fs/promises';
-// @ts-ignore
+import FormData from 'form-data';
 
 export const config = {
   api: {
@@ -29,9 +29,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const apiKey = process.env.IMGBB_API_KEY;
     if (!apiKey) {
+      console.error('IMGBB_API_KEY not found');
       return res.status(500).json({ error: 'ImgBB API key not configured' });
     }
 
+    // Use form-data to create proper multipart/form-data request
     const formData = new FormData();
     formData.append('image', base64);
 
@@ -41,10 +43,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     const data = await response.json();
+    console.log('ImgBB response status:', response.status, 'Success:', data.success);
 
     if (!data.success) {
       console.error('ImgBB upload failed:', data);
-      return res.status(500).json({ error: 'Failed to upload image to ImgBB' });
+      return res.status(500).json({ error: data.error?.message || 'Failed to upload image to ImgBB' });
     }
 
     return res.status(200).json({
