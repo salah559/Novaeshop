@@ -22,9 +22,7 @@ export default function AdminProducts() {
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
-      console.log('Current user email:', u?.email);
       const isAdminUser = u ? isAdmin(u.email) : false;
-      console.log('Is admin:', isAdminUser, 'Email:', u?.email);
       setAuthorized(isAdminUser);
       if (isAdminUser) {
         loadProducts();
@@ -145,22 +143,21 @@ export default function AdminProducts() {
 
   if (!user || !authorized) {
     return (
-      <div>
+      <div style={{padding: '40px 20px'}}>
         <div style={{textAlign: 'center', marginBottom: 40, padding: '30px 20px', background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)', borderRadius: 16}}>
           <h2 style={{fontSize: '2.5em', marginBottom: 10, background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text'}}>غير مصرح</h2>
         </div>
-        <div className="card" style={{textAlign: 'center', padding: 60, maxWidth: 600, margin: '0 auto'}}>
+        <div style={{textAlign: 'center', padding: 60, maxWidth: 600, margin: '0 auto', background: 'rgba(15, 15, 30, 0.7)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 12, backdropFilter: 'blur(20px)'}}>
           <div style={{fontSize: '4em', marginBottom: 20}}>🚫</div>
           <h3 style={{color: '#39ff14', marginBottom: 15}}>وصول محظور</h3>
           <p style={{color: '#c0c0c0'}}>هذه الصفحة للمدراء فقط</p>
-          {user && <p style={{color: '#ffd700', marginTop: 20, fontSize: '0.9em'}}>البريد المسجل: <strong>{user.email}</strong></p>}
         </div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div style={{padding: '40px 20px'}}>
       <div style={{textAlign: 'center', marginBottom: 40, padding: '30px 20px', background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)', borderRadius: 16}}>
         <h2 style={{fontSize: '2.5em', marginBottom: 10, background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text'}}>إدارة المنتجات</h2>
         <p style={{color: '#c0c0c0'}}>إضافة وتعديل وحذف المنتجات</p>
@@ -178,7 +175,7 @@ export default function AdminProducts() {
       </div>
 
       {showForm && (
-        <div className="card" style={{maxWidth: 800, margin: '0 auto 40px', background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)', border: '2px solid rgba(57, 255, 20, 0.4)'}}>
+        <div style={{maxWidth: 800, margin: '0 auto 40px', background: 'rgba(15, 15, 30, 0.7)', border: '2px solid rgba(57, 255, 20, 0.4)', borderRadius: 12, padding: 30, backdropFilter: 'blur(20px)'}}>
           <h3 style={{color: '#39ff14', marginBottom: 25}}>{editing ? '✏️ تعديل منتج' : '➕ إضافة منتج جديد'}</h3>
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gap: 20}}>
@@ -189,7 +186,7 @@ export default function AdminProducts() {
                   value={name} 
                   onChange={(e) => setName(e.target.value)} 
                   placeholder="أدخل اسم المنتج"
-                  style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', boxSizing: 'border-box'}} 
+                  style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', boxSizing: 'border-box', outline: 'none'}} 
                 />
               </div>
 
@@ -200,7 +197,7 @@ export default function AdminProducts() {
                   onChange={(e) => setDescription(e.target.value)} 
                   placeholder="أدخل وصف المنتج"
                   rows={4}
-                  style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', resize: 'vertical', boxSizing: 'border-box'}} 
+                  style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', resize: 'vertical', boxSizing: 'border-box', outline: 'none'}} 
                 />
               </div>
 
@@ -213,7 +210,7 @@ export default function AdminProducts() {
                     onChange={(e) => setPrice(e.target.value)} 
                     placeholder="0"
                     min="0"
-                    style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', boxSizing: 'border-box'}} 
+                    style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', boxSizing: 'border-box', outline: 'none'}} 
                   />
                 </div>
 
@@ -224,7 +221,7 @@ export default function AdminProducts() {
                     value={category} 
                     onChange={(e) => setCategory(e.target.value)} 
                     placeholder="أدخل الفئة"
-                    style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', boxSizing: 'border-box'}} 
+                    style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', boxSizing: 'border-box', outline: 'none'}} 
                   />
                 </div>
               </div>
@@ -236,7 +233,7 @@ export default function AdminProducts() {
                   accept="image/*" 
                   onChange={handleImageUpload} 
                   disabled={uploading}
-                  style={{width: '100%', padding: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '2px solid rgba(57, 255, 20, 0.4)', borderRadius: 8, color: '#39ff14', fontSize: '1rem', cursor: 'pointer', boxSizing: 'border-box'}} 
+                  style={{width: '100%', padding: '12px', background: 'rgba(255, 255, 255, 0.05)', border: '2px solid rgba(57, 255, 20, 0.4)', borderRadius: 8, color: '#39ff14', fontSize: '1rem', cursor: 'pointer', boxSizing: 'border-box', outline: 'none'}} 
                 />
                 {imageUrl && <div style={{marginTop: 12}}><img src={imageUrl} alt="معاينة" style={{width: 100, height: 100, borderRadius: 8, objectFit: 'cover'}} /></div>}
               </div>
@@ -248,7 +245,7 @@ export default function AdminProducts() {
                   onChange={(e) => setSuccessMessage(e.target.value)} 
                   placeholder="النص الذي يظهر للمشتري"
                   rows={3}
-                  style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', resize: 'vertical', boxSizing: 'border-box'}} 
+                  style={{width: '100%', padding: '12px 16px', background: 'rgba(255, 255, 255, 0.05)', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, color: '#fff', fontSize: '1rem', resize: 'vertical', boxSizing: 'border-box', outline: 'none'}} 
                 />
               </div>
 
@@ -256,7 +253,7 @@ export default function AdminProducts() {
                 <button type="submit" className="btn" style={{flex: 1, padding: '14px', fontSize: '1.1em'}}>
                   {editing ? '✓ حفظ التعديلات' : '✓ إضافة المنتج'}
                 </button>
-                <button type="button" onClick={resetForm} style={{flex: 1, padding: '14px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, fontWeight: 600, fontSize: '1.1em', cursor: 'pointer'}}>✕ إلغاء</button>
+                <button type="button" onClick={resetForm} style={{flex: 1, padding: '14px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, fontWeight: 600, fontSize: '1.1em', cursor: 'pointer', outline: 'none'}}>✕ إلغاء</button>
               </div>
             </div>
           </form>
@@ -281,8 +278,8 @@ export default function AdminProducts() {
                 <span style={{color: '#888', marginLeft: 8}}>{p.category}</span>
               </div>
               <div style={{display: 'flex', gap: 8}}>
-                <button onClick={() => handleEdit(p)} style={{flex: 1, padding: '10px', background: 'rgba(57, 255, 20, 0.2)', color: '#39ff14', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, cursor: 'pointer', fontWeight: 600}}>✏️ تعديل</button>
-                <button onClick={() => handleDelete(p.id)} style={{flex: 1, padding: '10px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, cursor: 'pointer', fontWeight: 600}}>🗑️ حذف</button>
+                <button onClick={() => handleEdit(p)} style={{flex: 1, padding: '10px', background: 'rgba(57, 255, 20, 0.2)', color: '#39ff14', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, cursor: 'pointer', fontWeight: 600, outline: 'none'}}>✏️ تعديل</button>
+                <button onClick={() => handleDelete(p.id)} style={{flex: 1, padding: '10px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, cursor: 'pointer', fontWeight: 600, outline: 'none'}}>🗑️ حذف</button>
               </div>
             </div>
           )) : <div style={{gridColumn: '1/-1', textAlign: 'center', padding: 60, color: '#c0c0c0'}}>لا توجد منتجات</div>}
