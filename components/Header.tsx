@@ -12,6 +12,13 @@ export default function Header(){
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(()=> {
+    // First, check current user immediately
+    if (auth.currentUser) {
+      setUser(auth.currentUser);
+      setIsAdminUser(isAdmin(auth.currentUser?.email));
+    }
+
+    // Then set up listener for future changes
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
       setIsAdminUser(isAdmin(u?.email));
