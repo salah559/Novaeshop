@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { signInWithGoogle } from '@/lib/firebaseClient';
 import Link from 'next/link';
+import { getCache, setCache } from '@/lib/cache';
 
 interface Order {
   id: string;
@@ -34,8 +35,15 @@ export default function Orders() {
     return () => unsub();
   }, []);
 
-  async function loadOrders(userId: string, email: string | null) {
-    setLoading(true);
+  const loadOrders = useCallback(async (userId: string, email: string | null) => {
+    const cacheKey = `orders_${userId}`;
+    const cached = getCache(cacheKey);
+    if (cached) {
+      setOrders(cached);
+      setLoading(false);
+      return;
+    }
+
     try {
       const qUserId = query(
         collection(db, 'orders'),
@@ -65,6 +73,7 @@ export default function Orders() {
         return dateB.getTime() - dateA.getTime();
       });
       
+      setCache(cacheKey, ordersList, 5);
       setOrders(ordersList);
     } catch (e) {
       console.error(e);
@@ -72,7 +81,7 @@ export default function Orders() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
 
   function getStatusColor(status: string) {
     switch (status) {

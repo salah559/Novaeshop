@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
+import { getCache, setCache } from '@/lib/cache';
 
 export default function MyPurchases(){
   const [user, setUser] = useState<any>(null);
@@ -17,7 +18,15 @@ export default function MyPurchases(){
     return ()=>unsub();
   },[]);
 
-  async function load(uid: string){
+  const load = useCallback(async (uid: string) => {
+    const cacheKey = `purchases_${uid}`;
+    const cached = getCache(cacheKey);
+    if (cached) {
+      setPurchases(cached);
+      setLoading(false);
+      return;
+    }
+
     const ordersQuery = query(collection(db, 'orders'), where('userId','==',uid));
     const purchasesQuery = query(collection(db, 'purchases'), where('userId','==',uid));
     
@@ -32,20 +41,22 @@ export default function MyPurchases(){
       type: 'order'
     }));
     
-    const purchases = purchasesSnap.docs.map(d=>({
+    const purchasesData = purchasesSnap.docs.map(d=>({
       id: d.id,
       ...d.data(),
       type: 'purchase'
     }));
     
-    setPurchases([...orders, ...purchases].sort((a: any, b: any) => {
+    const allData = [...orders, ...purchasesData].sort((a: any, b: any) => {
       const dateA = a.createdAt?.toDate?.() || new Date(0);
       const dateB = b.createdAt?.toDate?.() || new Date(0);
       return dateB.getTime() - dateA.getTime();
-    }));
-    
+    });
+
+    setCache(cacheKey, allData, 5);
+    setPurchases(allData);
     setLoading(false);
-  }
+  }, []);
 
   if(!user){
     return (
