@@ -1,28 +1,28 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { db, auth } from '@/lib/firebaseClient';
 import { collection, getDocs } from 'firebase/firestore';
 import { ProductPreview } from '@/components/ProductPreview';
+import { ProductCard } from '@/components/ProductCard';
 import { useToast } from '@/components/Toast';
+import { getCache, setCache } from '@/lib/cache';
 
 export default function Products(){
   const router = useRouter();
   const toast = useToast();
   const [products, setProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'default' | 'price_low' | 'price_high'>('default');
-  const [categories, setCategories] = useState<string[]>([]);
   const [previewProduct, setPreviewProduct] = useState<any>(null);
 
-  const handlePreview = (product: any) => {
+  const handlePreview = useCallback((product: any) => {
     setPreviewProduct(product);
-  };
+  }, []);
 
-  const handleBuyNow = (product: any) => {
+  const handleBuyNow = useCallback((product: any) => {
     setPreviewProduct(null);
     if (!auth.currentUser) {
       toast.info('يرجى تسجيل الدخول أولاً');
@@ -35,31 +35,35 @@ export default function Products(){
     };
     localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
     router.push('/checkout');
-  };
+  }, [router, toast]);
   
   useEffect(()=> {
     async function load(){
+      const cached = getCache('products_data');
+      if (cached) {
+        setProducts(cached);
+        setLoading(false);
+        return;
+      }
+
       const snap = await getDocs(collection(db, 'products'));
       const productsData = snap.docs.map(d=>({id:d.id, ...d.data()}));
+      setCache('products_data', productsData);
       setProducts(productsData);
-      setFilteredProducts(productsData);
-      
-      const uniqueCategories = Array.from(new Set(productsData.map((p: any) => p.category).filter(Boolean)));
-      setCategories(uniqueCategories as string[]);
-      
       setLoading(false);
     }
     load();
   },[]);
   
-  useEffect(() => {
+  const filteredProducts = useMemo(() => {
     let filtered = [...products];
     
     if (searchTerm) {
+      const lower = searchTerm.toLowerCase();
       filtered = filtered.filter(p => 
-        p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.category?.toLowerCase().includes(searchTerm.toLowerCase())
+        p.name?.toLowerCase().includes(lower) ||
+        p.description?.toLowerCase().includes(lower) ||
+        p.category?.toLowerCase().includes(lower)
       );
     }
     
@@ -73,8 +77,12 @@ export default function Products(){
       filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
     }
     
-    setFilteredProducts(filtered);
+    return filtered;
   }, [searchTerm, selectedCategory, sortBy, products]);
+
+  const categories = useMemo(() => {
+    return Array.from(new Set(products.map((p: any) => p.category).filter(Boolean))) as string[];
+  }, [products]);
   
   return (
     <div>
@@ -241,91 +249,13 @@ export default function Products(){
             </div>
           )}
           {filteredProducts.map((p, idx) => (
-            <div key={p.id} className="card animate-fadeInUp" style={{
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              padding: 0,
-              animationDelay: `${idx * 0.05}s`,
-              opacity: 0,
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease'
-            }} onClick={() => handlePreview(p)}>
-              <div style={{
-                width: '100%',
-                height: 'clamp(160px, 30vw, 220px)',
-                background: `linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%), url(${p.imageUrl || '/placeholder.png'}) center/cover`,
-                position: 'relative'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: 12,
-                  right: 12,
-                  background: 'linear-gradient(135deg, #39ff14, #ffd700)',
-                  color: '#000',
-                  padding: '8px 16px',
-                  borderRadius: 20,
-                  fontWeight: 700,
-                  fontSize: 'clamp(0.9em, 2.5vw, 1em)',
-                  boxShadow: '0 0 20px rgba(57, 255, 20, 0.5)'
-                }}>
-                  {p.price} دج
-                </div>
-                {p.category && (
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 12,
-                    left: 12,
-                    background: 'rgba(0, 0, 0, 0.8)',
-                    color: '#39ff14',
-                    padding: '6px 14px',
-                    borderRadius: 14,
-                    fontSize: '0.85em',
-                    border: '1px solid rgba(57, 255, 20, 0.4)',
-                    fontWeight: 500
-                  }}>
-                    {p.category}
-                  </div>
-                )}
-              </div>
-              <div style={{padding: 'clamp(16px, 3vw, 22px)', flex: 1, display: 'flex', flexDirection: 'column'}}>
-                <h3 style={{
-                  color: '#fff',
-                  marginBottom: 'clamp(8px, 2vw, 12px)',
-                  fontSize: 'clamp(1.05em, 3.5vw, 1.25em)',
-                  lineHeight: 1.4
-                }}>{p.name}</h3>
-                <p style={{
-                  color: 'rgba(255,255,255,0.65)',
-                  fontSize: 'clamp(0.9em, 2.5vw, 0.95em)',
-                  lineHeight: 1.7,
-                  flex: 1,
-                  marginBottom: 'clamp(14px, 3vw, 20px)'
-                }}>{p.description?.substring(0, 100)}...</p>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleBuyNow(p);
-                  }}
-                  className="btn"
-                  style={{
-                    width: '100%',
-                    textAlign: 'center',
-                    padding: 'clamp(12px, 2vw, 16px)',
-                    fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
-                    borderRadius: '12px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    background: 'linear-gradient(135deg, #39ff14, #ffd700)',
-                    color: '#000',
-                    fontWeight: 600,
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  💳 شراء الآن
-                </button>
-              </div>
-            </div>
+            <ProductCard
+              key={p.id}
+              product={p}
+              index={idx}
+              onClick={handlePreview}
+              onBuyNow={handleBuyNow}
+            />
           ))}
         </div>
       )}
