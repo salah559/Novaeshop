@@ -99,4 +99,22 @@ Preferred communication style: Simple, everyday language.
 ### Third-Party Integrations
 
 **Payment System**: Baridi Mob (manual/offline). No direct API integration; relies on receipt upload and manual verification.
-**Image Upload**: ImgBB for receipt image uploads via a secure server-side API endpoint, replacing Firebase Storage for this specific function.
+**Image Upload**: ImgBB for receipt and product image uploads via secure server-side API endpoint (`/api/upload-image`).
+
+## Admin Panel Updates (November 29, 2025)
+
+### Product Management
+- ✅ **Image Upload**: Admin can now upload product images directly via ImgBB (same API as receipt uploads)
+- ✅ **Success Message**: Replaced "Download Link" with "Success Message" field - text shown to user after purchase
+- ✅ **Edit & Delete Buttons**: Functional admin buttons for product management
+- ✅ **Form Validation**: Required fields for all product inputs
+- ✅ **Image Preview**: Shows uploaded image thumbnail in form
+
+### Data Structure
+**Products Collection Fields**:
+- `name`: Product name
+- `description`: Product description
+- `price`: Price in DZA
+- `category`: Product category
+- `imageUrl`: ImgBB image URL (uploaded via file input)
+- `successMessage`: Message displayed to customer after purchase confirmation

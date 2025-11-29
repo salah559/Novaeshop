@@ -32,7 +32,7 @@ interface Product {
   price: number;
   category: string;
   imageUrl: string;
-  fileUrl: string;
+  successMessage: string;
 }
 
 export default function AdminProducts(){
@@ -42,6 +42,7 @@ export default function AdminProducts(){
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   
   const [formData, setFormData] = useState<Product>({
     name: '',
@@ -49,7 +50,7 @@ export default function AdminProducts(){
     price: 0,
     category: '',
     imageUrl: '',
-    fileUrl: ''
+    successMessage: ''
   });
 
   useEffect(()=> {
@@ -122,9 +123,39 @@ export default function AdminProducts(){
       price: product.price,
       category: product.category,
       imageUrl: product.imageUrl,
-      fileUrl: product.fileUrl
+      successMessage: product.successMessage
     });
     setShowForm(true);
+  }
+
+  async function handleImageUpload(e: any) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setUploadingImage(true);
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = (reader.result as string).split(',')[1];
+        const response = await fetch('/api/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64 })
+        });
+        const data = await response.json();
+        if (data.success) {
+          setFormData({...formData, imageUrl: data.url});
+          alert('✅ تم رفع الصورة بنجاح');
+        } else {
+          alert('❌ فشل رفع الصورة');
+        }
+      };
+      reader.readAsDataURL(file);
+    } catch(e) {
+      alert('❌ خطأ في رفع الصورة');
+    } finally {
+      setUploadingImage(false);
+    }
   }
 
   function resetForm(){
@@ -135,7 +166,7 @@ export default function AdminProducts(){
       price: 0,
       category: '',
       imageUrl: '',
-      fileUrl: ''
+      successMessage: ''
     });
     setShowForm(false);
   }
@@ -340,36 +371,43 @@ export default function AdminProducts(){
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  رابط الصورة (URL)
+                  صورة المنتج
                 </label>
-                <input 
-                  type="url"
-                  value={formData.imageUrl}
-                  onChange={e => setFormData({...formData, imageUrl: e.target.value})}
-                  required
-                  placeholder="https://example.com/image.jpg"
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(57, 255, 20, 0.3)',
-                    borderRadius: 8,
-                    color: '#fff',
-                    fontSize: '1rem'
-                  }}
-                />
+                <div style={{display: 'flex', gap: 10, alignItems: 'center'}}>
+                  <input 
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploadingImage}
+                    style={{
+                      flex: 1,
+                      padding: '12px 16px',
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(57, 255, 20, 0.3)',
+                      borderRadius: 8,
+                      color: '#fff',
+                      fontSize: '1rem',
+                      cursor: uploadingImage ? 'not-allowed' : 'pointer'
+                    }}
+                  />
+                </div>
+                {formData.imageUrl && (
+                  <div style={{marginTop: 12}}>
+                    <img src={formData.imageUrl} alt="Preview" style={{width: 100, height: 100, borderRadius: 8, objectFit: 'cover'}} />
+                  </div>
+                )}
               </div>
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  رابط التحميل (URL)
+                  نص بعد الشراء
                 </label>
-                <input 
-                  type="url"
-                  value={formData.fileUrl}
-                  onChange={e => setFormData({...formData, fileUrl: e.target.value})}
+                <textarea 
+                  value={formData.successMessage}
+                  onChange={e => setFormData({...formData, successMessage: e.target.value})}
                   required
-                  placeholder="https://drive.google.com/..."
+                  rows={3}
+                  placeholder="مثال: شكراً لك على الشراء! رابط التحميل: ..."
                   style={{
                     width: '100%',
                     padding: '12px 16px',
@@ -377,7 +415,8 @@ export default function AdminProducts(){
                     border: '1px solid rgba(57, 255, 20, 0.3)',
                     borderRadius: 8,
                     color: '#fff',
-                    fontSize: '1rem'
+                    fontSize: '1rem',
+                    resize: 'vertical'
                   }}
                 />
               </div>
