@@ -61,16 +61,6 @@ export default function Header(){
             }}>
               {t('siteName')}
             </h1>
-            <small className="tagline" style={{
-              background: 'linear-gradient(135deg, #39ff14, #ffd700)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              fontWeight: 600,
-              fontSize: 'clamp(0.65em, 1.8vw, 0.8em)'
-            }}>
-              {t('tagline')}
-            </small>
           </div>
         </Link>
 
