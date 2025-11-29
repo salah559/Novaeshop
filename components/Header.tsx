@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { auth, logout, signInWithGoogle } from '@/lib/firebaseClient';
+import { auth, logout } from '@/lib/firebaseClient';
 import { useLanguage } from '@/lib/LanguageContext';
 import { isAdmin } from '@/lib/adminCheck';
 
@@ -225,17 +225,19 @@ export default function Header(){
               🚪 تسجيل الخروج
             </button>
           ) : (
-            <button 
-              onClick={signInWithGoogle}
+            <Link 
+              href="/login"
               className="btn"
               style={{
                 fontSize: 'clamp(0.85em, 1.5vw, 0.95em)',
                 padding: 'clamp(8px, 1.5vw, 10px) clamp(14px, 3vw, 18px)',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                textDecoration: 'none',
+                display: 'inline-block'
               } as any}
             >
               🔑 دخول
-            </button>
+            </Link>
           )}
 
           <button 
