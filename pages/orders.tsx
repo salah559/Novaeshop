@@ -4,7 +4,6 @@ import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { signInWithGoogle } from '@/lib/firebaseClient';
 import Link from 'next/link';
 import { getCache, setCache } from '@/lib/cache';
-import Loading3D from '@/components/Loading3D';
 
 interface Order {
   id: string;
@@ -24,20 +23,7 @@ export default function Orders() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    const unsub = auth.onAuthStateChanged(u => {
-      setUser(u);
-      if (u) {
-        loadOrders(u.uid, u.email);
-      } else {
-        // Add slight delay to show loading animation
-        setTimeout(() => setLoading(false), 300);
-      }
-    });
-    return () => unsub();
-  }, []); // loadOrders will be updated via useCallback
-
-  const loadOrders = useCallback(async (userId: string, email: string | null) => {
+  async function loadOrders(userId: string, email: string | null) {
     const cacheKey = `orders_${userId}`;
     const cached = getCache(cacheKey);
     if (cached) {
@@ -83,6 +69,18 @@ export default function Orders() {
     } finally {
       setLoading(false);
     }
+  }
+
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged(u => {
+      setUser(u);
+      if (u) {
+        loadOrders(u.uid, u.email);
+      } else {
+        setLoading(false);
+      }
+    });
+    return () => unsub();
   }, []);
 
   function getStatusColor(status: string) {

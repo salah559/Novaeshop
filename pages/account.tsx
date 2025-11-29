@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { auth, logout } from '@/lib/firebaseClient';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Loading3D from '@/components/Loading3D';
 
 export default function Account() {
   const [user, setUser] = useState<any>(null);
@@ -12,8 +11,7 @@ export default function Account() {
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
-      // Add slight delay to show loading animation
-      setTimeout(() => setLoading(false), 300);
+      setLoading(false);
       if (!u) {
         router.push('/login');
       }
@@ -29,10 +27,6 @@ export default function Account() {
       console.error('Logout error:', err);
     }
   };
-
-  if (loading) {
-    return <Loading3D />;
-  }
 
   if (!user) {
     return (

@@ -1,29 +1,15 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import { getCache, setCache } from '@/lib/cache';
-import Loading3D from '@/components/Loading3D';
 
 export default function MyPurchases(){
   const [user, setUser] = useState<any>(null);
   const [purchases, setPurchases] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   
-  useEffect(()=> {
-    const unsub = auth.onAuthStateChanged(u=> {
-      setUser(u);
-      if(u) {
-        load(u.uid);
-      } else {
-        // Add slight delay to show loading animation
-        setTimeout(() => setLoading(false), 300);
-      }
-    });
-    return ()=>unsub();
-  },[]); // load will be updated via useCallback
-
-  const load = useCallback(async (uid: string) => {
+  async function load(uid: string){
     const cacheKey = `purchases_${uid}`;
     const cached = getCache(cacheKey);
     if (cached) {
@@ -61,7 +47,16 @@ export default function MyPurchases(){
     setCache(cacheKey, allData, 5);
     setPurchases(allData);
     setLoading(false);
-  }, []);
+  }
+
+  useEffect(()=> {
+    const unsub = auth.onAuthStateChanged(u=> {
+      setUser(u);
+      if(u) load(u.uid);
+      else setLoading(false);
+    });
+    return ()=>unsub();
+  },[]);
 
   if(!user){
     return (

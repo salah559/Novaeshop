@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { auth, db, signInWithGoogle } from '@/lib/firebaseClient';
 import { collection, addDoc } from 'firebase/firestore';
 import { useToast } from '@/components/Toast';
-import Loading3D from '@/components/Loading3D';
 
 export default function Checkout(){
   const [file, setFile] = useState<File | null>(null);
@@ -18,8 +17,7 @@ export default function Checkout(){
       if (u?.email) {
         setEmail(u.email);
       }
-      // Add slight delay to show loading animation
-      setTimeout(() => setCheckingAuth(false), 300);
+      setCheckingAuth(false);
     });
     return ()=>unsub();
   },[]);
@@ -89,10 +87,6 @@ export default function Checkout(){
     } finally {
       setLoading(false);
     }
-  }
-
-  if (checkingAuth) {
-    return <Loading3D />;
   }
 
   if (!user) {
