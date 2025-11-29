@@ -47,21 +47,6 @@ export default function Header(){
             justifyContent: 'center',
             boxShadow: '0 0 25px rgba(57, 255, 20, 0.4)'
           }}></div>
-          <div className="logo-text" style={{display: 'flex', flexDirection: 'column', gap: 2}}>
-            <h1 style={{
-              margin: 0,
-              fontSize: 'clamp(1.2em, 4vw, 1.8em)',
-              background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              lineHeight: 1.2,
-              fontWeight: 800,
-              textShadow: '0 0 20px rgba(57, 255, 20, 0.4)'
-            }}>
-              {t('siteName')}
-            </h1>
-          </div>
         </Link>
 
         <nav className="desktop-nav" style={{
