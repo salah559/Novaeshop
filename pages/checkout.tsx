@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { auth, db, signInWithGoogle } from '@/lib/firebaseClient';
 import { collection, addDoc } from 'firebase/firestore';
+import { useToast } from '@/components/Toast';
 
 export default function Checkout(){
   const [file, setFile] = useState<File | null>(null);
@@ -8,6 +9,7 @@ export default function Checkout(){
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const toast = useToast();
 
   useEffect(()=> {
     const unsub = auth.onAuthStateChanged(u=> {
@@ -23,7 +25,7 @@ export default function Checkout(){
   async function handleSubmit(e:any){
     e.preventDefault();
     if(!file) {
-      alert('⚠️ الرجاء إرفاق صورة الإيصال');
+      toast.error('الرجاء إرفاق صورة الإيصال');
       return;
     }
     
@@ -74,11 +76,13 @@ export default function Checkout(){
         createdAt: new Date()
       });
       
-      alert('✅ تم إرسال الطلب بنجاح! سيتم مراجعته من قبل الأدمن.');
+      toast.success('تم إرسال الطلب بنجاح! سيتم مراجعته من قبل الأدمن.');
       localStorage.removeItem('cart');
-      window.location.href = '/mypurchases';
-    } catch(err) {
-      alert('❌ حدث خطأ. الرجاء المحاولة مرة أخرى');
+      setTimeout(() => {
+        window.location.href = '/mypurchases';
+      }, 1500);
+    } catch(err: any) {
+      toast.error(err.message || 'حدث خطأ. الرجاء المحاولة مرة أخرى');
       console.error(err);
     } finally {
       setLoading(false);

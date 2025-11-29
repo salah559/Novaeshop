@@ -3,9 +3,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { db, auth } from '@/lib/firebaseClient';
 import { collection, getDocs } from 'firebase/firestore';
+import { ProductPreview } from '@/components/ProductPreview';
+import { useToast } from '@/components/Toast';
 
 export default function Products(){
   const router = useRouter();
+  const toast = useToast();
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,13 +16,19 @@ export default function Products(){
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'default' | 'price_low' | 'price_high'>('default');
   const [categories, setCategories] = useState<string[]>([]);
+  const [previewProduct, setPreviewProduct] = useState<any>(null);
 
-  const buyProduct = (product: any) => {
+  const handlePreview = (product: any) => {
+    setPreviewProduct(product);
+  };
+
+  const handleBuyNow = (product: any) => {
+    setPreviewProduct(null);
     if (!auth.currentUser) {
+      toast.info('يرجى تسجيل الدخول أولاً');
       router.push('/login');
       return;
     }
-    // Add product to checkout
     const checkoutData = {
       items: [product],
       total: product.price
@@ -69,6 +78,13 @@ export default function Products(){
   
   return (
     <div>
+      {previewProduct && (
+        <ProductPreview
+          product={previewProduct}
+          onClose={() => setPreviewProduct(null)}
+          onBuyNow={() => handleBuyNow(previewProduct)}
+        />
+      )}
       <div style={{
         textAlign: 'center',
         marginBottom: 'clamp(30px, 6vw, 50px)',
@@ -231,8 +247,10 @@ export default function Products(){
               overflow: 'hidden',
               padding: 0,
               animationDelay: `${idx * 0.05}s`,
-              opacity: 0
-            }}>
+              opacity: 0,
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease'
+            }} onClick={() => handlePreview(p)}>
               <div style={{
                 width: '100%',
                 height: 'clamp(160px, 30vw, 220px)',
@@ -285,7 +303,10 @@ export default function Products(){
                   marginBottom: 'clamp(14px, 3vw, 20px)'
                 }}>{p.description?.substring(0, 100)}...</p>
                 <button
-                  onClick={() => buyProduct(p)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBuyNow(p);
+                  }}
                   className="btn"
                   style={{
                     width: '100%',
