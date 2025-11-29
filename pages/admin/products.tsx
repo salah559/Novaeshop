@@ -19,8 +19,8 @@ const ProductCardAdmin = memo(({ product, onEdit, onDelete }: any) => (
       <span style={{color: '#39ff14', fontWeight: 700}}>{product.price} دج</span> • <span style={{color: '#888'}}>{product.category}</span>
     </div>
     <div style={{display: 'flex', gap: 8}}>
-      <button onClick={() => onEdit(product)} style={{flex: 1, padding: '10px', background: 'rgba(57, 255, 20, 0.2)', color: '#39ff14', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, cursor: 'pointer'}}>✏️ تعديل</button>
-      <button onClick={() => onDelete(product.id)} style={{flex: 1, padding: '10px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, cursor: 'pointer'}}>🗑️ حذف</button>
+      <button type="button" onClick={() => onEdit(product)} style={{flex: 1, padding: '10px', background: 'rgba(57, 255, 20, 0.2)', color: '#39ff14', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, cursor: 'pointer'}}>✏️ تعديل</button>
+      <button type="button" onClick={() => onDelete(product.id)} style={{flex: 1, padding: '10px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, cursor: 'pointer'}}>🗑️ حذف</button>
     </div>
   </div>
 ));
@@ -83,6 +83,11 @@ export default function AdminProducts(){
 
   async function handleSubmit(e: any){
     e.preventDefault();
+    if (!formData.name || !formData.description || !formData.price || !formData.category || !formData.imageUrl || !formData.successMessage) {
+      alert('❌ الرجاء ملء جميع الحقول');
+      return;
+    }
+
     try {
       const { id, ...productData } = formData as any;
       if (editingProduct?.id) {
@@ -257,6 +262,7 @@ export default function AdminProducts(){
 
       <div style={{marginBottom: 30, textAlign: 'center'}}>
         <button 
+          type="button"
           onClick={() => setShowForm(!showForm)}
           className="btn"
           style={{
@@ -283,13 +289,12 @@ export default function AdminProducts(){
             <div style={{display: 'grid', gap: 20}}>
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  اسم المنتج
+                  اسم المنتج *
                 </label>
                 <input 
                   type="text"
                   value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
-                  required
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
@@ -297,19 +302,19 @@ export default function AdminProducts(){
                     border: '1px solid rgba(57, 255, 20, 0.3)',
                     borderRadius: 8,
                     color: '#fff',
-                    fontSize: '1rem'
+                    fontSize: '1rem',
+                    boxSizing: 'border-box'
                   }}
                 />
               </div>
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  الوصف
+                  الوصف *
                 </label>
                 <textarea 
                   value={formData.description}
-                  onChange={e => setFormData({...formData, description: e.target.value})}
-                  required
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
                   rows={4}
                   style={{
                     width: '100%',
@@ -319,7 +324,8 @@ export default function AdminProducts(){
                     borderRadius: 8,
                     color: '#fff',
                     fontSize: '1rem',
-                    resize: 'vertical'
+                    resize: 'vertical',
+                    boxSizing: 'border-box'
                   }}
                 />
               </div>
@@ -327,13 +333,12 @@ export default function AdminProducts(){
               <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20}}>
                 <div>
                   <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                    السعر (دج)
+                    السعر (دج) *
                   </label>
                   <input 
                     type="number"
                     value={formData.price}
-                    onChange={e => setFormData({...formData, price: Number(e.target.value)})}
-                    required
+                    onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
                     min="0"
                     style={{
                       width: '100%',
@@ -342,20 +347,20 @@ export default function AdminProducts(){
                       border: '1px solid rgba(57, 255, 20, 0.3)',
                       borderRadius: 8,
                       color: '#fff',
-                      fontSize: '1rem'
+                      fontSize: '1rem',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
 
                 <div>
                   <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                    الفئة
+                    الفئة *
                   </label>
                   <input 
                     type="text"
                     value={formData.category}
-                    onChange={e => setFormData({...formData, category: e.target.value})}
-                    required
+                    onChange={(e) => setFormData({...formData, category: e.target.value})}
                     style={{
                       width: '100%',
                       padding: '12px 16px',
@@ -363,7 +368,8 @@ export default function AdminProducts(){
                       border: '1px solid rgba(57, 255, 20, 0.3)',
                       borderRadius: 8,
                       color: '#fff',
-                      fontSize: '1rem'
+                      fontSize: '1rem',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
@@ -371,7 +377,7 @@ export default function AdminProducts(){
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  صورة المنتج
+                  صورة المنتج *
                 </label>
                 <input 
                   type="file"
@@ -386,7 +392,8 @@ export default function AdminProducts(){
                     borderRadius: 8,
                     color: '#39ff14',
                     fontSize: '1rem',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    boxSizing: 'border-box'
                   }}
                 />
                 {formData.imageUrl && (
@@ -398,12 +405,11 @@ export default function AdminProducts(){
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  نص بعد الشراء
+                  نص بعد الشراء *
                 </label>
                 <textarea 
                   value={formData.successMessage}
-                  onChange={e => setFormData({...formData, successMessage: e.target.value})}
-                  required
+                  onChange={(e) => setFormData({...formData, successMessage: e.target.value})}
                   rows={3}
                   placeholder="مثال: شكراً لك على الشراء! رابط التحميل: ..."
                   style={{
@@ -414,7 +420,8 @@ export default function AdminProducts(){
                     borderRadius: 8,
                     color: '#fff',
                     fontSize: '1rem',
-                    resize: 'vertical'
+                    resize: 'vertical',
+                    boxSizing: 'border-box'
                   }}
                 />
               </div>
