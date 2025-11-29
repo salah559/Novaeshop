@@ -6,6 +6,18 @@ DZ Digital Market is a Next.js-based digital marketplace application designed fo
 
 ## Recent Changes
 
+**November 29, 2025 - ImgBB Image Upload Integration**
+- ✅ **ImgBB Integration**: Replaced Firebase Storage with ImgBB for receipt image uploads
+  - Created API endpoint `/api/upload-image.ts` for secure server-side image upload
+  - Converts customer receipt images to base64 and uploads to ImgBB
+  - Returns permanent URL stored in Firestore orders collection
+  - API key secured on server-side (never exposed to client)
+- ✅ **Updated Checkout Flow**: Modified `pages/checkout.tsx` to use ImgBB
+  - Removed Firebase Storage dependency for receipts
+  - Added robust error handling for upload failures
+  - Maintains same user experience with improved reliability
+- 🔒 **Security**: ImgBB API key stored as environment secret
+
 **October 22, 2025 - Professional Authentication Modal**
 - ✅ **AuthModal Component**: Created comprehensive authentication modal (`components/AuthModal.tsx`)
   - Tab-based interface switching between Sign In and Sign Up modes
