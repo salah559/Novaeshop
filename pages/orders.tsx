@@ -30,11 +30,12 @@ export default function Orders() {
       if (u) {
         loadOrders(u.uid, u.email);
       } else {
-        setLoading(false);
+        // Add slight delay to show loading animation
+        setTimeout(() => setLoading(false), 300);
       }
     });
     return () => unsub();
-  }, []);
+  }, []); // loadOrders will be updated via useCallback
 
   const loadOrders = useCallback(async (userId: string, email: string | null) => {
     const cacheKey = `orders_${userId}`;

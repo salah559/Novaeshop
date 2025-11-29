@@ -13,11 +13,15 @@ export default function MyPurchases(){
   useEffect(()=> {
     const unsub = auth.onAuthStateChanged(u=> {
       setUser(u);
-      if(u) load(u.uid);
-      else setLoading(false);
+      if(u) {
+        load(u.uid);
+      } else {
+        // Add slight delay to show loading animation
+        setTimeout(() => setLoading(false), 300);
+      }
     });
     return ()=>unsub();
-  },[]);
+  },[]); // load will be updated via useCallback
 
   const load = useCallback(async (uid: string) => {
     const cacheKey = `purchases_${uid}`;

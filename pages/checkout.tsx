@@ -18,7 +18,8 @@ export default function Checkout(){
       if (u?.email) {
         setEmail(u.email);
       }
-      setCheckingAuth(false);
+      // Add slight delay to show loading animation
+      setTimeout(() => setCheckingAuth(false), 300);
     });
     return ()=>unsub();
   },[]);

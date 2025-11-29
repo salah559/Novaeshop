@@ -12,7 +12,8 @@ export default function Account() {
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
-      setLoading(false);
+      // Add slight delay to show loading animation
+      setTimeout(() => setLoading(false), 300);
       if (!u) {
         router.push('/login');
       }
