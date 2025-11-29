@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { auth, logout } from '@/lib/firebaseClient';
+import { auth, logout, signInWithGoogle } from '@/lib/firebaseClient';
 import { useLanguage } from '@/lib/LanguageContext';
 import { isAdmin } from '@/lib/adminCheck';
 
@@ -75,14 +75,10 @@ export default function Header(){
         </Link>
 
         <nav className="desktop-nav" style={{
-          display: 'none',
-          '@media (min-width: 768px)': {
-            display: 'flex'
-          },
           alignItems: 'center',
           gap: 'clamp(5px, 1vw, 10px)',
           flexWrap: 'nowrap'
-        }}>
+        } as any}>
           {[
             { href: '/', label: t('home') },
             { href: '/products', label: t('products') },
@@ -224,19 +220,19 @@ export default function Header(){
                 fontSize: 'clamp(0.85em, 1.5vw, 0.95em)',
                 padding: 'clamp(8px, 1.5vw, 10px) clamp(14px, 3vw, 18px)',
                 whiteSpace: 'nowrap'
-              }}
+              } as any}
             >
               🚪 تسجيل الخروج
             </button>
           ) : (
             <button 
-              onClick={() => auth.signInWithPopup(new (require('firebase/auth').GoogleAuthProvider)())}
+              onClick={signInWithGoogle}
               className="btn"
               style={{
                 fontSize: 'clamp(0.85em, 1.5vw, 0.95em)',
                 padding: 'clamp(8px, 1.5vw, 10px) clamp(14px, 3vw, 18px)',
                 whiteSpace: 'nowrap'
-              }}
+              } as any}
             >
               🔑 دخول
             </button>
@@ -246,10 +242,6 @@ export default function Header(){
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="mobile-menu-btn"
             style={{
-              display: 'none',
-              '@media (max-width: 767px)': {
-                display: 'flex'
-              },
               background: 'rgba(57, 255, 20, 0.1)',
               border: '2px solid rgba(57, 255, 20, 0.3)',
               borderRadius: 'clamp(8px, 1vw, 10px)',
@@ -262,7 +254,7 @@ export default function Header(){
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'all 0.3s ease'
-            }}
+            } as any}
           >
             {mobileMenuOpen ? '✕' : '☰'}
           </button>
