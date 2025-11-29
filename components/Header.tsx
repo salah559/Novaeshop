@@ -134,29 +134,6 @@ export default function Header(){
         </nav>
 
         <div style={{display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 12px)'}}>
-          <Link 
-            href="/cart"
-            style={{
-              padding: 'clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px)',
-              background: 'rgba(57, 255, 20, 0.1)',
-              color: '#39ff14',
-              border: '2px solid rgba(57, 255, 20, 0.3)',
-              borderRadius: 'clamp(8px, 1vw, 10px)',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: 'clamp(0.9em, 2vw, 1em)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'clamp(4px, 1vw, 6px)',
-              transition: 'all 0.3s ease',
-              textDecoration: 'none',
-              whiteSpace: 'nowrap',
-              boxShadow: '0 0 15px rgba(57, 255, 20, 0.2)'
-            }}
-          >
-            🛒 السلة
-          </Link>
-
           <div style={{position: 'relative'}}>
             <button 
               onClick={() => setLangMenuOpen(!langMenuOpen)}
@@ -295,7 +272,6 @@ export default function Header(){
             { href: '/', label: t('home') },
             { href: '/products', label: t('products') },
             { href: '/how-to-buy', label: 'كيف تشتري؟' },
-            { href: '/cart', label: t('cart') },
             { href: '/contact', label: t('contact') },
             ...(user ? [
               { href: '/account', label: 'حسابي' },

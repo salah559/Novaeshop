@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/firebaseClient';
+import { useRouter } from 'next/router';
+import { db, auth } from '@/lib/firebaseClient';
 import { collection, getDocs } from 'firebase/firestore';
 
 export default function Products(){
+  const router = useRouter();
   const [products, setProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -11,6 +13,20 @@ export default function Products(){
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'default' | 'price_low' | 'price_high'>('default');
   const [categories, setCategories] = useState<string[]>([]);
+
+  const buyProduct = (product: any) => {
+    if (!auth.currentUser) {
+      router.push('/login');
+      return;
+    }
+    // Add product to checkout
+    const checkoutData = {
+      items: [product],
+      total: product.price
+    };
+    localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+    router.push('/checkout');
+  };
   
   useEffect(()=> {
     async function load(){
@@ -268,19 +284,25 @@ export default function Products(){
                   flex: 1,
                   marginBottom: 'clamp(14px, 3vw, 20px)'
                 }}>{p.description?.substring(0, 100)}...</p>
-                <Link 
-                  href={`/products/${p.id}`}
+                <button
+                  onClick={() => buyProduct(p)}
                   className="btn"
                   style={{
                     width: '100%',
                     textAlign: 'center',
                     padding: 'clamp(12px, 2vw, 16px)',
                     fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
-                    borderRadius: '12px'
+                    borderRadius: '12px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: 'linear-gradient(135deg, #39ff14, #ffd700)',
+                    color: '#000',
+                    fontWeight: 600,
+                    transition: 'all 0.3s ease'
                   }}
                 >
-                  🛍️ عرض التفاصيل
-                </Link>
+                  💳 شراء الآن
+                </button>
               </div>
             </div>
           ))}
