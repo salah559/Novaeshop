@@ -70,6 +70,37 @@ export default function Header(){
               border: '1px solid transparent'
             }} className="nav-link">{item.label}</Link>
           ))}
+          {user && (
+            <>
+              <Link href="/account" style={{
+                color: 'rgba(255,255,255,0.75)',
+                fontWeight: 500,
+                padding: 'clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 16px)',
+                borderRadius: 'clamp(8px, 1vw, 10px)',
+                transition: 'all 0.3s ease',
+                fontSize: 'clamp(0.85em, 1.5vw, 1em)',
+                whiteSpace: 'nowrap'
+              }}>حسابي</Link>
+              <Link href="/mypurchases" style={{
+                color: 'rgba(255,255,255,0.75)',
+                fontWeight: 500,
+                padding: 'clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 16px)',
+                borderRadius: 'clamp(8px, 1vw, 10px)',
+                transition: 'all 0.3s ease',
+                fontSize: 'clamp(0.85em, 1.5vw, 1em)',
+                whiteSpace: 'nowrap'
+              }}>{t('myPurchases')}</Link>
+              <Link href="/orders" style={{
+                color: 'rgba(255,255,255,0.75)',
+                fontWeight: 500,
+                padding: 'clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 16px)',
+                borderRadius: 'clamp(8px, 1vw, 10px)',
+                transition: 'all 0.3s ease',
+                fontSize: 'clamp(0.85em, 1.5vw, 1em)',
+                whiteSpace: 'nowrap'
+              }}>طلباتي</Link>
+            </>
+          )}
           <Link href="/contact" style={{
             color: 'rgba(255,255,255,0.75)',
             fontWeight: 500,
