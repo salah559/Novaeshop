@@ -255,6 +255,7 @@ export default function Products(){
               index={idx}
               onClick={handlePreview}
               onBuyNow={handleBuyNow}
+              onDetails={handlePreview}
             />
           ))}
         </div>

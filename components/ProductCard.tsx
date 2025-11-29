@@ -5,9 +5,10 @@ interface ProductCardProps {
   index: number;
   onClick: (product: any) => void;
   onBuyNow: (product: any) => void;
+  onDetails?: (product: any) => void;
 }
 
-function ProductCardComponent({ product, index, onClick, onBuyNow }: ProductCardProps) {
+function ProductCardComponent({ product, index, onClick, onBuyNow, onDetails }: ProductCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
@@ -120,28 +121,72 @@ function ProductCardComponent({ product, index, onClick, onBuyNow }: ProductCard
           {product.description?.substring(0, 100)}...
         </p>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onBuyNow(product);
-          }}
-          className="btn"
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            padding: 'clamp(12px, 2vw, 16px)',
-            fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
-            borderRadius: '12px',
-            border: 'none',
-            cursor: 'pointer',
-            background: 'linear-gradient(135deg, #39ff14, #ffd700)',
-            color: '#000',
-            fontWeight: 600,
-            transition: 'all 0.3s ease'
-          }}
-        >
-          💳 شراء الآن
-        </button>
+        <div style={{
+          display: 'flex',
+          gap: 'clamp(8px, 2vw, 12px)'
+        }}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDetails ? onDetails(product) : onClick(product);
+            }}
+            className="btn"
+            style={{
+              flex: 1,
+              textAlign: 'center',
+              padding: 'clamp(12px, 2vw, 16px)',
+              fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
+              borderRadius: '12px',
+              border: '2px solid rgba(57, 255, 20, 0.4)',
+              cursor: 'pointer',
+              background: 'transparent',
+              color: '#39ff14',
+              fontWeight: 600,
+              transition: 'all 0.3s ease',
+              textDecoration: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(57, 255, 20, 0.1)';
+              e.currentTarget.style.borderColor = '#39ff14';
+              e.currentTarget.style.boxShadow = '0 0 15px rgba(57, 255, 20, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.borderColor = 'rgba(57, 255, 20, 0.4)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            👁️ التفاصيل
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onBuyNow(product);
+            }}
+            className="btn"
+            style={{
+              flex: 1,
+              textAlign: 'center',
+              padding: 'clamp(12px, 2vw, 16px)',
+              fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              background: 'linear-gradient(135deg, #39ff14, #ffd700)',
+              color: '#000',
+              fontWeight: 600,
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            💳 شراء
+          </button>
+        </div>
       </div>
     </div>
   );

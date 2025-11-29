@@ -3,5 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/products": "pages/products.js"
+  "/admin": "pages/admin.js",
+  "/products": "pages/products.js",
+  "/admin/products": "pages/admin/products.js"
 }
