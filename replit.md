@@ -8,6 +8,23 @@ DZ Digital Market is a Next.js digital marketplace for selling and purchasing di
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Performance Optimizations (November 29, 2025)
+
+### Navigation Performance
+- ✅ **Route Transition Indicator**: Added progress bar at top of page during navigation (neon green gradient)
+- ✅ **Automatic Prefetching**: Next.js 13+ prefetches routes automatically on viewport intersection
+- ✅ **Loading State Management**: Tracks route changes with immediate visual feedback
+
+### Rendering Optimizations
+- ✅ **useMemo**: Products filtering, sorting, and categories memoized
+- ✅ **useCallback**: Handler functions memoized to prevent re-renders
+- ✅ **ProductCard Component**: Separated into memo'd component to prevent re-renders of all cards when one updates
+- ✅ **Lazy Loading**: Images load on-demand with `loading="lazy"`
+
+### Data Caching
+- ✅ **Cache System** (`lib/cache.ts`): 10-minute TTL cache for product data
+- ✅ **Reduced Firebase Calls**: Products cached after first fetch
+
 ## System Architecture
 
 ### Frontend Architecture
