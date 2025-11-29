@@ -56,17 +56,17 @@ export default function ProductDetails(){
 
   if (loading) {
     return (
-      <div style={{textAlign: 'center', padding: 60}}>
+      <div style={{textAlign: 'center', padding: 'clamp(50px, 10vw, 80px)'}}>
         <div style={{
           width: 60,
           height: 60,
-          border: '4px solid rgba(0, 255, 136, 0.2)',
-          borderTop: '4px solid #00ff88',
+          border: '4px solid rgba(57, 255, 20, 0.2)',
+          borderTop: '4px solid #39ff14',
           borderRadius: '50%',
           margin: '0 auto 20px',
           animation: 'spin 1s linear infinite'
         }}></div>
-        <p style={{color: '#00ff88'}}>جاري التحميل...</p>
+        <p style={{color: '#39ff14', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>جاري التحميل...</p>
         <style jsx>{`
           @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -81,13 +81,13 @@ export default function ProductDetails(){
     return (
       <div className="card" style={{
         textAlign: 'center',
-        padding: 60,
+        padding: 'clamp(40px, 8vw, 60px)',
         maxWidth: 600,
         margin: '60px auto'
       }}>
-        <div style={{fontSize: '4em', marginBottom: 20}}>❌</div>
-        <h3 style={{color: '#00ff88', marginBottom: 15}}>المنتج غير موجود</h3>
-        <Link href="/products" className="btn">
+        <div style={{fontSize: 'clamp(3.5em, 10vw, 4.5em)', marginBottom: 'clamp(20px, 4vw, 30px)'}}>❌</div>
+        <h3 style={{color: '#39ff14', marginBottom: 'clamp(18px, 4vw, 25px)', textShadow: '0 0 15px rgba(57, 255, 20, 0.3)', fontSize: 'clamp(1.2em, 3.5vw, 1.5em)'}}>المنتج غير موجود</h3>
+        <Link href="/products" className="btn" style={{fontSize: 'clamp(1em, 2.5vw, 1.1em)', padding: 'clamp(12px, 2.5vw, 16px) clamp(28px, 6vw, 36px)'}}>
           العودة للمنتجات
         </Link>
       </div>
@@ -96,164 +96,148 @@ export default function ProductDetails(){
 
   return (
     <div>
-      <div style={{
-        maxWidth: 1100,
-        margin: '0 auto'
+      <Link href="/products" style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 8,
+        color: '#39ff14',
+        marginBottom: 'clamp(25px, 5vw, 35px)',
+        fontSize: 'clamp(1em, 2.5vw, 1.1em)',
+        padding: 'clamp(10px, 2vw, 14px) clamp(14px, 3vw, 20px)',
+        background: 'rgba(57, 255, 20, 0.1)',
+        borderRadius: 10,
+        border: '1px solid rgba(57, 255, 20, 0.2)',
+        transition: 'all 0.3s ease',
+        width: 'fit-content'
+      }} className="back-button">
+        ← العودة للمنتجات
+      </Link>
+
+      <div className="card" style={{
+        padding: 'clamp(20px, 4vw, 30px)',
+        overflow: 'hidden'
       }}>
-        <Link href="/products" style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 8,
-          color: '#00ff88',
-          marginBottom: 30,
-          fontSize: '1.05em'
-        }}>
-          ← العودة للمنتجات
-        </Link>
-
-        <div className="card" style={{
-          padding: 0,
-          overflow: 'hidden'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 40
-          }}>
-            <div style={{
-              width: '100%',
-              minHeight: 400,
-              background: `linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%), url(${product.imageUrl || '/placeholder.png'}) center/cover`,
-              position: 'relative'
-            }}>
-              <div style={{
-                position: 'absolute',
-                top: 25,
-                right: 25,
-                background: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
-                color: '#0a0f14',
-                padding: '12px 28px',
-                borderRadius: 30,
-                fontWeight: 700,
-                fontSize: '1.4em',
-                boxShadow: '0 6px 25px rgba(0, 255, 136, 0.5)'
-              }}>
-                {product.price === 0 ? 'مجاناً' : `${product.price} دج`}
-              </div>
-            </div>
-
-            <div style={{padding: '40px 40px 40px 0'}}>
-              <div style={{
-                display: 'inline-block',
-                background: 'rgba(0, 255, 136, 0.15)',
-                color: '#00ff88',
-                padding: '6px 18px',
-                borderRadius: 20,
-                fontSize: '0.85em',
-                fontWeight: 600,
-                marginBottom: 20
-              }}>
-                {product.category || 'منتج رقمي'}
-              </div>
-
-              <h1 style={{
-                fontSize: '2.5em',
-                color: '#fff',
-                marginBottom: 25,
-                lineHeight: 1.2
-              }}>{product.name}</h1>
-
-              <p style={{
-                color: '#c0c0c0',
-                lineHeight: 1.8,
-                fontSize: '1.05em',
-                marginBottom: 35
-              }}>{product.description || 'منتج رقمي عالي الجودة'}</p>
-
-              {inCart ? (
-                <div style={{
-                  display: 'flex',
-                  gap: 15,
-                  flexWrap: 'wrap'
-                }}>
-                  <div style={{
-                    flex: 1,
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '2px solid rgba(0, 255, 136, 0.4)',
-                    borderRadius: 12,
-                    padding: '18px 24px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    color: '#00ff88',
-                    fontWeight: 600
-                  }}>
-                    <span style={{fontSize: '1.5em'}}>✓</span>
-                    <span>في السلة</span>
-                  </div>
-                  <Link href="/cart" className="btn" style={{
-                    flex: 1,
-                    textAlign: 'center',
-                    padding: '18px 24px',
-                    fontSize: '1.1em'
-                  }}>
-                    عرض السلة →
-                  </Link>
-                </div>
-              ) : (
-                <button 
-                  onClick={addToCart}
-                  className="btn" 
-                  style={{
-                    width: '100%',
-                    fontSize: '1.2em',
-                    padding: '18px',
-                    boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
-                  }}
-                >
-                  إضافة إلى السلة 🛒
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 25,
-          marginTop: 40
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
+          gap: 'clamp(25px, 5vw, 35px)',
+          alignItems: 'start'
         }}>
-          <div className="card" style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 0, 0, 0.3) 100%)'
-          }}>
-            <div style={{fontSize: '2.5em', marginBottom: 15}}>⚡</div>
-            <h3 style={{color: '#00ff88', marginBottom: 10}}>تسليم فوري</h3>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>احصل على المنتج فوراً بعد تأكيد الدفع</p>
-          </div>
+          <div style={{
+            width: '100%',
+            minHeight: '300px',
+            background: `linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%), url(${product.imageUrl || '/placeholder.png'}) center/cover`,
+            borderRadius: 'clamp(12px, 3vw, 16px)',
+            border: '2px solid rgba(57, 255, 20, 0.2)',
+            boxShadow: '0 0 30px rgba(57, 255, 20, 0.15)'
+          }}></div>
 
-          <div className="card" style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 0, 0, 0.3) 100%)'
-          }}>
-            <div style={{fontSize: '2.5em', marginBottom: 15}}>🔒</div>
-            <h3 style={{color: '#00ff88', marginBottom: 10}}>دفع آمن</h3>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>نظام دفع آمن ومضمون 100%</p>
-          </div>
+          <div style={{display: 'flex', flexDirection: 'column', gap: 'clamp(18px, 4vw, 25px)'}}>
+            {product.category && (
+              <div style={{
+                display: 'inline-flex',
+                background: 'rgba(57, 255, 20, 0.15)',
+                color: '#39ff14',
+                padding: 'clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 18px)',
+                borderRadius: 10,
+                fontSize: 'clamp(0.85em, 2vw, 0.95em)',
+                fontWeight: 600,
+                border: '1px solid rgba(57, 255, 20, 0.3)',
+                width: 'fit-content'
+              }}>
+                {product.category}
+              </div>
+            )}
 
-          <div className="card" style={{
-            background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.08) 0%, rgba(0, 0, 0, 0.3) 100%)'
-          }}>
-            <div style={{fontSize: '2.5em', marginBottom: 15}}>♾️</div>
-            <h3 style={{color: '#00ff88', marginBottom: 10}}>حقوق إعادة بيع</h3>
-            <p style={{color: '#c0c0c0', fontSize: '0.95em'}}>يمكنك إعادة بيع المنتج بلا حدود</p>
+            <h1 style={{
+              color: '#fff',
+              margin: 0,
+              fontSize: 'clamp(1.5em, 5vw, 2.2em)',
+              lineHeight: 1.2
+            }}>
+              {product.name}
+            </h1>
+
+            <p style={{
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: 'clamp(1em, 2.5vw, 1.15em)',
+              lineHeight: 1.8,
+              margin: 0
+            }}>
+              {product.description}
+            </p>
+
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.15) 0%, rgba(255, 215, 0, 0.1) 100%)',
+              padding: 'clamp(18px, 3.5vw, 24px)',
+              borderRadius: 'clamp(12px, 3vw, 16px)',
+              border: '2px solid rgba(57, 255, 20, 0.3)',
+              textAlign: 'center'
+            }}>
+              <p style={{color: 'rgba(255,255,255,0.6)', margin: 0, marginBottom: 8, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>السعر</p>
+              <div style={{
+                fontSize: 'clamp(2em, 6vw, 2.8em)',
+                fontWeight: 900,
+                color: '#39ff14',
+                textShadow: '0 0 20px rgba(57, 255, 20, 0.4)',
+                margin: 0
+              }}>
+                {product.price} دج
+              </div>
+            </div>
+
+            {!inCart ? (
+              <button
+                onClick={addToCart}
+                className="btn"
+                style={{
+                  width: '100%',
+                  fontSize: 'clamp(1.05em, 2.5vw, 1.2em)',
+                  padding: 'clamp(14px, 3vw, 18px)',
+                  borderRadius: 'clamp(12px, 3vw, 16px)'
+                }}
+              >
+                🛒 إضافة إلى السلة
+              </button>
+            ) : (
+              <div style={{
+                width: '100%',
+                background: 'rgba(57, 255, 20, 0.15)',
+                color: '#39ff14',
+                padding: 'clamp(14px, 3vw, 18px)',
+                borderRadius: 'clamp(12px, 3vw, 16px)',
+                textAlign: 'center',
+                fontWeight: 600,
+                fontSize: 'clamp(1em, 2.5vw, 1.15em)',
+                border: '2px solid rgba(57, 255, 20, 0.3)',
+                boxShadow: '0 0 15px rgba(57, 255, 20, 0.2)'
+              }}>
+                ✅ موجود في السلة
+              </div>
+            )}
+
+            <Link href="/cart" className="btn btn-outline" style={{
+              width: '100%',
+              fontSize: 'clamp(1em, 2.5vw, 1.15em)',
+              padding: 'clamp(14px, 3vw, 18px)',
+              borderRadius: 'clamp(12px, 3vw, 16px)',
+              textAlign: 'center'
+            }}>
+              💳 إتمام الشراء
+            </Link>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        @media (max-width: 768px) {
-          .card > div {
-            grid-template-columns: 1fr !important;
+        .back-button:hover {
+          background: rgba(57, 255, 20, 0.15) !important;
+          box-shadow: 0 0 15px rgba(57, 255, 20, 0.2) !important;
+        }
+        
+        @media (max-width: 600px) {
+          .card {
+            padding: 0 !important;
           }
         }
       `}</style>

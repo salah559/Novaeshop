@@ -170,13 +170,13 @@ export default function Admin(){
           textAlign: 'center',
           marginBottom: 40,
           padding: '30px 20px',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
           borderRadius: 16
         }}>
           <h2 style={{
             fontSize: '2.5em',
             marginBottom: 10,
-            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -189,7 +189,7 @@ export default function Admin(){
           margin: '0 auto'
         }}>
           <div style={{fontSize: '4em', marginBottom: 20}}>🚫</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>وصول محظور</h3>
+          <h3 style={{color: '#39ff14', marginBottom: 15}}>وصول محظور</h3>
           <p style={{color: '#c0c0c0'}}>هذه الصفحة مخصصة للمدراء فقط</p>
         </div>
       </div>
@@ -202,13 +202,13 @@ export default function Admin(){
         textAlign: 'center',
         marginBottom: 40,
         padding: '30px 20px',
-        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
         borderRadius: 16
       }}>
         <h2 style={{
           fontSize: '2.5em',
           marginBottom: 10,
-          background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+          background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
@@ -235,11 +235,11 @@ export default function Admin(){
 
         <div className="card" style={{
           textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(0, 255, 136, 0.4)'
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
+          border: '2px solid rgba(57, 255, 20, 0.4)'
         }}>
           <div style={{fontSize: '2.5em', marginBottom: 10}}>✅</div>
-          <h3 style={{color: '#00ff88', fontSize: '2em', margin: '10px 0'}}>{stats.confirmed}</h3>
+          <h3 style={{color: '#39ff14', fontSize: '2em', margin: '10px 0'}}>{stats.confirmed}</h3>
           <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>طلبات مؤكدة</p>
         </div>
 
@@ -255,11 +255,11 @@ export default function Admin(){
 
         <div className="card" style={{
           textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(0, 255, 136, 0.4)'
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
+          border: '2px solid rgba(57, 255, 20, 0.4)'
         }}>
           <div style={{fontSize: '2.5em', marginBottom: 10}}>💰</div>
-          <h3 style={{color: '#00ff88', fontSize: '1.5em', margin: '10px 0'}}>{stats.totalRevenue.toLocaleString()} دج</h3>
+          <h3 style={{color: '#39ff14', fontSize: '1.5em', margin: '10px 0'}}>{stats.totalRevenue.toLocaleString()} دج</h3>
           <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>إجمالي المبيعات</p>
         </div>
 
@@ -284,8 +284,8 @@ export default function Admin(){
       }}>
         <div style={{
           padding: '12px 24px',
-          background: '#00ff88',
-          border: '1px solid #00ff88',
+          background: '#39ff14',
+          border: '1px solid #39ff14',
           borderRadius: 8,
           color: '#0a0f14',
           fontWeight: 600
@@ -295,7 +295,7 @@ export default function Admin(){
         <Link href="/admin/products" style={{
           padding: '12px 24px',
           background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(0, 255, 136, 0.3)',
+          border: '1px solid rgba(57, 255, 20, 0.3)',
           borderRadius: 8,
           color: '#c0c0c0',
           fontWeight: 600,
@@ -333,10 +333,10 @@ export default function Admin(){
           onClick={() => setFilter('confirmed')}
           style={{
             padding: '10px 20px',
-            background: filter === 'confirmed' ? 'rgba(0, 255, 136, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-            border: `2px solid ${filter === 'confirmed' ? '#00ff88' : 'rgba(0, 255, 136, 0.3)'}`,
+            background: filter === 'confirmed' ? 'rgba(57, 255, 20, 0.3)' : 'rgba(255, 255, 255, 0.05)',
+            border: `2px solid ${filter === 'confirmed' ? '#39ff14' : 'rgba(57, 255, 20, 0.3)'}`,
             borderRadius: 8,
-            color: filter === 'confirmed' ? '#00ff88' : '#c0c0c0',
+            color: filter === 'confirmed' ? '#39ff14' : '#c0c0c0',
             fontWeight: 600,
             cursor: 'pointer',
             transition: 'all 0.3s ease'
@@ -363,10 +363,10 @@ export default function Admin(){
           onClick={() => setFilter('all')}
           style={{
             padding: '10px 20px',
-            background: filter === 'all' ? 'rgba(0, 255, 136, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-            border: `2px solid ${filter === 'all' ? '#00ff88' : 'rgba(0, 255, 136, 0.3)'}`,
+            background: filter === 'all' ? 'rgba(57, 255, 20, 0.3)' : 'rgba(255, 255, 255, 0.05)',
+            border: `2px solid ${filter === 'all' ? '#39ff14' : 'rgba(57, 255, 20, 0.3)'}`,
             borderRadius: 8,
-            color: filter === 'all' ? '#00ff88' : '#c0c0c0',
+            color: filter === 'all' ? '#39ff14' : '#c0c0c0',
             fontWeight: 600,
             cursor: 'pointer',
             transition: 'all 0.3s ease'
@@ -381,13 +381,13 @@ export default function Admin(){
           <div style={{
             width: 60,
             height: 60,
-            border: '4px solid rgba(0, 255, 136, 0.2)',
-            borderTop: '4px solid #00ff88',
+            border: '4px solid rgba(57, 255, 20, 0.2)',
+            borderTop: '4px solid #39ff14',
             borderRadius: '50%',
             margin: '0 auto 20px',
             animation: 'spin 1s linear infinite'
           }}></div>
-          <p style={{color: '#00ff88'}}>جاري تحميل الطلبات...</p>
+          <p style={{color: '#39ff14'}}>جاري تحميل الطلبات...</p>
         </div>
       ) : (
         <div style={{
@@ -400,7 +400,7 @@ export default function Admin(){
               padding: 60
             }}>
               <div style={{fontSize: '4em', marginBottom: 20}}>📋</div>
-              <h3 style={{color: '#00ff88', marginBottom: 15}}>لا توجد طلبات</h3>
+              <h3 style={{color: '#39ff14', marginBottom: 15}}>لا توجد طلبات</h3>
               <p style={{color: '#c0c0c0'}}>
                 {filter === 'pending' && 'لا توجد طلبات معلقة في الوقت الحالي'}
                 {filter === 'confirmed' && 'لا توجد طلبات مؤكدة'}
@@ -411,8 +411,8 @@ export default function Admin(){
           ) : (
             orders.map(o=>(
               <div key={o.id} className="card" style={{
-                background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
-                border: '1px solid rgba(0, 255, 136, 0.4)'
+                background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
+                border: '1px solid rgba(57, 255, 20, 0.4)'
               }}>
                 <div style={{
                   display: 'grid',
@@ -421,7 +421,7 @@ export default function Admin(){
                   marginBottom: 20
                 }}>
                   <div>
-                    <h4 style={{color: '#00ff88', marginBottom: 8}}>معلومات الطلب</h4>
+                    <h4 style={{color: '#39ff14', marginBottom: 8}}>معلومات الطلب</h4>
                     <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 5}}>
                       <strong style={{color: '#fff'}}>رقم الطلب:</strong> {o.id.substring(0, 8)}...
                     </p>
@@ -431,7 +431,7 @@ export default function Admin(){
                     <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 5}}>
                       <strong style={{color: '#fff'}}>الحالة:</strong>{' '}
                       <span style={{
-                        color: o.status === 'pending' ? '#FFA500' : o.status === 'confirmed' ? '#00ff88' : '#ff6b6b',
+                        color: o.status === 'pending' ? '#FFA500' : o.status === 'confirmed' ? '#39ff14' : '#ff6b6b',
                         fontWeight: 600
                       }}>
                         {o.status === 'pending' ? '⏳ معلق' : o.status === 'confirmed' ? '✅ مؤكد' : '❌ مرفوض'}
@@ -440,7 +440,7 @@ export default function Admin(){
                     <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>
                       <strong style={{color: '#fff'}}>المبلغ:</strong> 
                       <span style={{
-                        color: '#00ff88',
+                        color: '#39ff14',
                         marginRight: 8,
                         fontSize: '1.2em',
                         fontWeight: 700
@@ -449,7 +449,7 @@ export default function Admin(){
                   </div>
 
                   <div>
-                    <h4 style={{color: '#00ff88', marginBottom: 8}}>المنتجات</h4>
+                    <h4 style={{color: '#39ff14', marginBottom: 8}}>المنتجات</h4>
                     {o.items && o.items.map((item: any, idx: number) => (
                       <p key={idx} style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 3}}>
                         • {item.name} - {item.price} دج
@@ -464,7 +464,7 @@ export default function Admin(){
                   padding: 15,
                   marginBottom: 20
                 }}>
-                  <h4 style={{color: '#00ff88', marginBottom: 12}}>إيصال الدفع</h4>
+                  <h4 style={{color: '#39ff14', marginBottom: 12}}>إيصال الدفع</h4>
                   <img 
                     src={o.paymentImageUrl} 
                     alt="إيصال الدفع"
@@ -472,7 +472,7 @@ export default function Admin(){
                       maxWidth: '100%',
                       maxHeight: 300,
                       borderRadius: 8,
-                      border: '2px solid rgba(0, 255, 136, 0.3)',
+                      border: '2px solid rgba(57, 255, 20, 0.3)',
                       objectFit: 'contain',
                       cursor: 'pointer'
                     }}
@@ -569,7 +569,7 @@ export default function Admin(){
                             flex: 2,
                             fontSize: '1.1em',
                             padding: '14px',
-                            boxShadow: '0 0 30px rgba(0, 255, 136, 0.4)'
+                            boxShadow: '0 0 30px rgba(57, 255, 20, 0.4)'
                           }}
                         >
                           ✓ تأكيد الدفع وتفعيل الطلب

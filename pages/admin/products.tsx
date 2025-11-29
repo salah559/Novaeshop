@@ -124,13 +124,13 @@ export default function AdminProducts(){
           textAlign: 'center',
           marginBottom: 40,
           padding: '30px 20px',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
           borderRadius: 16
         }}>
           <h2 style={{
             fontSize: '2.5em',
             marginBottom: 10,
-            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text'
@@ -143,7 +143,7 @@ export default function AdminProducts(){
           margin: '0 auto'
         }}>
           <div style={{fontSize: '4em', marginBottom: 20}}>🚫</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>وصول محظور</h3>
+          <h3 style={{color: '#39ff14', marginBottom: 15}}>وصول محظور</h3>
           <p style={{color: '#c0c0c0'}}>هذه الصفحة مخصصة للمدراء فقط</p>
         </div>
       </div>
@@ -156,13 +156,13 @@ export default function AdminProducts(){
         textAlign: 'center',
         marginBottom: 40,
         padding: '30px 20px',
-        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
         borderRadius: 16
       }}>
         <h2 style={{
           fontSize: '2.5em',
           marginBottom: 10,
-          background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+          background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text'
@@ -180,7 +180,7 @@ export default function AdminProducts(){
         <Link href="/admin" style={{
           padding: '12px 24px',
           background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(0, 255, 136, 0.3)',
+          border: '1px solid rgba(57, 255, 20, 0.3)',
           borderRadius: 8,
           color: '#c0c0c0',
           fontWeight: 600,
@@ -191,8 +191,8 @@ export default function AdminProducts(){
         </Link>
         <div style={{
           padding: '12px 24px',
-          background: '#00ff88',
-          border: '1px solid #00ff88',
+          background: '#39ff14',
+          border: '1px solid #39ff14',
           borderRadius: 8,
           color: '#0a0f14',
           fontWeight: 600
@@ -208,7 +208,7 @@ export default function AdminProducts(){
           style={{
             padding: '14px 30px',
             fontSize: '1.1em',
-            boxShadow: '0 0 30px rgba(0, 255, 136, 0.4)'
+            boxShadow: '0 0 30px rgba(57, 255, 20, 0.4)'
           }}
         >
           {showForm ? '✕ إلغاء' : '+ إضافة منتج جديد'}
@@ -219,16 +219,16 @@ export default function AdminProducts(){
         <div className="card" style={{
           maxWidth: 800,
           margin: '0 auto 40px',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(0, 255, 136, 0.4)'
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
+          border: '2px solid rgba(57, 255, 20, 0.4)'
         }}>
-          <h3 style={{color: '#00ff88', marginBottom: 25}}>
+          <h3 style={{color: '#39ff14', marginBottom: 25}}>
             {editingProduct ? '✏️ تعديل منتج' : '➕ إضافة منتج جديد'}
           </h3>
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gap: 20}}>
               <div>
-                <label style={{display: 'block', color: '#00ff88', marginBottom: 8, fontWeight: 600}}>
+                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                   اسم المنتج
                 </label>
                 <input 
@@ -240,7 +240,7 @@ export default function AdminProducts(){
                     width: '100%',
                     padding: '12px 16px',
                     background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(0, 255, 136, 0.3)',
+                    border: '1px solid rgba(57, 255, 20, 0.3)',
                     borderRadius: 8,
                     color: '#fff',
                     fontSize: '1rem'
@@ -249,7 +249,7 @@ export default function AdminProducts(){
               </div>
 
               <div>
-                <label style={{display: 'block', color: '#00ff88', marginBottom: 8, fontWeight: 600}}>
+                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                   الوصف
                 </label>
                 <textarea 
@@ -261,7 +261,7 @@ export default function AdminProducts(){
                     width: '100%',
                     padding: '12px 16px',
                     background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(0, 255, 136, 0.3)',
+                    border: '1px solid rgba(57, 255, 20, 0.3)',
                     borderRadius: 8,
                     color: '#fff',
                     fontSize: '1rem',
@@ -272,7 +272,7 @@ export default function AdminProducts(){
 
               <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20}}>
                 <div>
-                  <label style={{display: 'block', color: '#00ff88', marginBottom: 8, fontWeight: 600}}>
+                  <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                     السعر (دج)
                   </label>
                   <input 
@@ -285,7 +285,7 @@ export default function AdminProducts(){
                       width: '100%',
                       padding: '12px 16px',
                       background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(0, 255, 136, 0.3)',
+                      border: '1px solid rgba(57, 255, 20, 0.3)',
                       borderRadius: 8,
                       color: '#fff',
                       fontSize: '1rem'
@@ -294,7 +294,7 @@ export default function AdminProducts(){
                 </div>
 
                 <div>
-                  <label style={{display: 'block', color: '#00ff88', marginBottom: 8, fontWeight: 600}}>
+                  <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                     الفئة
                   </label>
                   <input 
@@ -306,7 +306,7 @@ export default function AdminProducts(){
                       width: '100%',
                       padding: '12px 16px',
                       background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(0, 255, 136, 0.3)',
+                      border: '1px solid rgba(57, 255, 20, 0.3)',
                       borderRadius: 8,
                       color: '#fff',
                       fontSize: '1rem'
@@ -316,7 +316,7 @@ export default function AdminProducts(){
               </div>
 
               <div>
-                <label style={{display: 'block', color: '#00ff88', marginBottom: 8, fontWeight: 600}}>
+                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                   رابط الصورة (URL)
                 </label>
                 <input 
@@ -329,7 +329,7 @@ export default function AdminProducts(){
                     width: '100%',
                     padding: '12px 16px',
                     background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(0, 255, 136, 0.3)',
+                    border: '1px solid rgba(57, 255, 20, 0.3)',
                     borderRadius: 8,
                     color: '#fff',
                     fontSize: '1rem'
@@ -338,7 +338,7 @@ export default function AdminProducts(){
               </div>
 
               <div>
-                <label style={{display: 'block', color: '#00ff88', marginBottom: 8, fontWeight: 600}}>
+                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                   رابط التحميل (URL)
                 </label>
                 <input 
@@ -351,7 +351,7 @@ export default function AdminProducts(){
                     width: '100%',
                     padding: '12px 16px',
                     background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(0, 255, 136, 0.3)',
+                    border: '1px solid rgba(57, 255, 20, 0.3)',
                     borderRadius: 8,
                     color: '#fff',
                     fontSize: '1rem'
@@ -400,13 +400,13 @@ export default function AdminProducts(){
           <div style={{
             width: 60,
             height: 60,
-            border: '4px solid rgba(0, 255, 136, 0.2)',
-            borderTop: '4px solid #00ff88',
+            border: '4px solid rgba(57, 255, 20, 0.2)',
+            borderTop: '4px solid #39ff14',
             borderRadius: '50%',
             margin: '0 auto 20px',
             animation: 'spin 1s linear infinite'
           }}></div>
-          <p style={{color: '#00ff88'}}>جاري تحميل المنتجات...</p>
+          <p style={{color: '#39ff14'}}>جاري تحميل المنتجات...</p>
         </div>
       ) : (
         <div style={{
@@ -416,8 +416,8 @@ export default function AdminProducts(){
         }}>
           {products.map(product => (
             <div key={product.id} className="card" style={{
-              background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
-              border: '1px solid rgba(0, 255, 136, 0.3)'
+              background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
+              border: '1px solid rgba(57, 255, 20, 0.3)'
             }}>
               <img 
                 src={product.imageUrl} 
@@ -430,7 +430,7 @@ export default function AdminProducts(){
                   marginBottom: 15
                 }}
               />
-              <h3 style={{color: '#00ff88', marginBottom: 10, fontSize: '1.2em'}}>
+              <h3 style={{color: '#39ff14', marginBottom: 10, fontSize: '1.2em'}}>
                 {product.name}
               </h3>
               <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 15, lineHeight: 1.6}}>
@@ -442,15 +442,15 @@ export default function AdminProducts(){
                 alignItems: 'center',
                 marginBottom: 15,
                 paddingTop: 15,
-                borderTop: '1px solid rgba(0, 255, 136, 0.2)'
+                borderTop: '1px solid rgba(57, 255, 20, 0.2)'
               }}>
-                <span style={{color: '#00ff88', fontWeight: 700, fontSize: '1.3em'}}>
+                <span style={{color: '#39ff14', fontWeight: 700, fontSize: '1.3em'}}>
                   {product.price} دج
                 </span>
                 <span style={{
                   color: '#888',
                   fontSize: '0.85em',
-                  background: 'rgba(0, 255, 136, 0.1)',
+                  background: 'rgba(57, 255, 20, 0.1)',
                   padding: '4px 12px',
                   borderRadius: 6
                 }}>
@@ -463,9 +463,9 @@ export default function AdminProducts(){
                   style={{
                     flex: 1,
                     padding: '10px',
-                    background: 'rgba(0, 255, 136, 0.2)',
-                    color: '#00ff88',
-                    border: '1px solid rgba(0, 255, 136, 0.4)',
+                    background: 'rgba(57, 255, 20, 0.2)',
+                    color: '#39ff14',
+                    border: '1px solid rgba(57, 255, 20, 0.4)',
                     borderRadius: 8,
                     fontWeight: 600,
                     cursor: 'pointer',

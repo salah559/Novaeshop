@@ -37,7 +37,6 @@ export default function Orders() {
   async function loadOrders(userId: string, email: string | null) {
     setLoading(true);
     try {
-      // Get orders by userId
       const qUserId = query(
         collection(db, 'orders'),
         where('userId', '==', userId)
@@ -45,7 +44,6 @@ export default function Orders() {
       const snapUserId = await getDocs(qUserId);
       let ordersList = snapUserId.docs.map(d => ({ id: d.id, ...d.data() } as Order));
       
-      // Always get orders by email too (for legacy orders created before user had an account)
       if (email) {
         const qEmail = query(
           collection(db, 'orders'),
@@ -54,7 +52,6 @@ export default function Orders() {
         const snapEmail = await getDocs(qEmail);
         const emailOrders = snapEmail.docs.map(d => ({ id: d.id, ...d.data() } as Order));
         
-        // Merge and remove duplicates
         const allOrders = [...ordersList, ...emailOrders];
         const uniqueOrders = allOrders.filter((order, index, self) =>
           index === self.findIndex((o) => o.id === order.id)
@@ -62,7 +59,6 @@ export default function Orders() {
         ordersList = uniqueOrders;
       }
       
-      // Sort by creation date (newest first)
       ordersList.sort((a, b) => {
         const dateA = a.createdAt?.toDate?.() || new Date(0);
         const dateB = b.createdAt?.toDate?.() || new Date(0);
@@ -80,8 +76,8 @@ export default function Orders() {
 
   function getStatusColor(status: string) {
     switch (status) {
-      case 'pending': return '#FFA500';
-      case 'confirmed': return '#00ff88';
+      case 'pending': return '#ffa500';
+      case 'confirmed': return '#39ff14';
       case 'rejected': return '#ff6b6b';
       default: return '#c0c0c0';
     }
@@ -108,50 +104,36 @@ export default function Orders() {
     });
   }
 
-  if (!user) {
+  if(!user){
     return (
       <div>
         <div style={{
           textAlign: 'center',
-          marginBottom: 40,
-          padding: '30px 20px',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-          borderRadius: 16
+          marginBottom: 'clamp(30px, 6vw, 50px)',
+          padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+          borderRadius: 'clamp(16px, 3vw, 24px)',
+          border: '2px solid rgba(57, 255, 20, 0.2)'
         }}>
           <h2 style={{
-            fontSize: '2.5em',
-            marginBottom: 10,
-            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            fontSize: 'clamp(2em, 7vw, 3em)',
+            marginBottom: 'clamp(12px, 2vw, 18px)',
+            background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>تسجيل الدخول مطلوب</h2>
-          <p style={{ color: '#c0c0c0' }}>يجب عليك تسجيل الدخول لعرض طلباتك</p>
+            backgroundClip: 'text',
+            textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
+          }}>طلباتي</h2>
         </div>
-
         <div className="card" style={{
+          textAlign: 'center',
+          padding: 'clamp(40px, 8vw, 60px)',
           maxWidth: 600,
-          margin: '0 auto',
-          textAlign: 'center'
+          margin: '0 auto'
         }}>
-          <div style={{ fontSize: '4em', marginBottom: 30 }}>🔐</div>
-          <h3 style={{ color: '#00ff88', marginBottom: 20, fontSize: '1.5em' }}>
-            لعرض طلباتك
-          </h3>
-          <p style={{ color: '#c0c0c0', marginBottom: 30, lineHeight: 1.8 }}>
-            يجب عليك تسجيل الدخول أولاً لتتبع حالة طلباتك ومشترياتك.
-          </p>
-          <button
-            onClick={signInWithGoogle}
-            className="btn"
-            style={{
-              fontSize: '1.2em',
-              padding: '16px 40px',
-              boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
-            }}
-          >
-            🔑 تسجيل الدخول بواسطة Google
-          </button>
+          <div style={{fontSize: 'clamp(3.5em, 10vw, 4.5em)', marginBottom: 'clamp(20px, 4vw, 30px)'}}>🔐</div>
+          <h3 style={{color: '#39ff14', marginBottom: 'clamp(12px, 2vw, 18px)', textShadow: '0 0 15px rgba(57, 255, 20, 0.3)', fontSize: 'clamp(1.2em, 3.5vw, 1.5em)'}}>يجب تسجيل الدخول</h3>
+          <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 'clamp(25px, 5vw, 35px)', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>الرجاء تسجيل الدخول لعرض طلباتك</p>
         </div>
       </div>
     );
@@ -161,204 +143,143 @@ export default function Orders() {
     <div>
       <div style={{
         textAlign: 'center',
-        marginBottom: 40,
-        padding: '30px 20px',
-        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 16
+        marginBottom: 'clamp(30px, 6vw, 50px)',
+        padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+        borderRadius: 'clamp(16px, 3vw, 24px)',
+        border: '2px solid rgba(57, 255, 20, 0.2)'
       }}>
         <h2 style={{
-          fontSize: '2.5em',
-          marginBottom: 10,
-          background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+          fontSize: 'clamp(2em, 7vw, 3em)',
+          marginBottom: 'clamp(12px, 2vw, 18px)',
+          background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }}>طلباتي</h2>
-        <p style={{ color: '#c0c0c0' }}>تتبع حالة طلباتك ومشترياتك</p>
+          backgroundClip: 'text',
+          textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
+        }}>📋 طلباتي</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>تتبع حالة طلباتك</p>
       </div>
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: 60 }}>
+        <div style={{textAlign: 'center', padding: 'clamp(50px, 10vw, 80px)'}}>
           <div style={{
             width: 60,
             height: 60,
-            border: '4px solid rgba(0, 255, 136, 0.2)',
-            borderTop: '4px solid #00ff88',
+            border: '4px solid rgba(57, 255, 20, 0.2)',
+            borderTop: '4px solid #39ff14',
             borderRadius: '50%',
             margin: '0 auto 20px',
             animation: 'spin 1s linear infinite'
           }}></div>
-          <p style={{ color: '#00ff88' }}>جاري تحميل الطلبات...</p>
+          <p style={{color: '#39ff14', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>جاري تحميل الطلبات...</p>
+          <style jsx>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
         </div>
       ) : orders.length === 0 ? (
         <div className="card" style={{
           textAlign: 'center',
-          padding: 60,
+          padding: 'clamp(40px, 8vw, 60px)',
           maxWidth: 600,
           margin: '0 auto'
         }}>
-          <div style={{ fontSize: '4em', marginBottom: 20 }}>📦</div>
-          <h3 style={{ color: '#00ff88', marginBottom: 15 }}>لا توجد طلبات</h3>
-          <p style={{ color: '#c0c0c0', marginBottom: 30 }}>
-            لم تقم بأي طلبات بعد. تصفح المنتجات وابدأ الشراء!
-          </p>
-          <Link href="/products" className="btn">
-            🛍️ تصفح المنتجات
-          </Link>
+          <div style={{fontSize: 'clamp(3.5em, 10vw, 4.5em)', marginBottom: 'clamp(20px, 4vw, 30px)'}}>📭</div>
+          <h3 style={{color: '#39ff14', marginBottom: 'clamp(12px, 2vw, 18px)', textShadow: '0 0 15px rgba(57, 255, 20, 0.3)', fontSize: 'clamp(1.2em, 3.5vw, 1.5em)'}}>لا توجد طلبات</h3>
+          <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 'clamp(25px, 5vw, 35px)', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>لم تقم بأي طلبات حتى الآن</p>
+          <Link href="/products" className="btn">🛍️ تصفح المنتجات</Link>
         </div>
       ) : (
         <div style={{
           display: 'grid',
-          gap: 25,
-          maxWidth: 1000,
+          gap: 'clamp(18px, 4vw, 28px)',
+          maxWidth: 900,
           margin: '0 auto'
         }}>
-          {orders.map(order => (
-            <div key={order.id} className="card" style={{
-              background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
-              border: `2px solid ${getStatusColor(order.status)}40`
+          {orders.map((order, idx) => (
+            <div key={order.id} className="card animate-fadeInUp" style={{
+              padding: 'clamp(20px, 4vw, 28px)',
+              borderLeft: `4px solid ${getStatusColor(order.status)}`,
+              animationDelay: `${idx * 0.05}s`,
+              opacity: 0
             }}>
-              {/* Header with status */}
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 20,
-                paddingBottom: 15,
-                borderBottom: '1px solid rgba(0, 255, 136, 0.2)'
-              }}>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'clamp(12px, 2vw, 20px)', flexWrap: 'wrap', marginBottom: 'clamp(16px, 3vw, 22px)'}}>
                 <div>
-                  <h3 style={{ color: '#00ff88', marginBottom: 5 }}>
-                    طلب #{order.id.substring(0, 8)}
-                  </h3>
-                  <p style={{ color: '#888', fontSize: '0.9em' }}>
-                    {formatDate(order.createdAt)}
-                  </p>
+                  <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)'}}>الطلب #{order.id?.substring(0, 8)}</h3>
+                  <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{formatDate(order.createdAt)}</p>
                 </div>
                 <div style={{
-                  padding: '10px 20px',
-                  background: `${getStatusColor(order.status)}20`,
-                  border: `2px solid ${getStatusColor(order.status)}`,
-                  borderRadius: 8,
-                  fontWeight: 700,
-                  color: getStatusColor(order.status)
+                  background: 'rgba(57, 255, 20, 0.1)',
+                  padding: 'clamp(8px, 1.5vw, 12px) clamp(14px, 3vw, 18px)',
+                  borderRadius: 10,
+                  fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
+                  color: getStatusColor(order.status),
+                  fontWeight: 600,
+                  border: `1px solid ${getStatusColor(order.status)}80`,
+                  whiteSpace: 'nowrap'
                 }}>
                   {getStatusText(order.status)}
                 </div>
               </div>
 
-              {/* Order items */}
-              <div style={{ marginBottom: 20 }}>
-                <h4 style={{ color: '#00ff88', marginBottom: 12 }}>المنتجات:</h4>
-                {order.items && order.items.map((item: any, idx: number) => (
-                  <div key={idx} style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    padding: '10px 0',
-                    borderBottom: idx < order.items.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none'
-                  }}>
-                    <span style={{ color: '#c0c0c0' }}>• {item.name}</span>
-                    <span style={{ color: '#00ff88', fontWeight: 600 }}>{item.price} دج</span>
-                  </div>
+              <div style={{
+                background: 'rgba(57, 255, 20, 0.05)',
+                padding: 'clamp(14px, 3vw, 18px)',
+                borderRadius: 10,
+                marginBottom: 'clamp(14px, 3vw, 20px)'
+              }}>
+                <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 8, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>المنتجات:</p>
+                {order.items?.map((item: any, i: number) => (
+                  <p key={i} style={{color: '#fff', margin: 4, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>• {item.name} - {item.price} دج</p>
                 ))}
               </div>
 
-              {/* Total */}
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: '15px',
-                background: 'rgba(0, 0, 0, 0.3)',
-                borderRadius: 8,
-                marginBottom: 20
+                paddingTop: 'clamp(14px, 3vw, 20px)',
+                borderTop: '1px solid rgba(57, 255, 20, 0.1)',
+                gap: 'clamp(12px, 2vw, 18px)',
+                flexWrap: 'wrap'
               }}>
-                <span style={{ color: '#fff', fontWeight: 600, fontSize: '1.1em' }}>
-                  المجموع الكلي:
-                </span>
-                <span style={{
-                  color: '#00ff88',
-                  fontWeight: 700,
-                  fontSize: '1.5em'
-                }}>
-                  {order.total} دج
-                </span>
+                <div>
+                  <p style={{color: 'rgba(255,255,255,0.5)', marginBottom: 4, fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>المجموع</p>
+                  <p style={{fontSize: 'clamp(1.3em, 4vw, 1.6em)', fontWeight: 700, color: '#39ff14', margin: 0, textShadow: '0 0 10px rgba(57, 255, 20, 0.3)'}}>{order.total} دج</p>
+                </div>
+                {order.paymentImageUrl && (
+                  <a 
+                    href={order.paymentImageUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="btn"
+                    style={{fontSize: 'clamp(0.9em, 2.5vw, 1em)', padding: 'clamp(10px, 2vw, 12px) clamp(18px, 3vw, 24px)'}}
+                  >
+                    🖼️ عرض الإيصال
+                  </a>
+                )}
               </div>
 
-              {/* Status-specific messages */}
-              {order.status === 'pending' && (
+              {order.rejectionReason && (
                 <div style={{
-                  padding: '15px',
-                  background: 'rgba(255, 165, 0, 0.1)',
-                  border: '1px solid rgba(255, 165, 0, 0.3)',
-                  borderRadius: 8,
-                  color: '#FFA500'
-                }}>
-                  <strong>⏳ طلبك قيد المراجعة</strong>
-                  <p style={{ margin: '8px 0 0 0', fontSize: '0.9em' }}>
-                    جاري التحقق من إيصال الدفع. سيتم تفعيل طلبك قريباً وستتمكن من التحميل.
-                  </p>
-                </div>
-              )}
-
-              {order.status === 'confirmed' && (
-                <div style={{
-                  padding: '15px',
-                  background: 'rgba(0, 255, 136, 0.1)',
-                  border: '1px solid rgba(0, 255, 136, 0.3)',
-                  borderRadius: 8
-                }}>
-                  <strong style={{ color: '#00ff88' }}>✅ تم تأكيد طلبك!</strong>
-                  <p style={{ margin: '8px 0', fontSize: '0.9em', color: '#c0c0c0' }}>
-                    تم في: {formatDate(order.confirmedAt)}
-                  </p>
-                  <Link 
-                    href="/mypurchases" 
-                    className="btn"
-                    style={{
-                      display: 'inline-block',
-                      marginTop: 10,
-                      padding: '12px 24px'
-                    }}
-                  >
-                    📥 تحميل المشتريات
-                  </Link>
-                </div>
-              )}
-
-              {order.status === 'rejected' && (
-                <div style={{
-                  padding: '15px',
                   background: 'rgba(255, 107, 107, 0.1)',
                   border: '1px solid rgba(255, 107, 107, 0.3)',
-                  borderRadius: 8,
-                  color: '#ff6b6b'
+                  borderRadius: 10,
+                  padding: 'clamp(12px, 2.5vw, 16px)',
+                  marginTop: 'clamp(14px, 3vw, 20px)',
+                  color: '#ff6b6b',
+                  fontSize: 'clamp(0.9em, 2.5vw, 0.95em)'
                 }}>
-                  <strong>❌ تم رفض الطلب</strong>
-                  <p style={{ margin: '8px 0', fontSize: '0.9em' }}>
-                    تم في: {formatDate(order.rejectedAt)}
-                  </p>
-                  {order.rejectionReason && (
-                    <p style={{ margin: '8px 0 0 0', fontSize: '0.9em' }}>
-                      <strong>السبب:</strong> {order.rejectionReason}
-                    </p>
-                  )}
-                  <p style={{ margin: '12px 0 0 0', fontSize: '0.85em', color: '#c0c0c0' }}>
-                    💡 يمكنك التواصل معنا للاستفسار أو إعادة المحاولة بإيصال صحيح.
-                  </p>
+                  <strong>سبب الرفض:</strong> {order.rejectionReason}
                 </div>
               )}
             </div>
           ))}
         </div>
       )}
-
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 }

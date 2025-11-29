@@ -87,9 +87,9 @@ export default function Checkout(){
 
   if (checkingAuth) {
     return (
-      <div style={{textAlign: 'center', padding: '100px 20px'}}>
-        <div style={{fontSize: '3em', marginBottom: 20}}>⏳</div>
-        <p style={{color: '#c0c0c0'}}>جاري التحميل...</p>
+      <div style={{textAlign: 'center', padding: 'clamp(80px, 15vw, 120px) 20px'}}>
+        <div style={{fontSize: 'clamp(2.5em, 7vw, 3.5em)', marginBottom: 20}}>⏳</div>
+        <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>جاري التحميل...</p>
       </div>
     );
   }
@@ -99,47 +99,59 @@ export default function Checkout(){
       <div>
         <div style={{
           textAlign: 'center',
-          marginBottom: 40,
-          padding: '30px 20px',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-          borderRadius: 16
+          marginBottom: 'clamp(30px, 6vw, 50px)',
+          padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+          borderRadius: 'clamp(16px, 3vw, 24px)',
+          border: '2px solid rgba(57, 255, 20, 0.2)'
         }}>
           <h2 style={{
-            fontSize: '2.5em',
-            marginBottom: 10,
-            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            fontSize: 'clamp(2em, 7vw, 3em)',
+            marginBottom: 'clamp(12px, 2vw, 18px)',
+            background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
+            backgroundClip: 'text',
+            textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
           }}>تسجيل الدخول مطلوب</h2>
-          <p style={{color: '#c0c0c0'}}>يجب عليك تسجيل الدخول لمتابعة عملية الدفع</p>
+          <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>يجب عليك تسجيل الدخول لمتابعة عملية الدفع</p>
         </div>
 
-        <div className="card" style={{
-          maxWidth: 600,
+        <div className="card animate-fadeInUp" style={{
+          maxWidth: 700,
           margin: '0 auto',
-          textAlign: 'center'
+          textAlign: 'center',
+          padding: 'clamp(30px, 6vw, 50px)'
         }}>
-          <div style={{fontSize: '4em', marginBottom: 30}}>🔐</div>
-          <h3 style={{color: '#00ff88', marginBottom: 20, fontSize: '1.5em'}}>
+          <div style={{fontSize: 'clamp(3.5em, 10vw, 5em)', marginBottom: 'clamp(25px, 5vw, 35px)'}}>🔐</div>
+          <h3 style={{
+            color: '#39ff14',
+            marginBottom: 'clamp(18px, 4vw, 28px)',
+            fontSize: 'clamp(1.3em, 4.5vw, 1.7em)',
+            textShadow: '0 0 15px rgba(57, 255, 20, 0.3)'
+          }}>
             للمتابعة إلى الدفع
           </h3>
-          <p style={{color: '#c0c0c0', marginBottom: 30, lineHeight: 1.8}}>
-            يجب عليك تسجيل الدخول أولاً لضمان حماية مشترياتك وتتبع طلباتك بسهولة.
-            سيتم ربط طلبك بحسابك لتتمكن من الوصول إليه في أي وقت.
+          <p style={{
+            color: 'rgba(255,255,255,0.65)',
+            marginBottom: 'clamp(25px, 5vw, 35px)',
+            lineHeight: 1.8,
+            fontSize: 'clamp(1em, 2.5vw, 1.1em)'
+          }}>
+            يجب عليك تسجيل الدخول أولاً لضمان حماية مشترياتك وتتبع طلباتك بسهولة. سيتم ربط طلبك بحسابك لتتمكن من الوصول إليه في أي وقت.
           </p>
           <button 
             onClick={signInWithGoogle} 
             className="btn"
             style={{
-              fontSize: '1.2em',
-              padding: '16px 40px',
-              boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
+              fontSize: 'clamp(1.05em, 2.5vw, 1.2em)',
+              padding: 'clamp(14px, 3vw, 18px) clamp(30px, 7vw, 40px)',
+              boxShadow: '0 0 40px rgba(57, 255, 20, 0.5)'
             }}
           >
             🔑 تسجيل الدخول بواسطة Google
           </button>
-          <p style={{color: '#888', marginTop: 20, fontSize: '0.9em'}}>
+          <p style={{color: 'rgba(255,255,255,0.5)', marginTop: 'clamp(18px, 3vw, 25px)', fontSize: 'clamp(0.9em, 2.5vw, 0.95em)'}}>
             سريع وآمن - نستخدم Google للمصادقة
           </p>
         </div>
@@ -151,237 +163,173 @@ export default function Checkout(){
     <div>
       <div style={{
         textAlign: 'center',
-        marginBottom: 40,
-        padding: '30px 20px',
-        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 16
+        marginBottom: 'clamp(30px, 6vw, 50px)',
+        padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+        borderRadius: 'clamp(16px, 3vw, 24px)',
+        border: '2px solid rgba(57, 255, 20, 0.2)'
       }}>
         <h2 style={{
-          fontSize: '2.5em',
-          marginBottom: 10,
-          background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+          fontSize: 'clamp(2em, 7vw, 3em)',
+          marginBottom: 'clamp(12px, 2vw, 18px)',
+          background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }}>إتمام الدفع</h2>
-        <p style={{color: '#c0c0c0'}}>قم بالدفع عبر بريدي موب وأرفق صورة الإيصال</p>
+          backgroundClip: 'text',
+          textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
+        }}>💳 إتمام الدفع</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>قم بالدفع عبر بريدي موب وأرفق صورة الإيصال</p>
       </div>
 
-      <div className="card" style={{
-        maxWidth: 700,
-        margin: '0 auto'
+      <div className="card animate-fadeInUp" style={{
+        maxWidth: 800,
+        margin: '0 auto',
+        padding: 'clamp(25px, 5vw, 35px)'
       }}>
         <div style={{
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%)',
-          border: '1px solid rgba(0, 255, 136, 0.3)',
-          borderRadius: 12,
-          padding: 24,
-          marginBottom: 30
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(255, 215, 0, 0.08) 100%)',
+          border: '2px solid rgba(57, 255, 20, 0.25)',
+          borderRadius: '14px',
+          padding: 'clamp(20px, 4vw, 28px)',
+          marginBottom: 'clamp(25px, 5vw, 35px)'
         }}>
-          <h3 style={{color: '#00ff88', marginBottom: 20, fontSize: '1.3em', display: 'flex', alignItems: 'center', gap: 10}}>
-            <span style={{fontSize: '1.3em'}}>💳</span> خطوات إتمام الطلب
-          </h3>
-          
-          <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.3)',
-              border: '1px solid rgba(0, 255, 136, 0.2)',
-              borderRadius: 10,
-              padding: 16,
-              borderLeft: '4px solid #00ff88'
-            }}>
-              <div style={{color: '#00ff88', fontWeight: 600, marginBottom: 8, fontSize: '1.05em'}}>
-                <span style={{
-                  background: 'rgba(0, 255, 136, 0.2)',
-                  borderRadius: '50%',
-                  width: 28,
-                  height: 28,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 8,
-                  fontSize: '0.9em'
-                }}>1</span>
-                قم بتحويل المبلغ عبر بريدي موب
-              </div>
-              <p style={{color: '#c0c0c0', margin: 0, paddingRight: 36, lineHeight: 1.6, marginBottom: 12}}>
-                حول المبلغ الكامل للطلب باستخدام تطبيق بريدي موب
-              </p>
-              <div style={{
-                background: 'rgba(0, 0, 0, 0.4)',
-                border: '2px dashed rgba(0, 255, 136, 0.3)',
-                borderRadius: 8,
-                padding: '12px 16px',
-                marginRight: 36
-              }}>
-                <div style={{color: '#888', fontSize: '0.85em', marginBottom: 4}}>📱 حساب بريدي موب:</div>
-                <div style={{
-                  color: '#00ff88',
-                  fontSize: '1.15em',
-                  fontWeight: 700,
-                  fontFamily: 'monospace',
-                  direction: 'ltr',
-                  textAlign: 'right'
-                }}>004191270393</div>
-                <div style={{color: '#888', fontSize: '0.8em', marginTop: 4}}>⚠️ تأكد من إدخال الرقم بشكل صحيح</div>
-              </div>
-            </div>
-
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.3)',
-              border: '1px solid rgba(0, 255, 136, 0.2)',
-              borderRadius: 10,
-              padding: 16,
-              borderLeft: '4px solid #00ff88'
-            }}>
-              <div style={{color: '#00ff88', fontWeight: 600, marginBottom: 8, fontSize: '1.05em'}}>
-                <span style={{
-                  background: 'rgba(0, 255, 136, 0.2)',
-                  borderRadius: '50%',
-                  width: 28,
-                  height: 28,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 8,
-                  fontSize: '0.9em'
-                }}>2</span>
-                التقط صورة واضحة لإيصال الدفع
-              </div>
-              <p style={{color: '#c0c0c0', margin: 0, paddingRight: 36, lineHeight: 1.6}}>
-                تأكد من وضوح جميع التفاصيل في الصورة (المبلغ، التاريخ، رقم العملية)
-              </p>
-            </div>
-
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.3)',
-              border: '1px solid rgba(0, 255, 136, 0.2)',
-              borderRadius: 10,
-              padding: 16,
-              borderLeft: '4px solid #00ff88'
-            }}>
-              <div style={{color: '#00ff88', fontWeight: 600, marginBottom: 8, fontSize: '1.05em'}}>
-                <span style={{
-                  background: 'rgba(0, 255, 136, 0.2)',
-                  borderRadius: '50%',
-                  width: 28,
-                  height: 28,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 8,
-                  fontSize: '0.9em'
-                }}>3</span>
-                ارفع صورة الإيصال في النموذج أدناه
-              </div>
-              <p style={{color: '#c0c0c0', margin: 0, paddingRight: 36, lineHeight: 1.6}}>
-                املأ البيانات المطلوبة وارفع صورة الإيصال
-              </p>
-            </div>
-          </div>
-
           <div style={{
-            marginTop: 20,
-            padding: 16,
-            background: 'rgba(57, 255, 20, 0.05)',
-            border: '1px solid rgba(57, 255, 20, 0.2)',
-            borderRadius: 8
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gap: 'clamp(14px, 3vw, 20px)',
+            alignItems: 'center'
           }}>
-            <p style={{color: '#c0c0c0', margin: 0, lineHeight: 1.7, fontSize: '0.95em'}}>
-              ✅ <strong style={{color: '#00ff88'}}>سيتم مراجعة طلبك خلال 24 ساعة</strong><br/>
-              📧 ستصلك رسالة تأكيد عبر البريد الإلكتروني بمجرد الموافقة<br/>
-              📦 بعد التأكيد، يمكنك تحميل المنتجات من صفحة "مشترياتي"
-            </p>
+            <div style={{fontSize: 'clamp(2em, 5vw, 2.5em)'}}>📱</div>
+            <div>
+              <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.9em, 2.5vw, 1em)', marginBottom: 8}}>رقم حساب بريدي موب:</p>
+              <div style={{
+                fontSize: 'clamp(1.4em, 4vw, 1.8em)',
+                fontWeight: 900,
+                background: 'linear-gradient(135deg, #39ff14, #ffd700)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                fontFamily: 'monospace',
+                letterSpacing: 2
+              }}>
+                004191270393
+              </div>
+            </div>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div style={{marginBottom: 25}}>
-            <label style={{
-              display: 'block',
-              color: '#00ff88',
-              marginBottom: 10,
-              fontWeight: 600,
-              fontSize: '1.1em'
-            }}>البريد الإلكتروني (نفس الإيميل الذي سترسل منه الوصل)</label>
-            <input 
-              type="email"
-              value={email} 
-              onChange={e=>setEmail(e.target.value)}
-              placeholder="example@email.com"
-              required
-              readOnly={!!user?.email}
-              style={{
-                width: '100%',
-                padding: '14px 16px',
-                background: user?.email ? 'rgba(0, 255, 136, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(0, 255, 136, 0.3)',
-                borderRadius: 8,
-                color: '#fff',
-                fontSize: '1rem',
-                cursor: user?.email ? 'not-allowed' : 'text'
-              }}
-            />
-            <small style={{color: user?.email ? '#00ff88' : '#888', fontSize: '0.85em', marginTop: 8, display: 'block'}}>
-              {user?.email ? '✓ تم تسجيل الدخول بنجاح - سنرسل لك التأكيد على هذا الإيميل' : 'سيتم إرسال تأكيد الطلب إلى هذا البريد الإلكتروني'}
-            </small>
-          </div>
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(0,0,0,0.3) 100%)',
+          border: '2px solid rgba(57, 255, 20, 0.2)',
+          borderRadius: '14px',
+          padding: 'clamp(18px, 3.5vw, 24px)',
+          marginBottom: 'clamp(25px, 5vw, 35px)'
+        }}>
+          <h3 style={{
+            color: '#39ff14',
+            marginBottom: 'clamp(14px, 2.5vw, 18px)',
+            fontSize: 'clamp(1.1em, 3vw, 1.3em)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 'clamp(8px, 2vw, 12px)',
+            textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
+          }}>
+            <span style={{fontSize: '1.3em'}}>📋</span> خطوات الدفع
+          </h3>
+          <ol style={{
+            color: 'rgba(255,255,255,0.7)',
+            lineHeight: 1.9,
+            paddingLeft: 'clamp(20px, 3vw, 28px)',
+            fontSize: 'clamp(0.95em, 2.5vw, 1.05em)'
+          }}>
+            <li style={{marginBottom: '12px'}}>حول المبلغ <strong style={{color: '#ffd700'}}>{JSON.parse(localStorage.getItem('cart')||'[]').reduce((s:any,i:any)=>s+(i.price||0),0)} دج</strong> إلى رقم الحساب أعلاه</li>
+            <li style={{marginBottom: '12px'}}>خذ صورة واضحة لإيصال التحويل (يظهر رقم الملف والمبلغ والتاريخ)</li>
+            <li>أرفقها هنا وسيتم التحقق منها من قبل الفريق</li>
+          </ol>
+        </div>
 
-          <div style={{marginBottom: 30}}>
+        <form onSubmit={handleSubmit}>
+          <div style={{marginBottom: 'clamp(20px, 4vw, 28px)'}}>
             <label style={{
               display: 'block',
-              color: '#00ff88',
-              marginBottom: 10,
+              color: '#39ff14',
+              marginBottom: 'clamp(10px, 2vw, 14px)',
               fontWeight: 600,
-              fontSize: '1.1em'
-            }}>صورة وصل الإرسال (للتأكيد)</label>
+              fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
+              textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
+            }}>📸 صورة الإيصال</label>
             <div style={{
               position: 'relative',
-              border: '2px dashed rgba(0, 255, 136, 0.3)',
-              borderRadius: 12,
-              padding: 30,
+              border: '2px dashed rgba(57, 255, 20, 0.3)',
+              borderRadius: '12px',
+              padding: 'clamp(25px, 5vw, 35px)',
               textAlign: 'center',
-              background: 'rgba(0, 255, 136, 0.03)',
+              background: 'rgba(57, 255, 20, 0.02)',
               transition: 'all 0.3s ease',
               cursor: 'pointer'
             }}>
               <input 
                 type="file" 
                 accept="image/*"
-                onChange={e=>setFile(e.target.files?.[0]||null)}
-                required
+                onChange={(e)=>setFile(e.target.files?.[0]||null)}
                 style={{
                   position: 'absolute',
-                  top: 0,
-                  left: 0,
+                  opacity: 0,
                   width: '100%',
                   height: '100%',
-                  opacity: 0,
                   cursor: 'pointer'
                 }}
               />
-              <div style={{fontSize: '3em', marginBottom: 10}}>📤</div>
-              <p style={{color: file ? '#00ff88' : '#c0c0c0', marginBottom: 5}}>
-                {file ? `✓ ${file.name}` : 'اضغط لاختيار الصورة'}
+              <div style={{color: '#39ff14', fontSize: 'clamp(2em, 6vw, 2.8em)', marginBottom: 12}}>📤</div>
+              <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(0.95em, 2.5vw, 1.05em)', margin: '8px 0'}}>
+                {file ? file.name : 'اضغط أو اسحب الصورة هنا'}
               </p>
-              <small style={{color: '#888'}}>JPG, PNG أو GIF</small>
+              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2vw, 0.9em)'}}>PNG, JPG, GIF حتى 10MB</p>
             </div>
           </div>
 
+          <div style={{marginBottom: 'clamp(20px, 4vw, 28px)'}}>
+            <label style={{
+              display: 'block',
+              color: '#39ff14',
+              marginBottom: 'clamp(10px, 2vw, 14px)',
+              fontWeight: 600,
+              fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
+              textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
+            }}>📧 بريدك الإلكتروني</label>
+            <input 
+              type="email"
+              value={email} 
+              onChange={(e)=>setEmail(e.target.value)}
+              placeholder="بريدك الإلكتروني"
+              disabled
+              style={{
+                width: '100%',
+                padding: 'clamp(12px, 2.5vw, 16px) clamp(14px, 3vw, 22px)',
+                background: 'rgba(57, 255, 20, 0.08)',
+                border: '2px solid rgba(57, 255, 20, 0.25)',
+                borderRadius: '12px',
+                color: '#39ff14',
+                fontSize: 'clamp(0.95rem, 2.5vw, 1.05rem)',
+                transition: 'all 0.3s ease'
+              }}
+            />
+          </div>
+
           <button 
-            className="btn" 
             type="submit"
             disabled={loading}
+            className="btn"
             style={{
               width: '100%',
-              fontSize: '1.2em',
-              padding: '16px',
+              fontSize: 'clamp(1.05em, 2.5vw, 1.2em)',
+              padding: 'clamp(14px, 3vw, 18px)',
               opacity: loading ? 0.6 : 1,
               cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 0 40px rgba(0, 255, 136, 0.5)'
+              borderRadius: '12px'
             }}
           >
-            {loading ? '⏳ جاري الإرسال...' : '✓ تأكيد الطلب'}
+            {loading ? '⏳ جاري الإرسال...' : '✓ إرسال الطلب'}
           </button>
         </form>
       </div>

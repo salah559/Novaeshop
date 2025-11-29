@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import Link from 'next/link';
 
 export default function MyPurchases(){
   const [user, setUser] = useState<any>(null);
@@ -51,29 +52,31 @@ export default function MyPurchases(){
       <div>
         <div style={{
           textAlign: 'center',
-          marginBottom: 40,
-          padding: '30px 20px',
-          background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-          borderRadius: 16
+          marginBottom: 'clamp(30px, 6vw, 50px)',
+          padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+          borderRadius: 'clamp(16px, 3vw, 24px)',
+          border: '2px solid rgba(57, 255, 20, 0.2)'
         }}>
           <h2 style={{
-            fontSize: '2.5em',
-            marginBottom: 10,
-            background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+            fontSize: 'clamp(2em, 7vw, 3em)',
+            marginBottom: 'clamp(12px, 2vw, 18px)',
+            background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
+            backgroundClip: 'text',
+            textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
           }}>مشترياتي</h2>
         </div>
         <div className="card" style={{
           textAlign: 'center',
-          padding: 60,
+          padding: 'clamp(40px, 8vw, 60px)',
           maxWidth: 600,
           margin: '0 auto'
         }}>
-          <div style={{fontSize: '4em', marginBottom: 20}}>🔐</div>
-          <h3 style={{color: '#00ff88', marginBottom: 15}}>يجب تسجيل الدخول</h3>
-          <p style={{color: '#c0c0c0'}}>الرجاء تسجيل الدخول لعرض مشترياتك</p>
+          <div style={{fontSize: 'clamp(3.5em, 10vw, 4.5em)', marginBottom: 'clamp(20px, 4vw, 30px)'}}>🔐</div>
+          <h3 style={{color: '#39ff14', marginBottom: 'clamp(12px, 2vw, 18px)', textShadow: '0 0 15px rgba(57, 255, 20, 0.3)', fontSize: 'clamp(1.2em, 3.5vw, 1.5em)'}}>يجب تسجيل الدخول</h3>
+          <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>الرجاء تسجيل الدخول لعرض مشترياتك</p>
         </div>
       </div>
     );
@@ -83,165 +86,120 @@ export default function MyPurchases(){
     <div>
       <div style={{
         textAlign: 'center',
-        marginBottom: 40,
-        padding: '30px 20px',
-        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 16
+        marginBottom: 'clamp(30px, 6vw, 50px)',
+        padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+        borderRadius: 'clamp(16px, 3vw, 24px)',
+        border: '2px solid rgba(57, 255, 20, 0.2)'
       }}>
         <h2 style={{
-          fontSize: '2.5em',
-          marginBottom: 10,
-          background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+          fontSize: 'clamp(2em, 7vw, 3em)',
+          marginBottom: 'clamp(12px, 2vw, 18px)',
+          background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }}>مشترياتي</h2>
-        <p style={{color: '#c0c0c0'}}>جميع منتجاتك الرقمية في مكان واحد</p>
+          backgroundClip: 'text',
+          textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
+        }}>📦 مشترياتي</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>جميع منتجاتك الرقمية في مكان واحد</p>
       </div>
 
       {loading ? (
-        <div style={{textAlign: 'center', padding: 60}}>
+        <div style={{textAlign: 'center', padding: 'clamp(50px, 10vw, 80px)'}}>
           <div style={{
             width: 60,
             height: 60,
-            border: '4px solid rgba(0, 255, 136, 0.2)',
-            borderTop: '4px solid #00ff88',
+            border: '4px solid rgba(57, 255, 20, 0.2)',
+            borderTop: '4px solid #39ff14',
             borderRadius: '50%',
             margin: '0 auto 20px',
             animation: 'spin 1s linear infinite'
           }}></div>
-          <p style={{color: '#00ff88'}}>جاري التحميل...</p>
+          <p style={{color: '#39ff14', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>جاري التحميل...</p>
+          <style jsx>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+        </div>
+      ) : purchases.length === 0 ? (
+        <div className="card" style={{
+          textAlign: 'center',
+          padding: 'clamp(40px, 8vw, 60px)',
+          maxWidth: 600,
+          margin: '0 auto'
+        }}>
+          <div style={{fontSize: 'clamp(3.5em, 10vw, 4.5em)', marginBottom: 'clamp(20px, 4vw, 30px)'}}>🎁</div>
+          <h3 style={{color: '#39ff14', marginBottom: 'clamp(12px, 2vw, 18px)', textShadow: '0 0 15px rgba(57, 255, 20, 0.3)', fontSize: 'clamp(1.2em, 3.5vw, 1.5em)'}}>لم تشتري شيئاً بعد</h3>
+          <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 'clamp(25px, 5vw, 35px)', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>ابدأ بتصفح منتجاتنا وأضف إلى سلتك</p>
+          <Link href="/products" className="btn" style={{fontSize: 'clamp(1em, 2.5vw, 1.15em)', padding: 'clamp(12px, 2.5vw, 16px) clamp(28px, 6vw, 36px)'}}>🛍️ تصفح المنتجات</Link>
         </div>
       ) : (
         <div style={{
           display: 'grid',
-          gap: 20,
+          gap: 'clamp(18px, 4vw, 28px)',
           maxWidth: 900,
           margin: '0 auto'
         }}>
-          {purchases.length === 0 ? (
-            <div className="card" style={{
-              textAlign: 'center',
-              padding: 60
+          {purchases.map((item, idx) => (
+            <div key={item.id} className="card animate-fadeInUp" style={{
+              padding: 'clamp(20px, 4vw, 28px)',
+              borderLeft: item.type === 'purchase' ? '4px solid #39ff14' : '4px solid #ffa500',
+              animationDelay: `${idx * 0.05}s`,
+              opacity: 0
             }}>
-              <div style={{fontSize: '4em', marginBottom: 20}}>📦</div>
-              <h3 style={{color: '#00ff88', marginBottom: 15}}>لا توجد مشتريات</h3>
-              <p style={{color: '#c0c0c0', marginBottom: 30}}>لم تقم بشراء أي منتجات بعد</p>
-              <a href="/products" className="btn">تصفح المنتجات</a>
+              {item.type === 'purchase' ? (
+                <>
+                  <div style={{marginBottom: 'clamp(14px, 3vw, 20px)'}}>
+                    <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)', textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'}}>{item.name}</h3>
+                    <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}</p>
+                  </div>
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(57, 255, 20, 0.05) 100%)',
+                    padding: 'clamp(14px, 3vw, 18px)',
+                    borderRadius: 10,
+                    borderTop: '2px solid rgba(57, 255, 20, 0.3)',
+                    marginBottom: 'clamp(14px, 3vw, 20px)'
+                  }}>
+                    <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 10, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>✅ متوفر للتحميل</p>
+                    {item.downloadUrl && (
+                      <a 
+                        href={item.downloadUrl}
+                        className="btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{fontSize: 'clamp(0.95em, 2.5vw, 1.05em)', padding: 'clamp(10px, 2vw, 12px) clamp(20px, 4vw, 28px)', display: 'inline-block'}}
+                      >
+                        ⬇️ تحميل الآن
+                      </a>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div style={{marginBottom: 'clamp(14px, 3vw, 20px)'}}>
+                    <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)'}}>الطلب #{item.id?.substring(0, 8)}</h3>
+                    <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}</p>
+                  </div>
+                  <div style={{
+                    background: 'rgba(255, 165, 0, 0.08)',
+                    padding: 'clamp(14px, 3vw, 18px)',
+                    borderRadius: 10,
+                    marginBottom: 'clamp(14px, 3vw, 20px)'
+                  }}>
+                    <div style={{display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10}}>
+                      <span style={{fontSize: '1.3em'}}>⏳</span>
+                      <p style={{color: '#ffa500', fontSize: 'clamp(0.95em, 2.5vw, 1.05em)', margin: 0, fontWeight: 600}}>قيد المراجعة</p>
+                    </div>
+                    <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: 0}}>المجموع: <strong style={{color: '#ffd700'}}>{item.total} دج</strong></p>
+                  </div>
+                </>
+              )}
             </div>
-          ) : (
-            purchases.map(p=>(
-              <div key={p.id} className="card" style={{
-                background: p.type === 'order' 
-                  ? 'linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)'
-                  : 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-                border: p.type === 'order'
-                  ? '1px solid rgba(255, 193, 7, 0.3)'
-                  : '1px solid rgba(0, 255, 136, 0.3)'
-              }}>
-                {p.type === 'order' ? (
-                  <>
-                    <div style={{marginBottom: 20}}>
-                      <div style={{
-                        display: 'inline-block',
-                        background: 'rgba(255, 193, 7, 0.2)',
-                        color: '#ffc107',
-                        padding: '6px 16px',
-                        borderRadius: 20,
-                        fontSize: '0.85em',
-                        fontWeight: 600,
-                        marginBottom: 15
-                      }}>
-                        ⏳ قيد المراجعة
-                      </div>
-                      <h3 style={{color: '#fff', marginBottom: 12}}>طلبية #{p.id.substring(0, 8)}</h3>
-                      <div style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 8}}>
-                        <strong>المنتجات:</strong>
-                      </div>
-                      {p.items && p.items.map((item: any, idx: number) => (
-                        <div key={idx} style={{
-                          color: '#c0c0c0',
-                          fontSize: '0.9em',
-                          marginBottom: 4,
-                          paddingRight: 15
-                        }}>
-                          • {item.name} - {item.price} دج
-                        </div>
-                      ))}
-                      <div style={{
-                        marginTop: 12,
-                        padding: '12px 0',
-                        borderTop: '1px solid rgba(255, 193, 7, 0.2)',
-                        color: '#ffc107',
-                        fontWeight: 700,
-                        fontSize: '1.1em'
-                      }}>
-                        المجموع: {p.total} دج
-                      </div>
-                      <p style={{color: '#c0c0c0', fontSize: '0.85em', marginTop: 8}}>
-                        📅 تاريخ الطلب: {p.createdAt?.toDate?.()?.toLocaleDateString('ar-DZ') || 'غير محدد'}
-                      </p>
-                    </div>
-                    <div style={{
-                      background: 'rgba(255, 193, 7, 0.1)',
-                      border: '1px solid rgba(255, 193, 7, 0.3)',
-                      borderRadius: 8,
-                      padding: '12px 16px',
-                      textAlign: 'center',
-                      color: '#ffc107'
-                    }}>
-                      جاري مراجعة طلبك، سيتم تفعيله قريباً
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div style={{flex: 1}}>
-                      <div style={{
-                        display: 'inline-block',
-                        background: 'rgba(0, 255, 136, 0.2)',
-                        color: '#00ff88',
-                        padding: '6px 16px',
-                        borderRadius: 20,
-                        fontSize: '0.85em',
-                        fontWeight: 600,
-                        marginBottom: 12
-                      }}>
-                        ✅ مؤكد
-                      </div>
-                      <h3 style={{color: '#fff', marginBottom: 8}}>{p.name}</h3>
-                      <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>
-                        تم الشراء: {p.createdAt?.toDate?.()?.toLocaleDateString('ar-DZ') || 'غير محدد'}
-                      </p>
-                    </div>
-                    <a 
-                      className="btn" 
-                      href={p.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 8,
-                        marginTop: 15
-                      }}
-                    >
-                      <span>تحميل</span>
-                      <span>⬇️</span>
-                    </a>
-                  </>
-                )}
-              </div>
-            ))
-          )}
+          ))}
         </div>
       )}
-
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 }

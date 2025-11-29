@@ -19,7 +19,6 @@ export default function Products(){
       setProducts(productsData);
       setFilteredProducts(productsData);
       
-      // Extract unique categories
       const uniqueCategories = Array.from(new Set(productsData.map((p: any) => p.category).filter(Boolean)));
       setCategories(uniqueCategories as string[]);
       
@@ -31,7 +30,6 @@ export default function Products(){
   useEffect(() => {
     let filtered = [...products];
     
-    // Search filter
     if (searchTerm) {
       filtered = filtered.filter(p => 
         p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -40,12 +38,10 @@ export default function Products(){
       );
     }
     
-    // Category filter
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(p => p.category === selectedCategory);
     }
     
-    // Sort
     if (sortBy === 'price_low') {
       filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
     } else if (sortBy === 'price_high') {
@@ -59,33 +55,43 @@ export default function Products(){
     <div>
       <div style={{
         textAlign: 'center',
-        marginBottom: 'clamp(20px, 5vw, 40px)',
-        padding: 'clamp(20px, 5vw, 40px) clamp(15px, 3vw, 20px)',
-        background: 'linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 'clamp(12px, 3vw, 16px)'
+        marginBottom: 'clamp(30px, 6vw, 50px)',
+        padding: 'clamp(30px, 6vw, 50px) clamp(15px, 3vw, 20px)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+        borderRadius: 'clamp(16px, 3vw, 24px)',
+        border: '2px solid rgba(57, 255, 20, 0.2)',
+        position: 'relative'
       }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '2px',
+          background: 'linear-gradient(90deg, transparent, #39ff14, transparent)',
+          animation: 'shine 2s infinite'
+        }}></div>
         <h2 style={{
-          fontSize: 'clamp(1.8em, 6vw, 2.5em)',
-          marginBottom: 'clamp(10px, 2vw, 15px)',
-          background: 'linear-gradient(135deg, #00ff88 0%, #39ff14 100%)',
+          fontSize: 'clamp(2em, 7vw, 3em)',
+          marginBottom: 'clamp(12px, 2vw, 18px)',
+          background: 'linear-gradient(135deg, #39ff14 0%, #ffd700 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
+          backgroundClip: 'text',
+          textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
         }}>المنتجات الرقمية</h2>
-        <p style={{color: '#c0c0c0', fontSize: 'clamp(0.95em, 2.5vw, 1.1em)'}}>اختر من مجموعتنا المتنوعة من المنتجات الرقمية عالية الجودة</p>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>اختر من مجموعتنا المتنوعة من المنتجات الرقمية عالية الجودة</p>
       </div>
 
-      {/* Search and Filter Section */}
       <div style={{
-        marginBottom: 'clamp(20px, 5vw, 40px)',
+        marginBottom: 'clamp(25px, 5vw, 40px)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'clamp(12px, 3vw, 20px)'
+        gap: 'clamp(15px, 3vw, 22px)'
       }} className="filters-section">
-        {/* Search Bar */}
         <div style={{
           display: 'flex',
-          gap: 'clamp(10px, 2vw, 15px)',
+          gap: 'clamp(12px, 3vw, 18px)',
           flexWrap: 'wrap'
         }}>
           <input
@@ -95,14 +101,15 @@ export default function Products(){
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               flex: 1,
-              minWidth: 'min(250px, 100%)',
-              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 20px)',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '2px solid rgba(0, 255, 136, 0.3)',
-              borderRadius: 'clamp(8px, 2vw, 12px)',
+              minWidth: 'min(260px, 100%)',
+              padding: 'clamp(12px, 2.5vw, 16px) clamp(14px, 3vw, 22px)',
+              background: 'rgba(57, 255, 20, 0.05)',
+              border: '2px solid rgba(57, 255, 20, 0.3)',
+              borderRadius: 'clamp(10px, 2vw, 14px)',
               color: '#fff',
-              fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
-              transition: 'all 0.3s ease'
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.05rem)',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 0 15px rgba(57, 255, 20, 0.1)'
             }}
           />
           
@@ -110,15 +117,16 @@ export default function Products(){
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             style={{
-              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 20px)',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '2px solid rgba(0, 255, 136, 0.3)',
-              borderRadius: 'clamp(8px, 2vw, 12px)',
+              padding: 'clamp(12px, 2.5vw, 16px) clamp(14px, 3vw, 22px)',
+              background: 'rgba(57, 255, 20, 0.05)',
+              border: '2px solid rgba(57, 255, 20, 0.3)',
+              borderRadius: 'clamp(10px, 2vw, 14px)',
               color: '#fff',
-              fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.05rem)',
               cursor: 'pointer',
-              minWidth: 'min(150px, 100%)',
-              flex: 1
+              minWidth: 'min(160px, 100%)',
+              flex: 1,
+              boxShadow: '0 0 15px rgba(57, 255, 20, 0.1)'
             }}
           >
             <option value="all">كل الفئات</option>
@@ -131,15 +139,16 @@ export default function Products(){
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             style={{
-              padding: 'clamp(10px, 2.5vw, 14px) clamp(12px, 3vw, 20px)',
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '2px solid rgba(0, 255, 136, 0.3)',
-              borderRadius: 'clamp(8px, 2vw, 12px)',
+              padding: 'clamp(12px, 2.5vw, 16px) clamp(14px, 3vw, 22px)',
+              background: 'rgba(57, 255, 20, 0.05)',
+              border: '2px solid rgba(57, 255, 20, 0.3)',
+              borderRadius: 'clamp(10px, 2vw, 14px)',
               color: '#fff',
-              fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+              fontSize: 'clamp(0.95rem, 2.5vw, 1.05rem)',
               cursor: 'pointer',
-              minWidth: 'min(150px, 100%)',
-              flex: 1
+              minWidth: 'min(160px, 100%)',
+              flex: 1,
+              boxShadow: '0 0 15px rgba(57, 255, 20, 0.1)'
             }}
           >
             <option value="default">الترتيب الافتراضي</option>
@@ -148,9 +157,8 @@ export default function Products(){
           </select>
         </div>
         
-        {/* Results count */}
         <div style={{
-          color: '#c0c0c0',
+          color: 'rgba(255,255,255,0.6)',
           fontSize: '0.95em',
           textAlign: 'center'
         }}>
@@ -165,36 +173,28 @@ export default function Products(){
       {loading ? (
         <div style={{
           textAlign: 'center',
-          padding: '60px 20px',
-          color: '#00ff88',
+          padding: 'clamp(50px, 10vw, 80px) 20px',
+          color: '#39ff14',
           fontSize: '1.2em'
         }}>
-          <div style={{
-            width: 60,
-            height: 60,
-            border: '4px solid rgba(0, 255, 136, 0.2)',
-            borderTop: '4px solid #00ff88',
-            borderRadius: '50%',
-            margin: '0 auto 20px',
-            animation: 'spin 1s linear infinite'
-          }}></div>
+          <div className="spinner" style={{margin: '0 auto 20px'}}></div>
           جاري تحميل المنتجات...
         </div>
       ) : (
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
-          gap: 'clamp(15px, 3vw, 25px)'
+          gap: 'clamp(18px, 4vw, 28px)'
         }}>
           {filteredProducts.length === 0 && (
-            <div className="card" style={{
+            <div className="card animate-scaleIn" style={{
               textAlign: 'center',
-              padding: 60,
+              padding: 'clamp(40px, 8vw, 60px) 20px',
               gridColumn: '1 / -1'
             }}>
-              <div style={{fontSize: '3em', marginBottom: 20}}>🔍</div>
-              <h3 style={{color: '#00ff88', marginBottom: 10}}>لا توجد نتائج</h3>
-              <p style={{color: '#c0c0c0'}}>جرب تغيير البحث أو الفلتر</p>
+              <div style={{fontSize: 'clamp(2.5em, 8vw, 3.5em)', marginBottom: 20}}>🔍</div>
+              <h3 style={{color: '#39ff14', marginBottom: 10, textShadow: '0 0 15px rgba(57, 255, 20, 0.4)'}}>لا توجد نتائج</h3>
+              <p style={{color: 'rgba(255,255,255,0.6)'}}>جرب تغيير البحث أو الفلتر</p>
               <button
                 onClick={() => {
                   setSearchTerm('');
@@ -208,63 +208,65 @@ export default function Products(){
               </button>
             </div>
           )}
-          {filteredProducts.map(p => (
-            <div key={p.id} className="card" style={{
+          {filteredProducts.map((p, idx) => (
+            <div key={p.id} className="card animate-fadeInUp" style={{
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
               padding: 0,
-              transition: 'all 0.3s ease'
+              animationDelay: `${idx * 0.05}s`,
+              opacity: 0
             }}>
               <div style={{
                 width: '100%',
-                height: 200,
-                background: `linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%), url(${p.imageUrl || '/placeholder.png'}) center/cover`,
+                height: 'clamp(160px, 30vw, 220px)',
+                background: `linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%), url(${p.imageUrl || '/placeholder.png'}) center/cover`,
                 position: 'relative'
               }}>
                 <div style={{
                   position: 'absolute',
-                  top: 15,
-                  right: 15,
-                  background: 'linear-gradient(135deg, #00ff88 0%, #00cc6a 100%)',
-                  color: '#0a0f14',
-                  padding: '6px 16px',
+                  top: 12,
+                  right: 12,
+                  background: 'linear-gradient(135deg, #39ff14, #ffd700)',
+                  color: '#000',
+                  padding: '8px 16px',
                   borderRadius: 20,
                   fontWeight: 700,
-                  fontSize: '0.9em',
-                  boxShadow: '0 4px 15px rgba(0, 255, 136, 0.4)'
+                  fontSize: 'clamp(0.9em, 2.5vw, 1em)',
+                  boxShadow: '0 0 20px rgba(57, 255, 20, 0.5)'
                 }}>
                   {p.price} دج
                 </div>
                 {p.category && (
                   <div style={{
                     position: 'absolute',
-                    bottom: 15,
-                    left: 15,
-                    background: 'rgba(0, 0, 0, 0.7)',
-                    color: '#00ff88',
-                    padding: '4px 12px',
-                    borderRadius: 12,
+                    bottom: 12,
+                    left: 12,
+                    background: 'rgba(0, 0, 0, 0.8)',
+                    color: '#39ff14',
+                    padding: '6px 14px',
+                    borderRadius: 14,
                     fontSize: '0.85em',
-                    border: '1px solid rgba(0, 255, 136, 0.3)'
+                    border: '1px solid rgba(57, 255, 20, 0.4)',
+                    fontWeight: 500
                   }}>
                     {p.category}
                   </div>
                 )}
               </div>
-              <div style={{padding: 20, flex: 1, display: 'flex', flexDirection: 'column'}}>
+              <div style={{padding: 'clamp(16px, 3vw, 22px)', flex: 1, display: 'flex', flexDirection: 'column'}}>
                 <h3 style={{
                   color: '#fff',
-                  marginBottom: 12,
-                  fontSize: '1.2em',
+                  marginBottom: 'clamp(8px, 2vw, 12px)',
+                  fontSize: 'clamp(1.05em, 3.5vw, 1.25em)',
                   lineHeight: 1.4
                 }}>{p.name}</h3>
                 <p style={{
-                  color: '#c0c0c0',
-                  fontSize: '0.95em',
+                  color: 'rgba(255,255,255,0.65)',
+                  fontSize: 'clamp(0.9em, 2.5vw, 0.95em)',
                   lineHeight: 1.7,
                   flex: 1,
-                  marginBottom: 20
+                  marginBottom: 'clamp(14px, 3vw, 20px)'
                 }}>{p.description?.substring(0, 100)}...</p>
                 <Link 
                   href={`/products/${p.id}`}
@@ -272,9 +274,9 @@ export default function Products(){
                   style={{
                     width: '100%',
                     textAlign: 'center',
-                    padding: '12px',
-                    fontSize: '1em',
-                    boxShadow: '0 4px 20px rgba(0, 255, 136, 0.3)'
+                    padding: 'clamp(12px, 2vw, 16px)',
+                    fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
+                    borderRadius: '12px'
                   }}
                 >
                   🛍️ عرض التفاصيل
@@ -286,9 +288,9 @@ export default function Products(){
       )}
       
       <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes shine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
         }
         
         @media (max-width: 600px) {
