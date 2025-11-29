@@ -79,26 +79,21 @@ export default function AdminProducts(){
   }
 
   async function handleDelete(id: string){
-    console.log('Delete button clicked for product:', id);
     if(!window.confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
-      console.log('User cancelled delete');
       return;
     }
     
     try {
-      console.log('Deleting product from Firebase...');
       await deleteDoc(doc(db, 'products', id));
       alert('✅ تم حذف المنتج بنجاح');
-      console.log('Product deleted, reloading...');
       await loadProducts();
     } catch(e: any) {
-      console.error('Delete error:', e);
       alert(`❌ حدث خطأ في حذف المنتج: ${e.message}`);
+      console.error('Delete error:', e);
     }
   }
 
   function startEdit(product: Product){
-    console.log('Starting edit for product:', product);
     setEditingProduct(product);
     setFormData({
       name: product.name,
@@ -109,7 +104,6 @@ export default function AdminProducts(){
       fileUrl: product.fileUrl
     });
     setShowForm(true);
-    console.log('Form should be shown now');
   }
 
   function resetForm(){
@@ -465,15 +459,9 @@ export default function AdminProducts(){
                   {product.category}
                 </span>
               </div>
-              <div style={{display: 'flex', gap: 10}}>
+              <div style={{display: 'flex', gap: 10, pointerEvents: 'auto'}}>
                 <button 
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Edit button clicked');
-                    startEdit(product);
-                  }}
+                  onClick={() => startEdit(product)}
                   style={{
                     flex: 1,
                     padding: '10px',
@@ -483,25 +471,14 @@ export default function AdminProducts(){
                     borderRadius: 8,
                     fontWeight: 600,
                     cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(57, 255, 20, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(57, 255, 20, 0.2)';
+                    transition: 'all 0.3s ease',
+                    pointerEvents: 'auto'
                   }}
                 >
                   ✏️ تعديل
                 </button>
                 <button 
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Delete button clicked');
-                    handleDelete(product.id!);
-                  }}
+                  onClick={() => handleDelete(product.id!)}
                   style={{
                     flex: 1,
                     padding: '10px',
@@ -511,13 +488,8 @@ export default function AdminProducts(){
                     borderRadius: 8,
                     fontWeight: 600,
                     cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 0, 0, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'rgba(255, 0, 0, 0.2)';
+                    transition: 'all 0.3s ease',
+                    pointerEvents: 'auto'
                   }}
                 >
                   🗑️ حذف
