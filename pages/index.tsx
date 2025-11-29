@@ -7,13 +7,13 @@ export default function Home(){
   
   return (
     <div>
-      <div className="floating-shapes">
-        <div className="shape"></div>
-        <div className="shape"></div>
-        <div className="shape"></div>
+      <div className="floating-orbs">
+        <div className="orb orb1"></div>
+        <div className="orb orb2"></div>
+        <div className="orb orb3"></div>
       </div>
 
-      <section className="animate-fadeIn" style={{
+      <section style={{
         padding: 'clamp(60px, 12vw, 120px) 0',
         textAlign: 'center',
         position: 'relative'
@@ -25,67 +25,68 @@ export default function Home(){
         }}>
           <div className="animate-scaleIn" style={{
             display: 'inline-block',
-            marginBottom: 20
+            marginBottom: 30
           }}>
-            <span className="tag purple" style={{fontSize: '0.9em'}}>
-              🚀 منصة رقمية متطورة
+            <span className="tag">
+              ✨ اختبر تجربة جديدة من التسوق
             </span>
           </div>
           
           <h1 style={{
-            fontSize: 'clamp(2.2em, 9vw, 4em)',
-            marginBottom: 'clamp(20px, 4vw, 30px)',
+            fontSize: 'clamp(2.2em, 10vw, 4.5em)',
+            marginBottom: 'clamp(20px, 4vw, 35px)',
             lineHeight: 1.1,
             fontWeight: 800
           }}>{t('welcomeTitle')}</h1>
           
           <p style={{
             fontSize: 'clamp(1.1em, 3.5vw, 1.4em)',
-            color: 'rgba(255,255,255,0.7)',
-            marginBottom: 'clamp(15px, 3vw, 20px)',
-            lineHeight: 1.7,
-            maxWidth: 700,
-            margin: '0 auto'
+            color: 'rgba(255,255,255,0.75)',
+            marginBottom: 'clamp(15px, 3vw, 25px)',
+            lineHeight: 1.8,
+            maxWidth: 750,
+            margin: '0 auto 25px'
           }}>
             {t('welcomeSubtitle')}
           </p>
           
           <p style={{
-            fontSize: 'clamp(1em, 3vw, 1.2em)',
+            fontSize: 'clamp(1.05em, 3vw, 1.3em)',
             marginBottom: 'clamp(30px, 6vw, 50px)',
-            marginTop: 15
+            animation: 'pulse 2s ease-in-out infinite'
           }}>
             <span style={{
-              background: 'linear-gradient(135deg, #6366f1, #ec4899)',
+              background: 'linear-gradient(135deg, #39ff14, #ffd700)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              fontWeight: 600
+              fontWeight: 700,
+              fontSize: '1.1em'
             }}>{t('paymentInfo')}</span>
           </p>
           
           <div style={{
             display: 'flex',
-            gap: 'clamp(12px, 3vw, 20px)',
+            gap: 'clamp(15px, 4vw, 25px)',
             justifyContent: 'center',
             flexWrap: 'wrap'
           }} className="hero-buttons">
-            <Link href="/products" className="btn" style={{
-              fontSize: 'clamp(1em, 2.5vw, 1.15em)',
-              padding: 'clamp(14px, 3vw, 18px) clamp(28px, 7vw, 45px)',
+            <Link href="/products" className="btn animate-slideInLeft animate-delay-1" style={{
+              fontSize: 'clamp(1em, 2.5vw, 1.2em)',
+              padding: 'clamp(16px, 3vw, 20px) clamp(32px, 8vw, 50px)',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 10
+              gap: 12
             }}>
               <span>🛍️</span>
               {t('browseProducts')}
             </Link>
-            <Link href="/contact" className="btn btn-outline" style={{
-              fontSize: 'clamp(1em, 2.5vw, 1.15em)',
-              padding: 'clamp(14px, 3vw, 18px) clamp(28px, 7vw, 45px)',
+            <Link href="/contact" className="btn btn-outline animate-slideInRight animate-delay-2" style={{
+              fontSize: 'clamp(1em, 2.5vw, 1.2em)',
+              padding: 'clamp(16px, 3vw, 20px) clamp(32px, 8vw, 50px)',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 10
+              gap: 12
             }}>
               <span>💬</span>
               {t('contactUs')}
@@ -95,42 +96,60 @@ export default function Home(){
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            gap: 40,
-            marginTop: 'clamp(40px, 8vw, 70px)',
+            gap: 'clamp(30px, 6vw, 50px)',
+            marginTop: 'clamp(50px, 10vw, 80px)',
             flexWrap: 'wrap'
           }}>
-            <div className="animate-fadeInUp animate-delay-1" style={{textAlign: 'center'}}>
+            <div className="animate-fadeInUp animate-delay-1 glow-effect" style={{textAlign: 'center'}}>
               <div style={{
-                fontSize: 'clamp(2em, 6vw, 2.8em)',
-                fontWeight: 800,
-                background: 'linear-gradient(135deg, #6366f1, #818cf8)',
+                fontSize: 'clamp(2.2em, 7vw, 3.2em)',
+                fontWeight: 900,
+                background: 'linear-gradient(135deg, #39ff14, #ffd700)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
+                backgroundClip: 'text',
+                textShadow: '0 0 40px rgba(57, 255, 20, 0.5)'
               }}>500+</div>
-              <div style={{color: 'rgba(255,255,255,0.5)', fontSize: '0.95em'}}>منتج رقمي</div>
-            </div>
-            <div className="animate-fadeInUp animate-delay-2" style={{textAlign: 'center'}}>
               <div style={{
-                fontSize: 'clamp(2em, 6vw, 2.8em)',
-                fontWeight: 800,
-                background: 'linear-gradient(135deg, #ec4899, #f472b6)',
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: '1em',
+                marginTop: 8,
+                fontWeight: 500
+              }}>منتج رقمي</div>
+            </div>
+            <div className="animate-fadeInUp animate-delay-2 glow-effect" style={{textAlign: 'center'}}>
+              <div style={{
+                fontSize: 'clamp(2.2em, 7vw, 3.2em)',
+                fontWeight: 900,
+                background: 'linear-gradient(135deg, #ffd700, #39ff14)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
+                backgroundClip: 'text',
+                textShadow: '0 0 40px rgba(255, 215, 0, 0.5)'
               }}>1000+</div>
-              <div style={{color: 'rgba(255,255,255,0.5)', fontSize: '0.95em'}}>عميل سعيد</div>
-            </div>
-            <div className="animate-fadeInUp animate-delay-3" style={{textAlign: 'center'}}>
               <div style={{
-                fontSize: 'clamp(2em, 6vw, 2.8em)',
-                fontWeight: 800,
-                background: 'linear-gradient(135deg, #06b6d4, #22d3ee)',
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: '1em',
+                marginTop: 8,
+                fontWeight: 500
+              }}>عميل سعيد</div>
+            </div>
+            <div className="animate-fadeInUp animate-delay-3 glow-effect" style={{textAlign: 'center'}}>
+              <div style={{
+                fontSize: 'clamp(2.2em, 7vw, 3.2em)',
+                fontWeight: 900,
+                background: 'linear-gradient(135deg, #00ff88, #39ff14)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
+                backgroundClip: 'text',
+                textShadow: '0 0 40px rgba(57, 255, 20, 0.5)'
               }}>24/7</div>
-              <div style={{color: 'rgba(255,255,255,0.5)', fontSize: '0.95em'}}>دعم متواصل</div>
+              <div style={{
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: '1em',
+                marginTop: 8,
+                fontWeight: 500
+              }}>دعم متواصل</div>
             </div>
           </div>
         </div>
@@ -138,146 +157,220 @@ export default function Home(){
 
       <section style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
-        gap: 'clamp(20px, 4vw, 30px)',
-        marginTop: 'clamp(20px, 6vw, 40px)'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+        gap: 'clamp(25px, 5vw, 35px)',
+        marginTop: 'clamp(30px, 8vw, 60px)'
       }}>
         <div className="card animate-fadeInUp animate-delay-1" style={{textAlign: 'center'}}>
-          <div className="icon-box purple animate-float" style={{
-            margin: '0 auto 20px'
+          <div className="icon-box animate-float" style={{
+            margin: '0 auto 25px'
           }}>🛍️</div>
           <h3 style={{
-            color: '#818cf8',
-            marginBottom: 12,
-            fontSize: 'clamp(1.1em, 3vw, 1.3em)'
+            color: '#39ff14',
+            marginBottom: 15,
+            fontSize: 'clamp(1.15em, 3.5vw, 1.4em)',
+            textShadow: '0 0 15px rgba(57, 255, 20, 0.4)'
           }}>{t('diverseProducts')}</h3>
-          <p style={{color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontSize: '0.95em'}}>
+          <p style={{
+            color: 'rgba(255,255,255,0.65)',
+            lineHeight: 1.8,
+            fontSize: '0.95em'
+          }}>
             {t('diverseProductsDesc')}
           </p>
         </div>
 
         <div className="card animate-fadeInUp animate-delay-2" style={{textAlign: 'center'}}>
-          <div className="icon-box pink animate-float" style={{
-            margin: '0 auto 20px',
+          <div className="icon-box animate-float" style={{
+            margin: '0 auto 25px',
             animationDelay: '0.5s'
           }}>💳</div>
           <h3 style={{
-            color: '#f472b6',
-            marginBottom: 12,
-            fontSize: 'clamp(1.1em, 3vw, 1.3em)'
+            color: '#ffd700',
+            marginBottom: 15,
+            fontSize: 'clamp(1.15em, 3.5vw, 1.4em)',
+            textShadow: '0 0 15px rgba(255, 215, 0, 0.4)'
           }}>{t('securePayment')}</h3>
-          <p style={{color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontSize: '0.95em'}}>
+          <p style={{
+            color: 'rgba(255,255,255,0.65)',
+            lineHeight: 1.8,
+            fontSize: '0.95em'
+          }}>
             {t('securePaymentDesc')}
           </p>
         </div>
 
         <div className="card animate-fadeInUp animate-delay-3" style={{textAlign: 'center'}}>
-          <div className="icon-box cyan animate-float" style={{
-            margin: '0 auto 20px',
+          <div className="icon-box animate-float" style={{
+            margin: '0 auto 25px',
             animationDelay: '1s'
           }}>⚡</div>
           <h3 style={{
-            color: '#22d3ee',
-            marginBottom: 12,
-            fontSize: 'clamp(1.1em, 3vw, 1.3em)'
+            color: '#00ff88',
+            marginBottom: 15,
+            fontSize: 'clamp(1.15em, 3.5vw, 1.4em)',
+            textShadow: '0 0 15px rgba(0, 255, 136, 0.4)'
           }}>{t('instantDelivery')}</h3>
-          <p style={{color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontSize: '0.95em'}}>
+          <p style={{
+            color: 'rgba(255,255,255,0.65)',
+            lineHeight: 1.8,
+            fontSize: '0.95em'
+          }}>
             {t('instantDeliveryDesc')}
           </p>
         </div>
       </section>
 
-      <section className="card animate-fadeInUp" style={{
-        marginTop: 'clamp(40px, 10vw, 80px)',
-        background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.05) 100%)',
-        border: '1px solid rgba(99, 102, 241, 0.2)',
+      <section className="card animate-fadeInUp animate-delay-2" style={{
+        marginTop: 'clamp(50px, 12vw, 100px)',
+        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
+        border: '2px solid rgba(57, 255, 20, 0.25)',
         textAlign: 'center',
-        padding: 'clamp(30px, 6vw, 50px)'
+        padding: 'clamp(40px, 8vw, 60px)',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <span className="tag pink" style={{marginBottom: 15, display: 'inline-block'}}>
-          ✨ سهولة في الاستخدام
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '2px',
+          background: 'linear-gradient(90deg, transparent, #39ff14, transparent)',
+          animation: 'shine 2s infinite'
+        }}></div>
+        
+        <span className="tag" style={{marginBottom: 20, display: 'inline-block'}}>
+          🚀 كيفية الاستخدام
         </span>
-        <h2 style={{marginBottom: 'clamp(20px, 4vw, 30px)', fontSize: 'clamp(1.6em, 5vw, 2.2em)'}}>{t('howItWorks')}</h2>
+        <h2 style={{
+          marginBottom: 'clamp(25px, 5vw, 40px)',
+          fontSize: 'clamp(1.8em, 6vw, 2.4em)',
+          textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
+        }}>{t('howItWorks')}</h2>
         
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
-          gap: 'clamp(25px, 5vw, 40px)',
-          marginTop: 'clamp(25px, 5vw, 40px)'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
+          gap: 'clamp(30px, 6vw, 45px)',
+          marginTop: 'clamp(30px, 6vw, 50px)'
         }}>
           <div className="animate-fadeInUp animate-delay-1">
             <div style={{
-              width: 60,
-              height: 60,
-              margin: '0 auto 15px',
+              width: 70,
+              height: 70,
+              margin: '0 auto 18px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              background: 'linear-gradient(135deg, #39ff14, #00ff88)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.5em',
-              fontWeight: 700,
-              color: 'white',
-              boxShadow: '0 0 30px rgba(99, 102, 241, 0.4)'
+              fontSize: '1.8em',
+              fontWeight: 800,
+              color: '#000',
+              boxShadow: '0 0 40px rgba(57, 255, 20, 0.6)',
+              animation: 'pulse 2s ease-in-out infinite'
             }}>1</div>
-            <h4 style={{color: '#fff', marginBottom: 10, fontSize: '1.1em'}}>{t('step1')}</h4>
-            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: '0.9em', lineHeight: 1.6}}>{t('step1Desc')}</p>
+            <h4 style={{
+              color: '#39ff14',
+              marginBottom: 12,
+              fontSize: '1.15em',
+              fontWeight: 600,
+              textShadow: '0 0 10px rgba(57, 255, 20, 0.3)'
+            }}>{t('step1')}</h4>
+            <p style={{
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '0.95em',
+              lineHeight: 1.7
+            }}>{t('step1Desc')}</p>
           </div>
           
           <div className="animate-fadeInUp animate-delay-2">
             <div style={{
-              width: 60,
-              height: 60,
-              margin: '0 auto 15px',
+              width: 70,
+              height: 70,
+              margin: '0 auto 18px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #ec4899, #f472b6)',
+              background: 'linear-gradient(135deg, #ffd700, #ffaa00)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.5em',
-              fontWeight: 700,
-              color: 'white',
-              boxShadow: '0 0 30px rgba(236, 72, 153, 0.4)'
+              fontSize: '1.8em',
+              fontWeight: 800,
+              color: '#000',
+              boxShadow: '0 0 40px rgba(255, 215, 0, 0.6)',
+              animation: 'pulse 2s ease-in-out infinite'
             }}>2</div>
-            <h4 style={{color: '#fff', marginBottom: 10, fontSize: '1.1em'}}>{t('step2')}</h4>
-            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: '0.9em', lineHeight: 1.6}}>{t('step2Desc')}</p>
+            <h4 style={{
+              color: '#ffd700',
+              marginBottom: 12,
+              fontSize: '1.15em',
+              fontWeight: 600,
+              textShadow: '0 0 10px rgba(255, 215, 0, 0.3)'
+            }}>{t('step2')}</h4>
+            <p style={{
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '0.95em',
+              lineHeight: 1.7
+            }}>{t('step2Desc')}</p>
           </div>
           
           <div className="animate-fadeInUp animate-delay-3">
             <div style={{
-              width: 60,
-              height: 60,
-              margin: '0 auto 15px',
+              width: 70,
+              height: 70,
+              margin: '0 auto 18px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #06b6d4, #22d3ee)',
+              background: 'linear-gradient(135deg, #00ff88, #39ff14)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '1.5em',
-              fontWeight: 700,
-              color: 'white',
-              boxShadow: '0 0 30px rgba(6, 182, 212, 0.4)'
+              fontSize: '1.8em',
+              fontWeight: 800,
+              color: '#000',
+              boxShadow: '0 0 40px rgba(0, 255, 136, 0.6)',
+              animation: 'pulse 2s ease-in-out infinite'
             }}>3</div>
-            <h4 style={{color: '#fff', marginBottom: 10, fontSize: '1.1em'}}>{t('step3')}</h4>
-            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: '0.9em', lineHeight: 1.6}}>{t('step3Desc')}</p>
+            <h4 style={{
+              color: '#00ff88',
+              marginBottom: 12,
+              fontSize: '1.15em',
+              fontWeight: 600,
+              textShadow: '0 0 10px rgba(0, 255, 136, 0.3)'
+            }}>{t('step3')}</h4>
+            <p style={{
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '0.95em',
+              lineHeight: 1.7
+            }}>{t('step3Desc')}</p>
           </div>
         </div>
       </section>
 
       <section style={{
-        marginTop: 'clamp(40px, 10vw, 80px)',
+        marginTop: 'clamp(50px, 12vw, 100px)',
         textAlign: 'center',
-        padding: 'clamp(30px, 6vw, 50px) 0'
+        padding: 'clamp(40px, 8vw, 60px) 0',
+        position: 'relative'
       }}>
-        <h2 style={{marginBottom: 15}}>هل أنت مستعد للبدء؟</h2>
-        <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 30, fontSize: '1.1em'}}>
+        <h2 style={{
+          marginBottom: 20,
+          fontSize: 'clamp(1.8em, 6vw, 2.4em)',
+          textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
+        }}>هل أنت مستعد للبدء؟</h2>
+        <p style={{
+          color: 'rgba(255,255,255,0.7)',
+          marginBottom: 35,
+          fontSize: '1.1em',
+          lineHeight: 1.8
+        }}>
           انضم إلى آلاف العملاء الراضين واحصل على منتجاتك الرقمية الآن
         </p>
-        <Link href="/products" className="btn" style={{
-          fontSize: '1.1em',
-          padding: '16px 40px'
+        <Link href="/products" className="btn animate-pulse" style={{
+          fontSize: '1.15em',
+          padding: '16px 45px'
         }}>
-          ابدأ التسوق الآن ←
+          ابدأ التسوق الآن ← 
         </Link>
       </section>
 

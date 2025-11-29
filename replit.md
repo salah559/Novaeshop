@@ -6,6 +6,23 @@ DZ Digital Market is a Next.js-based digital marketplace application designed fo
 
 ## Recent Changes
 
+**November 29, 2025 - Modern Vibrant Design & Animation Overhaul**
+- ✅ **Brand-Based Color Scheme**: Updated to neon green (#39ff14) and gold (#ffd700) from logo
+  - Stunning glowing effects on all interactive elements
+  - Animated text with pulsing gradient backgrounds
+  - Floating orbs in background with smooth animations
+- ✅ **Enhanced Animations**: Added elaborate motion effects
+  - Card hover effects with directional glow
+  - Button shine and scale animations
+  - Floating and pulsing icon animations
+  - Smooth transitions with cubic-bezier timing
+- ✅ **Redesigned Components**:
+  - Header with glowing logo (neon gradient) and animated menu lines
+  - Homepage with animated hero section and stats counter
+  - Feature cards with floating animations and glow borders
+  - Smooth step indicators with pulsing circles
+- ✨ **Visual Impact**: Site now features premium animations that captivate and engage users
+
 **November 29, 2025 - ImgBB Image Upload Integration**
 - ✅ **ImgBB Integration**: Replaced Firebase Storage with ImgBB for receipt image uploads
   - Created API endpoint `/api/upload-image.ts` for secure server-side image upload
