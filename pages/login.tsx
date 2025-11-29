@@ -524,7 +524,7 @@ export default function LoginPage() {
       <style jsx>{`
         .login-page {
           min-height: 100vh;
-          background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 50%, #001a0f 100%);
+          background: linear-gradient(135deg, rgba(5, 7, 8, 0.95) 0%, rgba(10, 15, 20, 0.95) 50%, rgba(5, 7, 8, 0.98) 100%);
           padding: 20px;
           display: flex;
           align-items: center;
@@ -540,8 +540,8 @@ export default function LoginPage() {
           width: 100%;
           height: 100%;
           background: 
-            radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(57, 255, 20, 0.1) 0%, transparent 50%);
+            radial-gradient(circle at 20% 50%, rgba(57, 255, 20, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
           pointer-events: none;
           z-index: 0;
         }
@@ -557,7 +557,7 @@ export default function LoginPage() {
         .back-link {
           display: inline-block;
           margin-bottom: 20px;
-          color: var(--electric-green);
+          color: #39ff14;
           font-weight: 500;
           font-size: 1rem;
           transition: all 0.3s ease;
@@ -565,17 +565,17 @@ export default function LoginPage() {
 
         .back-link:hover {
           transform: translateX(-5px);
-          color: var(--neon-green);
+          color: #ffd700;
         }
 
         .login-card {
-          background: linear-gradient(135deg, rgba(10, 15, 20, 0.95) 0%, rgba(5, 10, 14, 0.95) 100%);
-          border: 2px solid rgba(0, 255, 136, 0.3);
+          background: linear-gradient(135deg, rgba(5, 7, 8, 0.95) 0%, rgba(10, 15, 20, 0.95) 100%);
+          border: 2px solid rgba(57, 255, 20, 0.2);
           border-radius: 24px;
           padding: clamp(30px, 5vw, 50px);
           box-shadow: 
             0 20px 60px rgba(0, 0, 0, 0.5),
-            0 0 40px rgba(0, 255, 136, 0.2);
+            0 0 40px rgba(57, 255, 20, 0.15);
           backdrop-filter: blur(10px);
         }
 
@@ -602,21 +602,21 @@ export default function LoginPage() {
         }
 
         .auth-tab.active {
-          background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
-          color: #0a0f14;
-          box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+          background: linear-gradient(135deg, #39ff14 0%, #ffd700 100%);
+          color: #000;
+          box-shadow: 0 4px 15px rgba(57, 255, 20, 0.4);
         }
 
         .auth-tab:not(.active):hover {
-          background: rgba(0, 255, 136, 0.1);
-          color: #00ff88;
+          background: rgba(57, 255, 20, 0.1);
+          color: #39ff14;
         }
 
         .auth-title {
           text-align: center;
           font-size: clamp(1.6em, 5vw, 2em);
           margin-bottom: 30px;
-          background: linear-gradient(135deg, #00ff88 0%, #39ff14 100%);
+          background: linear-gradient(135deg, #39ff14 0%, #ffd700 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -632,7 +632,7 @@ export default function LoginPage() {
           flex: 1;
           padding: 14px;
           background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(0, 255, 136, 0.2);
+          border: 1px solid rgba(57, 255, 20, 0.2);
           color: #e0e0e0;
           border-radius: 8px;
           cursor: pointer;
@@ -642,15 +642,15 @@ export default function LoginPage() {
         }
 
         .method-btn.active {
-          background: rgba(0, 255, 136, 0.15);
-          border-color: #00ff88;
-          color: #00ff88;
-          box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+          background: rgba(57, 255, 20, 0.15);
+          border-color: #39ff14;
+          color: #39ff14;
+          box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
         }
 
         .method-btn:not(.active):hover {
           background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(0, 255, 136, 0.4);
+          border-color: rgba(57, 255, 20, 0.4);
         }
 
         .auth-error {
@@ -665,9 +665,9 @@ export default function LoginPage() {
         }
 
         .auth-success {
-          background: rgba(0, 255, 136, 0.1);
-          border: 1px solid rgba(0, 255, 136, 0.3);
-          color: #00ff88;
+          background: rgba(57, 255, 20, 0.1);
+          border: 1px solid rgba(57, 255, 20, 0.3);
+          color: #39ff14;
           padding: 12px;
           border-radius: 8px;
           margin-bottom: 20px;
@@ -686,7 +686,7 @@ export default function LoginPage() {
         .form-group label {
           display: block;
           margin-bottom: 8px;
-          color: #00ff88;
+          color: #39ff14;
           font-weight: 500;
           font-size: clamp(0.9rem, 2.5vw, 1rem);
         }
@@ -695,7 +695,7 @@ export default function LoginPage() {
           width: 100%;
           padding: 14px 16px;
           background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(0, 255, 136, 0.3);
+          border: 1px solid rgba(57, 255, 20, 0.2);
           border-radius: 8px;
           color: #fff;
           font-size: clamp(0.95rem, 2.5vw, 1rem);
@@ -704,8 +704,8 @@ export default function LoginPage() {
 
         .form-group input:focus {
           outline: none;
-          border-color: #00ff88;
-          box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+          border-color: #39ff14;
+          box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
           background: rgba(255, 255, 255, 0.08);
         }
 
@@ -723,7 +723,7 @@ export default function LoginPage() {
           width: 110px;
           padding: 14px 10px;
           background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(0, 255, 136, 0.3);
+          border: 1px solid rgba(57, 255, 20, 0.2);
           border-radius: 8px;
           color: #fff;
           font-size: 0.95rem;
@@ -733,8 +733,8 @@ export default function LoginPage() {
 
         .country-code-select:focus {
           outline: none;
-          border-color: #00ff88;
-          box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+          border-color: #39ff14;
+          box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
         }
 
         .country-code-select option {
@@ -763,23 +763,23 @@ export default function LoginPage() {
         .btn-submit {
           width: 100%;
           padding: 16px;
-          background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+          background: linear-gradient(135deg, #39ff14 0%, #ffd700 100%);
           border: none;
           border-radius: 8px;
-          color: #0a0f14;
+          color: #000;
           font-weight: 700;
           font-size: clamp(1rem, 2.5vw, 1.1rem);
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+          box-shadow: 0 4px 15px rgba(57, 255, 20, 0.4);
           text-transform: uppercase;
           letter-spacing: 1px;
         }
 
         .btn-submit:hover:not(:disabled) {
           transform: translateY(-2px);
-          box-shadow: 0 6px 25px rgba(0, 255, 136, 0.6);
-          background: linear-gradient(135deg, #39ff14 0%, #00ff88 100%);
+          box-shadow: 0 6px 25px rgba(57, 255, 20, 0.6);
+          background: linear-gradient(135deg, #ffd700 0%, #39ff14 100%);
         }
 
         .btn-submit:disabled {
@@ -791,9 +791,9 @@ export default function LoginPage() {
           width: 100%;
           padding: 14px;
           background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(0, 255, 136, 0.3);
+          border: 1px solid rgba(57, 255, 20, 0.2);
           border-radius: 8px;
-          color: #00ff88;
+          color: #39ff14;
           font-weight: 600;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -803,7 +803,7 @@ export default function LoginPage() {
 
         .btn-secondary:hover:not(:disabled) {
           background: rgba(255, 255, 255, 0.08);
-          border-color: #00ff88;
+          border-color: #39ff14;
         }
 
         .btn-secondary:disabled {
@@ -824,12 +824,12 @@ export default function LoginPage() {
           left: 0;
           right: 0;
           height: 1px;
-          background: rgba(0, 255, 136, 0.2);
+          background: rgba(57, 255, 20, 0.1);
         }
 
         .auth-divider span {
           position: relative;
-          background: linear-gradient(135deg, rgba(10, 15, 20, 0.95) 0%, rgba(5, 10, 14, 0.95) 100%);
+          background: linear-gradient(135deg, rgba(5, 7, 8, 0.95) 0%, rgba(10, 15, 20, 0.95) 100%);
           padding: 0 15px;
           color: rgba(255, 255, 255, 0.5);
           font-size: 0.9em;
