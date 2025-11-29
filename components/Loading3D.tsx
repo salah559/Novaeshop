@@ -7,84 +7,102 @@ export default function Loading3D() {
       justifyContent: 'center',
       minHeight: '100vh',
       background: 'linear-gradient(135deg, rgba(5, 7, 8, 1) 0%, rgba(20, 10, 30, 0.5) 100%)',
-      perspective: '1000px'
+      perspective: '1200px'
     }}>
-      {/* 3D Rotating Cube */}
+      {/* Atomic Loading Animation */}
       <div style={{
         position: 'relative',
-        width: '120px',
-        height: '120px',
-        marginBottom: 40,
-        perspective: '1200px'
-      }}>
-        <div style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          transformStyle: 'preserve-3d',
-          animation: 'rotate3d 4s infinite linear',
-          top: 0,
-          left: 0
-        }}>
-          {/* Cube faces */}
-          {[
-            { transform: 'translateZ(60px)', color: '#39ff14' },
-            { transform: 'rotateY(180deg) translateZ(60px)', color: '#ffd700' },
-            { transform: 'rotateY(90deg) translateZ(60px)', color: '#00ff88' },
-            { transform: 'rotateY(-90deg) translateZ(60px)', color: '#ff00ff' },
-            { transform: 'rotateX(90deg) translateZ(60px)', color: '#00ffff' },
-            { transform: 'rotateX(-90deg) translateZ(60px)', color: '#ff6b9d' }
-          ].map((face, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                width: '120px',
-                height: '120px',
-                background: `linear-gradient(135deg, ${face.color} 0%, rgba(255,255,255,0.1) 100%)`,
-                border: `2px solid ${face.color}`,
-                opacity: 0.8,
-                transform: face.transform,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '40px',
-                boxShadow: `0 0 30px ${face.color}80`,
-                backdropFilter: 'blur(10px)'
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Animated Particles */}
-      <div style={{
-        position: 'absolute',
         width: '200px',
         height: '200px',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        pointerEvents: 'none'
+        marginBottom: 60
       }}>
-        {[0, 1, 2].map(i => (
+        {/* Center Nucleus */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '20px',
+          height: '20px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, #39ff14, #00ff88)',
+          boxShadow: `
+            0 0 20px #39ff14,
+            0 0 40px rgba(57, 255, 20, 0.5),
+            inset 0 0 10px rgba(255, 255, 255, 0.3)
+          `,
+          zIndex: 10
+        }} />
+
+        {/* Electron Orbits */}
+        {[
+          { delay: 0, radius: 80, color: '#39ff14', duration: '6s' },
+          { delay: 2, radius: 100, color: '#00ff88', duration: '8s' },
+          { delay: 1, radius: 120, color: '#39ff14', duration: '10s' }
+        ].map((orbit, i) => (
+          <div key={`orbit-${i}`} style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: `${orbit.radius * 2}px`,
+            height: `${orbit.radius * 2}px`,
+            transform: 'translate(-50%, -50%)',
+            border: `2px dashed ${orbit.color}`,
+            borderRadius: '50%',
+            opacity: 0.3,
+            boxShadow: `0 0 15px ${orbit.color}40`
+          }} />
+        ))}
+
+        {/* Rotating Electrons */}
+        {[0, 1, 2].map((i) => (
           <div
-            key={i}
+            key={`electron-${i}`}
             style={{
               position: 'absolute',
+              top: '50%',
+              left: '50%',
               width: '8px',
               height: '8px',
               borderRadius: '50%',
-              background: `linear-gradient(135deg, #39ff14, #ffd700)`,
-              animation: `orbit 3s infinite linear`,
-              animationDelay: `${i * 1}s`,
-              left: '50%',
-              top: '50%',
-              marginLeft: '-4px',
-              marginTop: '-4px',
-              boxShadow: '0 0 10px #39ff14'
+              background: `linear-gradient(135deg, #39ff14, #00ff88)`,
+              boxShadow: `0 0 15px #39ff14, inset 0 0 5px rgba(255,255,255,0.5)`,
+              animation: `electronOrbit${i} ${7 + i * 2}s linear infinite`,
+              transformOrigin: `${100 - i * 20}px center`,
+              willChange: 'transform'
             }}
           />
+        ))}
+
+        {/* Energy Lines */}
+        {[0, 1, 2, 3].map((line) => (
+          <svg
+            key={`line-${line}`}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '200px',
+              height: '200px',
+              transform: 'translate(-50%, -50%)',
+              pointerEvents: 'none'
+            }}
+            viewBox="0 0 200 200"
+          >
+            <line
+              x1="100"
+              y1="100"
+              x2={100 + 80 * Math.cos((line * Math.PI) / 2)}
+              y2={100 + 80 * Math.sin((line * Math.PI) / 2)}
+              stroke="#39ff14"
+              strokeWidth="2"
+              opacity="0.4"
+              style={{
+                animation: `pulseEnergy 2s ease-in-out infinite`,
+                animationDelay: `${line * 0.3}s`
+              }}
+            />
+          </svg>
         ))}
       </div>
 
@@ -92,36 +110,38 @@ export default function Loading3D() {
       <div style={{
         position: 'relative',
         zIndex: 10,
-        marginTop: 60,
         textAlign: 'center'
       }}>
         <p style={{
-          fontSize: 'clamp(1.2em, 3vw, 1.5em)',
+          fontSize: 'clamp(1.1em, 3vw, 1.4em)',
           color: '#39ff14',
           fontWeight: 700,
           letterSpacing: '2px',
           margin: 0,
-          marginBottom: 10,
-          animation: 'fadeInOut 2s infinite'
+          marginBottom: 15,
+          animation: 'fadeInOut 2s infinite',
+          textShadow: '0 0 10px #39ff14'
         }}>
           جاري التحميل
         </p>
+        
+        {/* Animated dots */}
         <div style={{
           display: 'flex',
-          gap: '8px',
+          gap: '6px',
           justifyContent: 'center'
         }}>
           {[0, 1, 2].map(i => (
             <div
               key={i}
               style={{
-                width: '8px',
-                height: '8px',
+                width: '6px',
+                height: '6px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #39ff14, #ffd700)',
-                animation: `bounce 1.2s ease-in-out infinite`,
+                background: '#39ff14',
+                animation: `dotPulse 1.4s ease-in-out infinite`,
                 animationDelay: `${i * 0.2}s`,
-                boxShadow: '0 0 10px #39ff14'
+                boxShadow: '0 0 8px #39ff14'
               }}
             />
           ))}
@@ -129,16 +149,7 @@ export default function Loading3D() {
       </div>
 
       <style jsx>{`
-        @keyframes rotate3d {
-          0% {
-            transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-          }
-          100% {
-            transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
-          }
-        }
-
-        @keyframes orbit {
+        @keyframes electronOrbit0 {
           0% {
             transform: rotate(0deg) translateX(80px) rotate(0deg);
           }
@@ -147,14 +158,32 @@ export default function Loading3D() {
           }
         }
 
-        @keyframes bounce {
+        @keyframes electronOrbit1 {
+          0% {
+            transform: rotate(120deg) translateX(100px) rotate(-120deg);
+          }
+          100% {
+            transform: rotate(480deg) translateX(100px) rotate(-480deg);
+          }
+        }
+
+        @keyframes electronOrbit2 {
+          0% {
+            transform: rotate(240deg) translateX(120px) rotate(-240deg);
+          }
+          100% {
+            transform: rotate(600deg) translateX(120px) rotate(-600deg);
+          }
+        }
+
+        @keyframes pulseEnergy {
           0%, 100% {
-            transform: translateY(0);
-            opacity: 1;
+            opacity: 0.3;
+            stroke-width: 1;
           }
           50% {
-            transform: translateY(-15px);
-            opacity: 0.6;
+            opacity: 0.8;
+            stroke-width: 2;
           }
         }
 
@@ -163,6 +192,17 @@ export default function Loading3D() {
             opacity: 0.6;
           }
           50% {
+            opacity: 1;
+          }
+        }
+
+        @keyframes dotPulse {
+          0%, 100% {
+            transform: scale(0.8);
+            opacity: 0.6;
+          }
+          50% {
+            transform: scale(1.2);
             opacity: 1;
           }
         }
