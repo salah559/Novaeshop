@@ -1,8 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { isAdmin } from '@/lib/adminCheck';
 import Link from 'next/link';
+
+const ProductCardAdmin = memo(({ product, onEdit, onDelete }: any) => (
+  <div style={{
+    background: 'rgba(15, 15, 30, 0.7)',
+    border: '1px solid rgba(57, 255, 20, 0.3)',
+    borderRadius: 12,
+    padding: 20,
+    backdropFilter: 'blur(20px)'
+  }}>
+    <img src={product.imageUrl} alt={product.name} style={{width: '100%', height: 180, objectFit: 'cover', borderRadius: 8, marginBottom: 12}} />
+    <h3 style={{color: '#39ff14', marginBottom: 8}}>{product.name}</h3>
+    <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 12}}>{product.description?.substring(0, 80)}...</p>
+    <div style={{marginBottom: 12, paddingBottom: 12, borderBottom: '1px solid rgba(57, 255, 20, 0.2)'}}>
+      <span style={{color: '#39ff14', fontWeight: 700}}>{product.price} دج</span> • <span style={{color: '#888'}}>{product.category}</span>
+    </div>
+    <div style={{display: 'flex', gap: 8}}>
+      <button onClick={() => onEdit(product)} style={{flex: 1, padding: '10px', background: 'rgba(57, 255, 20, 0.2)', color: '#39ff14', border: '1px solid rgba(57, 255, 20, 0.3)', borderRadius: 8, cursor: 'pointer'}}>✏️ تعديل</button>
+      <button onClick={() => onDelete(product.id)} style={{flex: 1, padding: '10px', background: 'rgba(255, 0, 0, 0.2)', color: '#ff6b6b', border: '1px solid rgba(255, 0, 0, 0.3)', borderRadius: 8, cursor: 'pointer'}}>🗑️ حذف</button>
+    </div>
+  </div>
+));
 
 interface Product {
   id?: string;
@@ -417,85 +438,12 @@ export default function AdminProducts(){
           gap: 25
         }}>
           {products.map(product => (
-            <div key={product.id} className="card" style={{
-              background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
-              border: '1px solid rgba(57, 255, 20, 0.3)'
-            }}>
-              <img 
-                src={product.imageUrl} 
-                alt={product.name}
-                style={{
-                  width: '100%',
-                  height: 200,
-                  objectFit: 'cover',
-                  borderRadius: 12,
-                  marginBottom: 15
-                }}
-              />
-              <h3 style={{color: '#39ff14', marginBottom: 10, fontSize: '1.2em'}}>
-                {product.name}
-              </h3>
-              <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 15, lineHeight: 1.6}}>
-                {product.description?.substring(0, 100) || 'لا يوجد وصف'}...
-              </p>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 15,
-                paddingTop: 15,
-                borderTop: '1px solid rgba(57, 255, 20, 0.2)'
-              }}>
-                <span style={{color: '#39ff14', fontWeight: 700, fontSize: '1.3em'}}>
-                  {product.price} دج
-                </span>
-                <span style={{
-                  color: '#888',
-                  fontSize: '0.85em',
-                  background: 'rgba(57, 255, 20, 0.1)',
-                  padding: '4px 12px',
-                  borderRadius: 6
-                }}>
-                  {product.category}
-                </span>
-              </div>
-              <div style={{display: 'flex', gap: 10, pointerEvents: 'auto'}}>
-                <button 
-                  onClick={() => startEdit(product)}
-                  style={{
-                    flex: 1,
-                    padding: '10px',
-                    background: 'rgba(57, 255, 20, 0.2)',
-                    color: '#39ff14',
-                    border: '1px solid rgba(57, 255, 20, 0.4)',
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    pointerEvents: 'auto'
-                  }}
-                >
-                  ✏️ تعديل
-                </button>
-                <button 
-                  onClick={() => handleDelete(product.id!)}
-                  style={{
-                    flex: 1,
-                    padding: '10px',
-                    background: 'rgba(255, 0, 0, 0.2)',
-                    color: '#ff6b6b',
-                    border: '1px solid rgba(255, 0, 0, 0.3)',
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    pointerEvents: 'auto'
-                  }}
-                >
-                  🗑️ حذف
-                </button>
-              </div>
-            </div>
+            <ProductCardAdmin 
+              key={product.id}
+              product={product}
+              onEdit={startEdit}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       )}
