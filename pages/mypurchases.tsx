@@ -50,13 +50,13 @@ export default function MyPurchases(){
   }
 
   useEffect(()=> {
-    const unsub = auth.onAuthStateChanged(u=> {
+    const unsub = auth.onAuthStateChanged(async u=> {
       setUser(u);
-      if(u) load(u.uid);
+      if(u) await load(u.uid);
       else setLoading(false);
     });
     return ()=>unsub();
-  },[]);
+  }, []);
 
   if(!user){
     return (

@@ -72,10 +72,10 @@ export default function Orders() {
   }
 
   useEffect(() => {
-    const unsub = auth.onAuthStateChanged(u => {
+    const unsub = auth.onAuthStateChanged(async u => {
       setUser(u);
       if (u) {
-        loadOrders(u.uid, u.email);
+        await loadOrders(u.uid, u.email);
       } else {
         setLoading(false);
       }
