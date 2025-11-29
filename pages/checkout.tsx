@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { auth, db, storage, signInWithGoogle } from '@/lib/firebaseClient';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth, db, signInWithGoogle } from '@/lib/firebaseClient';
 import { collection, addDoc } from 'firebase/firestore';
 
 export default function Checkout(){
@@ -33,10 +32,33 @@ export default function Checkout(){
       const items = JSON.parse(localStorage.getItem('cart')||'[]');
       const total = items.reduce((s:any,i:any)=>s+(i.price||0),0);
       
-      const path = `receipts/${Date.now()}_${file.name}`;
-      const storageRef = ref(storage, path);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
+      const reader = new FileReader();
+      const base64Promise = new Promise<string>((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64 = (reader.result as string).split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      
+      const base64Image = await base64Promise;
+      
+      const uploadResponse = await fetch('/api/upload-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: base64Image }),
+      });
+      
+      const uploadData = await uploadResponse.json();
+      
+      if (!uploadData.success) {
+        throw new Error(uploadData.error || 'فشل في رفع الصورة');
+      }
+      
+      const url = uploadData.url;
       
       await addDoc(collection(db, 'orders'), {
         userId: user?.uid || null,
