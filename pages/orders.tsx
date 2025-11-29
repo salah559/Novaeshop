@@ -4,6 +4,7 @@ import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import { signInWithGoogle } from '@/lib/firebaseClient';
 import Link from 'next/link';
 import { getCache, setCache } from '@/lib/cache';
+import Loading3D from '@/components/Loading3D';
 
 interface Order {
   id: string;

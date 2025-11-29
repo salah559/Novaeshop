@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { auth, db, signInWithGoogle } from '@/lib/firebaseClient';
 import { collection, addDoc } from 'firebase/firestore';
 import { useToast } from '@/components/Toast';
+import Loading3D from '@/components/Loading3D';
 
 export default function Checkout(){
   const [file, setFile] = useState<File | null>(null);
@@ -90,12 +91,7 @@ export default function Checkout(){
   }
 
   if (checkingAuth) {
-    return (
-      <div style={{textAlign: 'center', padding: 'clamp(80px, 15vw, 120px) 20px'}}>
-        <div style={{fontSize: 'clamp(2.5em, 7vw, 3.5em)', marginBottom: 20}}>⏳</div>
-        <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>جاري التحميل...</p>
-      </div>
-    );
+    return <Loading3D />;
   }
 
   if (!user) {

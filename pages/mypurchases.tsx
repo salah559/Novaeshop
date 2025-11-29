@@ -3,6 +3,7 @@ import { auth, db } from '@/lib/firebaseClient';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import { getCache, setCache } from '@/lib/cache';
+import Loading3D from '@/components/Loading3D';
 
 export default function MyPurchases(){
   const [user, setUser] = useState<any>(null);

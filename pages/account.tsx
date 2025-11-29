@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { auth, logout } from '@/lib/firebaseClient';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Loading3D from '@/components/Loading3D';
 
 export default function Account() {
   const [user, setUser] = useState<any>(null);
@@ -29,26 +30,7 @@ export default function Account() {
   };
 
   if (loading) {
-    return (
-      <div style={{textAlign: 'center', padding: 'clamp(50px, 10vw, 80px)'}}>
-        <div style={{
-          width: 60,
-          height: 60,
-          border: '4px solid rgba(57, 255, 20, 0.2)',
-          borderTop: '4px solid #39ff14',
-          borderRadius: '50%',
-          margin: '0 auto 20px',
-          animation: 'spin 1s linear infinite'
-        }}></div>
-        <p style={{color: '#39ff14', fontSize: 'clamp(1em, 2.5vw, 1.1em)'}}>جاري التحميل...</p>
-        <style jsx>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
-      </div>
-    );
+    return <Loading3D />;
   }
 
   if (!user) {

@@ -8,7 +8,7 @@ DZ Digital Market is a Next.js digital marketplace for selling and purchasing di
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Performance Optimizations (November 29, 2025)
+## Recent Performance & UX Enhancements (November 29, 2025)
 
 ### Navigation Performance
 - ✅ **Route Transition Indicator**: Added progress bar at top of page during navigation (neon green gradient)
@@ -22,8 +22,13 @@ Preferred communication style: Simple, everyday language.
 - ✅ **Lazy Loading**: Images load on-demand with `loading="lazy"`
 
 ### Data Caching
-- ✅ **Cache System** (`lib/cache.ts`): 10-minute TTL cache for product data
-- ✅ **Reduced Firebase Calls**: Products cached after first fetch
+- ✅ **Cache System** (`lib/cache.ts`): 10-minute TTL cache for product data (5-min for user data)
+- ✅ **Reduced Firebase Calls**: Products and user data cached after first fetch
+
+### 3D Loading Animation
+- ✅ **Loading3D Component**: Modern 3D rotating cube with particles and animations
+- ✅ **Applied to**: Account page, Checkout page, Purchases page, Orders page
+- ✅ **Features**: Smooth 3D transformations, glowing effects, animated particles, bounce indicators
 
 ## System Architecture
 
