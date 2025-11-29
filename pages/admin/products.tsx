@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useRef } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { isAdmin } from '@/lib/adminCheck';
@@ -43,7 +43,6 @@ export default function AdminProducts(){
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState<Product>({
     name: '',
@@ -145,8 +144,9 @@ export default function AdminProducts(){
       
       const data = await response.json();
       if (data.success) {
-        setFormData({...formData, imageUrl: data.url});
+        setFormData(prev => ({...prev, imageUrl: data.url}));
         alert('✅ تم رفع الصورة بنجاح');
+        e.target.value = '';
       } else {
         alert(`❌ فشل رفع الصورة: ${data.error}`);
       }
@@ -374,31 +374,21 @@ export default function AdminProducts(){
                   صورة المنتج
                 </label>
                 <input 
-                  ref={fileInputRef}
                   type="file"
                   accept="image/*"
                   onChange={handleImageUpload}
-                  style={{display: 'none'}}
-                />
-                <button 
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
                   disabled={uploadingImage}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    background: uploadingImage ? 'rgba(57, 255, 20, 0.1)' : 'rgba(57, 255, 20, 0.2)',
+                    padding: '12px',
+                    background: 'rgba(255, 255, 255, 0.05)',
                     border: '2px solid rgba(57, 255, 20, 0.4)',
                     borderRadius: 8,
                     color: '#39ff14',
                     fontSize: '1rem',
-                    fontWeight: 600,
-                    cursor: uploadingImage ? 'not-allowed' : 'pointer',
-                    transition: 'all 0.3s ease'
+                    cursor: 'pointer'
                   }}
-                >
-                  {uploadingImage ? '⏳ جاري الرفع...' : '📸 اختر صورة'}
-                </button>
+                />
                 {formData.imageUrl && (
                   <div style={{marginTop: 12}}>
                     <img src={formData.imageUrl} alt="Preview" style={{width: 100, height: 100, borderRadius: 8, objectFit: 'cover'}} />

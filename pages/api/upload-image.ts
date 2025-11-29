@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { IncomingForm } from 'formidable';
+import fs from 'fs/promises';
 
 export const config = {
   api: {
-    bodyParser: {
-      sizeLimit: '32mb',
-    },
+    bodyParser: false,
   },
 };
 
@@ -14,31 +14,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { image } = req.body;
+    const form = new IncomingForm();
+    const [fields, files] = await form.parse(req);
     
-    if (!image) {
-      return res.status(400).json({ error: 'No image provided' });
+    const fileArray = files.image as any[];
+    if (!fileArray || fileArray.length === 0) {
+      return res.status(400).json({ error: 'No image file provided' });
     }
 
+    const file = fileArray[0];
+    const fileData = await fs.readFile(file.filepath);
+    const base64 = fileData.toString('base64');
+
     const apiKey = process.env.IMGBB_API_KEY;
-    
     if (!apiKey) {
       return res.status(500).json({ error: 'ImgBB API key not configured' });
     }
 
     const formData = new FormData();
-    formData.append('image', image);
+    formData.append('image', base64);
 
     const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: 'POST',
-      body: formData,
+      body: formData as any,
     });
 
     const data = await response.json();
 
     if (!data.success) {
       console.error('ImgBB upload failed:', data);
-      return res.status(500).json({ error: 'Failed to upload image to ImgBB', details: data });
+      return res.status(500).json({ error: 'Failed to upload image to ImgBB' });
     }
 
     return res.status(200).json({
