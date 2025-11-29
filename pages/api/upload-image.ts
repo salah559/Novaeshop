@@ -38,16 +38,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!data.success) {
       console.error('ImgBB upload failed:', data);
-      return res.status(500).json({ error: 'Failed to upload image to ImgBB' });
+      return res.status(500).json({ error: 'Failed to upload image to ImgBB', details: data });
     }
 
     return res.status(200).json({
       success: true,
       url: data.data.display_url,
-      deleteUrl: data.data.delete_url,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Upload error:', error);
-    return res.status(500).json({ error: 'Failed to upload image' });
+    return res.status(500).json({ error: 'Failed to upload image', message: error.message });
   }
 }

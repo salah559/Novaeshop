@@ -134,25 +134,24 @@ export default function AdminProducts(){
     
     setUploadingImage(true);
     try {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64 = (reader.result as string).split(',')[1];
-        const response = await fetch('/api/upload-image', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: base64 })
-        });
-        const data = await response.json();
-        if (data.success) {
-          setFormData({...formData, imageUrl: data.url});
-          alert('✅ تم رفع الصورة بنجاح');
-        } else {
-          alert('❌ فشل رفع الصورة');
-        }
-      };
-      reader.readAsDataURL(file);
-    } catch(e) {
-      alert('❌ خطأ في رفع الصورة');
+      const uploadFormData = new FormData();
+      uploadFormData.append('image', file);
+      
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: uploadFormData
+      });
+      
+      const data = await response.json();
+      if (data.success) {
+        setFormData({...formData, imageUrl: data.url});
+        alert('✅ تم رفع الصورة بنجاح');
+      } else {
+        alert(`❌ فشل رفع الصورة: ${data.error}`);
+      }
+    } catch(e: any) {
+      alert(`❌ خطأ في رفع الصورة: ${e.message}`);
+      console.error('Upload error:', e);
     } finally {
       setUploadingImage(false);
     }
