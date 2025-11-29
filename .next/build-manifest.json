@@ -32,15 +32,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/cart.js"
     ],
-    "/products": [
+    "/how-to-buy": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/products.js"
+      "static/chunks/pages/how-to-buy.js"
     ],
-    "/products/[id]": [
+    "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/products/[id].js"
+      "static/chunks/pages/login.js"
     ]
   },
   "ampFirstPages": []

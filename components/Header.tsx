@@ -83,7 +83,6 @@ export default function Header(){
             { href: '/', label: t('home') },
             { href: '/products', label: t('products') },
             { href: '/how-to-buy', label: 'كيف تشتري؟' },
-            { href: '/cart', label: t('cart') },
           ].map((item, i) => (
             <Link key={i} href={item.href} style={{
               color: 'rgba(255,255,255,0.75)',
@@ -96,26 +95,6 @@ export default function Header(){
               border: '1px solid transparent'
             }} className="nav-link">{item.label}</Link>
           ))}
-          {user && (
-            <Link href="/orders" style={{
-              color: 'rgba(255,255,255,0.75)',
-              fontWeight: 500,
-              padding: 'clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 16px)',
-              borderRadius: 'clamp(8px, 1vw, 10px)',
-              transition: 'all 0.3s ease',
-              fontSize: 'clamp(0.85em, 1.5vw, 1em)',
-              whiteSpace: 'nowrap'
-            }}>طلباتي</Link>
-          )}
-          <Link href="/mypurchases" style={{
-            color: 'rgba(255,255,255,0.75)',
-            fontWeight: 500,
-            padding: 'clamp(8px, 1.5vw, 12px) clamp(10px, 2vw, 16px)',
-            borderRadius: 'clamp(8px, 1vw, 10px)',
-            transition: 'all 0.3s ease',
-            fontSize: 'clamp(0.85em, 1.5vw, 1em)',
-            whiteSpace: 'nowrap'
-          }}>{t('myPurchases')}</Link>
           <Link href="/contact" style={{
             color: 'rgba(255,255,255,0.75)',
             fontWeight: 500,
@@ -142,6 +121,29 @@ export default function Header(){
         </nav>
 
         <div style={{display: 'flex', alignItems: 'center', gap: 'clamp(8px, 2vw, 12px)'}}>
+          <Link 
+            href="/cart"
+            style={{
+              padding: 'clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px)',
+              background: 'rgba(57, 255, 20, 0.1)',
+              color: '#39ff14',
+              border: '2px solid rgba(57, 255, 20, 0.3)',
+              borderRadius: 'clamp(8px, 1vw, 10px)',
+              cursor: 'pointer',
+              fontWeight: 600,
+              fontSize: 'clamp(0.9em, 2vw, 1em)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'clamp(4px, 1vw, 6px)',
+              transition: 'all 0.3s ease',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 0 15px rgba(57, 255, 20, 0.2)'
+            }}
+          >
+            🛒 السلة
+          </Link>
+
           <div style={{position: 'relative'}}>
             <button 
               onClick={() => setLangMenuOpen(!langMenuOpen)}
@@ -213,17 +215,19 @@ export default function Header(){
           </div>
 
           {user ? (
-            <button 
-              onClick={() => logout()}
+            <Link 
+              href="/account"
               className="btn"
               style={{
                 fontSize: 'clamp(0.85em, 1.5vw, 0.95em)',
                 padding: 'clamp(8px, 1.5vw, 10px) clamp(14px, 3vw, 18px)',
-                whiteSpace: 'nowrap'
+                whiteSpace: 'nowrap',
+                textDecoration: 'none',
+                display: 'inline-block'
               } as any}
             >
-              🚪 تسجيل الخروج
-            </button>
+              👤 حسابي
+            </Link>
           ) : (
             <Link 
               href="/login"
@@ -270,16 +274,21 @@ export default function Header(){
           padding: 'clamp(15px, 3vw, 20px)',
           gap: 'clamp(10px, 2vw, 14px)',
           borderTop: '1px solid rgba(57, 255, 20, 0.1)',
-          background: 'rgba(15, 15, 20, 0.98)'
+          background: 'rgba(15, 15, 20, 0.98)',
+          maxHeight: 'calc(100vh - 150px)',
+          overflowY: 'auto'
         }}>
           {[
             { href: '/', label: t('home') },
             { href: '/products', label: t('products') },
             { href: '/how-to-buy', label: 'كيف تشتري؟' },
             { href: '/cart', label: t('cart') },
-            { href: '/mypurchases', label: t('myPurchases') },
             { href: '/contact', label: t('contact') },
-            ...(user ? [{ href: '/orders', label: 'طلباتي' }] : []),
+            ...(user ? [
+              { href: '/account', label: 'حسابي' },
+              { href: '/mypurchases', label: t('myPurchases') },
+              { href: '/orders', label: 'طلباتي' }
+            ] : []),
             ...(isAdminUser ? [{ href: '/admin', label: t('admin') }] : [])
           ].map((item, i) => (
             <Link 
@@ -299,6 +308,29 @@ export default function Header(){
               {item.label}
             </Link>
           ))}
+          {user && (
+            <button
+              onClick={() => {
+                logout();
+                setMobileMenuOpen(false);
+              }}
+              style={{
+                color: '#ff6b6b',
+                fontWeight: 600,
+                padding: 'clamp(10px, 2vw, 12px)',
+                borderRadius: '8px',
+                transition: 'all 0.3s ease',
+                fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
+                borderLeft: '3px solid rgba(255, 107, 107, 0.3)',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'right'
+              }}
+            >
+              🚪 تسجيل الخروج
+            </button>
+          )}
         </nav>
       )}
 
