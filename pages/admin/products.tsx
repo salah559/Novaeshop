@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useRef } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { isAdmin } from '@/lib/adminCheck';
@@ -43,6 +43,7 @@ export default function AdminProducts(){
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState<Product>({
     name: '',
@@ -372,24 +373,32 @@ export default function AdminProducts(){
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
                   صورة المنتج
                 </label>
-                <div style={{display: 'flex', gap: 10, alignItems: 'center'}}>
-                  <input 
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    disabled={uploadingImage}
-                    style={{
-                      flex: 1,
-                      padding: '12px 16px',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(57, 255, 20, 0.3)',
-                      borderRadius: 8,
-                      color: '#fff',
-                      fontSize: '1rem',
-                      cursor: uploadingImage ? 'not-allowed' : 'pointer'
-                    }}
-                  />
-                </div>
+                <input 
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{display: 'none'}}
+                />
+                <button 
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploadingImage}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    background: uploadingImage ? 'rgba(57, 255, 20, 0.1)' : 'rgba(57, 255, 20, 0.2)',
+                    border: '2px solid rgba(57, 255, 20, 0.4)',
+                    borderRadius: 8,
+                    color: '#39ff14',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    cursor: uploadingImage ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  {uploadingImage ? '⏳ جاري الرفع...' : '📸 اختر صورة'}
+                </button>
                 {formData.imageUrl && (
                   <div style={{marginTop: 12}}>
                     <img src={formData.imageUrl} alt="Preview" style={{width: 100, height: 100, borderRadius: 8, objectFit: 'cover'}} />
