@@ -52,6 +52,10 @@ export default function Checkout(){
         body: JSON.stringify({ image: base64Image }),
       });
       
+      if (!uploadResponse.ok) {
+        throw new Error('فشل في الاتصال بخادم رفع الصور');
+      }
+      
       const uploadData = await uploadResponse.json();
       
       if (!uploadData.success) {
