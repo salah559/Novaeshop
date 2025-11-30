@@ -201,26 +201,6 @@ export default function MyPurchases(){
                       </div>
                     </div>
                   )}
-                  <div style={{
-                    background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(57, 255, 20, 0.05) 100%)',
-                    padding: 'clamp(14px, 3vw, 18px)',
-                    borderRadius: 10,
-                    borderTop: '2px solid rgba(57, 255, 20, 0.3)',
-                    marginBottom: 'clamp(14px, 3vw, 20px)'
-                  }}>
-                    <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 10, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>✅ متوفر للتحميل</p>
-                    {item.downloadUrl && (
-                      <a 
-                        href={item.downloadUrl}
-                        className="btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{fontSize: 'clamp(0.95em, 2.5vw, 1.05em)', padding: 'clamp(10px, 2vw, 12px) clamp(20px, 4vw, 28px)', display: 'inline-block'}}
-                      >
-                        ⬇️ تحميل الآن
-                      </a>
-                    )}
-                  </div>
                 </>
               ) : (
                 <>
