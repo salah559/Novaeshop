@@ -104,18 +104,6 @@ export default function BottomNavigation() {
       pointerEvents: 'none'
     }} className="bottom-nav">
       <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: 'linear-gradient(180deg, rgba(20, 25, 40, 0), rgba(10, 15, 25, 0.95) 30%)',
-        backdropFilter: 'blur(30px)',
-        height: '120px',
-        zIndex: -1,
-        pointerEvents: 'auto'
-      }} />
-
-      <div style={{
         position: 'relative',
         bottom: '10px',
         background: 'rgba(15, 20, 35, 0.7)',
