@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebaseClient';
-import { collection, query, where, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, updateDoc, addDoc, getDoc } from 'firebase/firestore';
 import { isAdmin } from '@/lib/adminCheck';
 import Link from 'next/link';
 
@@ -111,10 +111,8 @@ export default function Admin(){
       const items = order.items || [];
       
       for (const item of items) {
-        const productSnap = await getDocs(query(collection(db, 'products'), where('__name__', '==', item.id)));
-        if (productSnap.empty) continue;
-        
-        const productData = productSnap.docs[0].data();
+        const productDoc = await getDoc(doc(db, 'products', item.id));
+        const productData = productDoc.exists() ? productDoc.data() : {};
         
         await addDoc(collection(db, 'purchases'), {
           userId: order.userId || null,
