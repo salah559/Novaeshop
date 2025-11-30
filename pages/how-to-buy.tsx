@@ -7,38 +7,38 @@ export default function HowToBuy() {
   const steps = [
     {
       num: 1,
-      title: t('step1Title'),
-      desc: t('step1Desc'),
+      title: t('buystep1Title'),
+      desc: t('buystep1Desc'),
       emoji: '🛍️'
     },
     {
       num: 2,
-      title: t('step2Title'),
-      desc: t('step2Desc'),
+      title: t('buystep2Title'),
+      desc: t('buystep2Desc'),
       emoji: '🛒'
     },
     {
       num: 3,
-      title: t('step3Title'),
-      desc: t('step3Desc'),
+      title: t('buystep3Title'),
+      desc: t('buystep3Desc'),
       emoji: '💳'
     },
     {
       num: 4,
-      title: t('step4Title'),
-      desc: t('step4Desc'),
+      title: t('buystep4Title'),
+      desc: t('buystep4Desc'),
       emoji: '📸'
     },
     {
       num: 5,
-      title: t('step5Title'),
-      desc: t('step5Desc'),
+      title: t('buystep5Title'),
+      desc: t('buystep5Desc'),
       emoji: '⏳'
     },
     {
       num: 6,
-      title: t('step6Title'),
-      desc: t('step6Desc'),
+      title: t('buystep6Title'),
+      desc: t('buystep6Desc'),
       emoji: '⬇️'
     }
   ];
