@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useLanguage } from '@/lib/LanguageContext';
 import { db, storage } from '@/lib/firebaseClient';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 export default function Contact(){
+  const { t } = useLanguage();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -37,7 +39,7 @@ export default function Contact(){
         setSuccess(false);
       }, 3000);
     } catch(err) {
-      alert('❌ حدث خطأ. الرجاء المحاولة مرة أخرى');
+      alert('❌ ' + t('errorMessage'));
       console.error(err);
     } finally {
       setLoading(false);
@@ -62,8 +64,8 @@ export default function Contact(){
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>📧 تواصل معنا</h2>
-        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>نحن هنا للإجابة على استفساراتك</p>
+        }}>📧 {t('contactTitle')}</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>{t('contactSubtitle')}</p>
       </div>
 
       <div className="card animate-fadeInUp" style={{
@@ -86,8 +88,8 @@ export default function Contact(){
               marginBottom: 'clamp(8px, 1.5vw, 12px)',
               fontSize: 'clamp(1.2em, 3.5vw, 1.5em)',
               textShadow: '0 0 15px rgba(57, 255, 20, 0.3)'
-            }}>تم الإرسال بنجاح!</h3>
-            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.95em, 2.5vw, 1.05em)'}}>سنتواصل معك قريباً</p>
+            }}>{t('successTitle')}</h3>
+            <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.95em, 2.5vw, 1.05em)'}}>{t('successDesc')}</p>
           </div>
         )}
 
@@ -100,11 +102,11 @@ export default function Contact(){
               fontWeight: 600,
               fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
               textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
-            }}>الاسم الكامل</label>
+            }}>{t('fullName')}</label>
             <input 
               value={name} 
               onChange={e=>setName(e.target.value)}
-              placeholder="أدخل اسمك"
+              placeholder={t('enterName')}
               required
             />
           </div>
@@ -117,12 +119,12 @@ export default function Contact(){
               fontWeight: 600,
               fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
               textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
-            }}>البريد الإلكتروني</label>
+            }}>{t('contactEmail')}</label>
             <input 
               type="email"
               value={email} 
               onChange={e=>setEmail(e.target.value)}
-              placeholder="بريدك الإلكتروني"
+              placeholder={t('emailAddress')}
               required
             />
           </div>
@@ -135,11 +137,11 @@ export default function Contact(){
               fontWeight: 600,
               fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
               textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
-            }}>الرسالة</label>
+            }}>{t('contactMessage')}</label>
             <textarea 
               value={message} 
               onChange={e=>setMessage(e.target.value)}
-              placeholder="اكتب رسالتك..."
+              placeholder={t('writeMessage')}
               required
               rows={5}
             ></textarea>
@@ -153,7 +155,7 @@ export default function Contact(){
               fontWeight: 600,
               fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
               textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
-            }}>إرفاق ملف (اختياري)</label>
+            }}>{t('attachFile')}</label>
             <input 
               type="file" 
               onChange={e=>setFile(e.target.files?.[0]||null)}
@@ -176,7 +178,7 @@ export default function Contact(){
               borderRadius: '12px'
             }}
           >
-            {loading ? '⏳ جاري الإرسال...' : '✓ إرسال الرسالة'}
+            {loading ? '⏳ ' + t('sending') : '✓ ' + t('sendMessage')}
           </button>
         </form>
       </div>

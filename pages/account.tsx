@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/lib/LanguageContext';
 import { auth, logout } from '@/lib/firebaseClient';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function Account() {
+  const { t } = useLanguage();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -34,7 +36,7 @@ export default function Account() {
         textAlign: 'center',
         padding: 'clamp(50px, 10vw, 80px)'
       }}>
-        <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 30}}>جاري إعادة التوجيه...</p>
+        <p style={{color: 'rgba(255,255,255,0.6)', marginBottom: 30}}>{t('loading')}</p>
       </div>
     );
   }
@@ -57,7 +59,7 @@ export default function Account() {
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>👤 حسابي</h2>
+        }}>👤 {t('contact')}</h2>
         <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>إدارة حسابك والمشتريات</p>
       </div>
 
@@ -137,7 +139,7 @@ export default function Account() {
                 margin: 0,
                 fontSize: 'clamp(1.1em, 3vw, 1.3em)',
                 textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
-              }}>مشترياتي</h3>
+              }}>{t('myPurchases')}</h3>
               <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>المنتجات المشتراة</p>
             </div>
           </Link>
@@ -162,7 +164,7 @@ export default function Account() {
                 fontSize: 'clamp(1.1em, 3vw, 1.3em)',
                 textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
               }}>طلباتي</h3>
-              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>تتبع الطلبات</p>
+              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>{t('orders')}</p>
             </div>
           </Link>
         </div>
@@ -184,7 +186,7 @@ export default function Account() {
             cursor: 'pointer'
           }}
         >
-          🚪 تسجيل الخروج
+          🚪 {t('logout')}
         </button>
       </div>
     </div>

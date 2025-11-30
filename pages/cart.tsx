@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function Cart(){
+  const { t } = useLanguage();
   const items = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('cart')||'[]') : [];
   const total = items.reduce((s: number, i: any)=>s+(i.price||0),0);
   
@@ -22,8 +24,8 @@ export default function Cart(){
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>🛒 سلة التسوق</h2>
-        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>راجع منتجاتك قبل الدفع</p>
+        }}>🛒 {t('shoppingCart')}</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>{t('reviewProducts')}</p>
       </div>
 
       <div className="card animate-fadeInUp" style={{
@@ -42,7 +44,7 @@ export default function Cart(){
               marginBottom: 'clamp(12px, 2vw, 18px)',
               fontSize: 'clamp(1.3em, 4.5vw, 1.7em)',
               textShadow: '0 0 20px rgba(57, 255, 20, 0.4)'
-            }}>السلة فارغة</h3>
+            }}>{t('emptyCart')}</h3>
             <p style={{
               color: 'rgba(255,255,255,0.6)',
               marginBottom: 'clamp(25px, 5vw, 35px)',
@@ -52,7 +54,7 @@ export default function Cart(){
               fontSize: 'clamp(1em, 2.5vw, 1.15em)',
               padding: 'clamp(14px, 3vw, 18px) clamp(30px, 7vw, 40px)'
             }}>
-              🛍️ تصفح المنتجات
+              🛍️ {t('browseProducts')}
             </Link>
           </div>
         ) : (
@@ -79,7 +81,7 @@ export default function Cart(){
                     <p style={{
                       color: 'rgba(255,255,255,0.6)',
                       fontSize: 'clamp(0.9em, 2.5vw, 0.95em)'
-                    }}>كمية: 1</p>
+                    }}>{t('price')}: 1</p>
                   </div>
                   <div style={{
                     display: 'flex',
@@ -118,7 +120,7 @@ export default function Cart(){
                         fontWeight: 600
                       }}
                     >
-                      ✕ حذف
+                      ✕ {t('cart')}
                     </button>
                   </div>
                 </div>
@@ -137,7 +139,7 @@ export default function Cart(){
                 color: 'rgba(255,255,255,0.6)',
                 marginBottom: '12px',
                 fontSize: 'clamp(0.95em, 2.5vw, 1.05em)'
-              }}>المجموع</p>
+              }}>{t('total')}</p>
               <div style={{
                 fontSize: 'clamp(2em, 6vw, 2.8em)',
                 fontWeight: 900,
@@ -159,7 +161,7 @@ export default function Cart(){
               borderRadius: '12px',
               display: 'block'
             }}>
-              💳 متابعة الدفع
+              💳 {t('proceedToCheckout')}
             </Link>
           </>
         )}

@@ -1,6 +1,48 @@
 import Link from 'next/link';
+import { useLanguage } from '@/lib/LanguageContext';
 
 export default function HowToBuy() {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      num: 1,
+      title: t('step1Title'),
+      desc: t('step1Desc'),
+      emoji: '🛍️'
+    },
+    {
+      num: 2,
+      title: t('step2Title'),
+      desc: t('step2Desc'),
+      emoji: '🛒'
+    },
+    {
+      num: 3,
+      title: t('step3Title'),
+      desc: t('step3Desc'),
+      emoji: '💳'
+    },
+    {
+      num: 4,
+      title: t('step4Title'),
+      desc: t('step4Desc'),
+      emoji: '📸'
+    },
+    {
+      num: 5,
+      title: t('step5Title'),
+      desc: t('step5Desc'),
+      emoji: '⏳'
+    },
+    {
+      num: 6,
+      title: t('step6Title'),
+      desc: t('step6Desc'),
+      emoji: '⬇️'
+    }
+  ];
+
   return (
     <div>
       <div style={{
@@ -19,8 +61,8 @@ export default function HowToBuy() {
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>دليل الشراء</h2>
-        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>دليل سهل وبسيط للشراء من متجرنا</p>
+        }}>{t('howToBuyTitle')}</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>{t('howToBuySubtitle')}</p>
       </div>
 
       <div style={{
@@ -29,44 +71,7 @@ export default function HowToBuy() {
         maxWidth: 900,
         margin: '0 auto'
       }}>
-        {[
-          {
-            num: 1,
-            title: 'تصفح المنتجات',
-            desc: '• ابحث عن ما تريده في صفحة المنتجات\n• استخدم البحث أو الفلترة للعثور بسرعة\n• اقرأ الوصف والسعر بعناية',
-            emoji: '🛍️'
-          },
-          {
-            num: 2,
-            title: 'أضف إلى السلة',
-            desc: '• اضغط على "إضافة إلى السلة"\n• يمكنك إضافة عدة منتجات\n• راجع سلتك من القائمة العلوية',
-            emoji: '🛒'
-          },
-          {
-            num: 3,
-            title: 'الدفع عبر بريدي موب',
-            desc: '• انتقل إلى صفحة الدفع\n• حول المبلغ المطلوب\n• احفظ إيصال التحويل',
-            emoji: '💳'
-          },
-          {
-            num: 4,
-            title: 'أرفق الإيصال',
-            desc: '• التقط صورة واضحة للإيصال\n• يجب أن تظهر رقم الملف والمبلغ\n• أرفقها في نموذج الدفع',
-            emoji: '📸'
-          },
-          {
-            num: 5,
-            title: 'انتظر التأكيد',
-            desc: '• سيراجع الفريق الإيصال\n• سيتم التحقق من التحويل\n• ستحصل على إشعار التأكيد',
-            emoji: '⏳'
-          },
-          {
-            num: 6,
-            title: 'تحميل المنتجات',
-            desc: '• بعد التأكيد ستصبح المنتجات متاحة\n• ستجدها في "مشترياتي"\n• حمل الملفات متى تشاء',
-            emoji: '⬇️'
-          }
-        ].map((step) => (
+        {steps.map((step) => (
           <div key={step.num} className="card animate-fadeInUp" style={{
             background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.08) 0%, rgba(255, 215, 0, 0.05) 100%)',
             border: '2px solid rgba(57, 255, 20, 0.2)',
@@ -132,7 +137,7 @@ export default function HowToBuy() {
           marginBottom: 'clamp(12px, 2vw, 18px)',
           textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
         }}>
-          💡 نصائح مهمة
+          💡 {t('importantTips')}
         </h3>
         <ul style={{
           textAlign: 'right',
@@ -143,10 +148,10 @@ export default function HowToBuy() {
           paddingLeft: 0,
           listStyle: 'none'
         }}>
-          <li>✓ تأكد من كتابة رقم الحساب بشكل صحيح</li>
-          <li>✓ احرص على أن تكون صورة الإيصال واضحة</li>
-          <li>✓ تواصل معنا عبر الدردشة إذا واجهت أي مشكلة</li>
-          <li>✓ المنتجات متاحة للتحميل فوراً بعد التأكيد</li>
+          <li>✓ {t('tip1')}</li>
+          <li>✓ {t('tip2')}</li>
+          <li>✓ {t('tip3')}</li>
+          <li>✓ {t('tip4')}</li>
         </ul>
       </div>
 
@@ -159,14 +164,14 @@ export default function HowToBuy() {
           fontSize: 'clamp(1em, 2.5vw, 1.1em)',
           marginBottom: 'clamp(20px, 4vw, 30px)'
         }}>
-          هل انت مستعد للبدء؟
+          {t('readyToStart')}
         </p>
         <Link href="/products" className="btn" style={{
           fontSize: 'clamp(1.05em, 2.5vw, 1.2em)',
           padding: 'clamp(14px, 3vw, 18px) clamp(30px, 7vw, 40px)',
           borderRadius: 'clamp(12px, 3vw, 16px)'
         }}>
-          🛍️ تصفح المنتجات الآن
+          🛍️ {t('browseNow')}
         </Link>
       </div>
     </div>
