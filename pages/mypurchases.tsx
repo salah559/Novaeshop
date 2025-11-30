@@ -178,7 +178,58 @@ export default function MyPurchases(){
                         fontFamily: 'monospace'
                       }}>
                         {typeof item.purchaseContent === 'string' 
-                          ? item.purchaseContent 
+                          ? item.purchaseContent.split('\n').map((line: string, idx: number) => {
+                              const urlMatches = line.match(/https?:\/\/[^\s]+/g);
+                              if (!urlMatches) {
+                                return <div key={idx}>{line}</div>;
+                              }
+                              
+                              let parts: any[] = [];
+                              let lastIndex = 0;
+                              
+                              urlMatches.forEach((url: string) => {
+                                const startIndex = line.indexOf(url, lastIndex);
+                                if (startIndex > lastIndex) {
+                                  parts.push({ type: 'text', content: line.substring(lastIndex, startIndex) });
+                                }
+                                parts.push({ type: 'url', content: url });
+                                lastIndex = startIndex + url.length;
+                              });
+                              
+                              if (lastIndex < line.length) {
+                                parts.push({ type: 'text', content: line.substring(lastIndex) });
+                              }
+                              
+                              return (
+                                <div key={idx}>
+                                  {parts.map((part: any, i: number) =>
+                                    part.type === 'url' ? (
+                                      <button
+                                        key={i}
+                                        onClick={() => window.open(part.content, '_blank')}
+                                        style={{
+                                          background: '#39ff14',
+                                          color: '#000',
+                                          border: 'none',
+                                          padding: '4px 8px',
+                                          borderRadius: '4px',
+                                          cursor: 'pointer',
+                                          fontSize: 'inherit',
+                                          fontFamily: 'inherit',
+                                          fontWeight: 'bold',
+                                          marginLeft: '4px',
+                                          marginRight: '4px'
+                                        }}
+                                      >
+                                        🔗
+                                      </button>
+                                    ) : (
+                                      <span key={i}>{part.content}</span>
+                                    )
+                                  )}
+                                </div>
+                              );
+                            })
                           : JSON.stringify(item.purchaseContent)
                         }
                       </div>
