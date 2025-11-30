@@ -57,13 +57,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: 'ImgBB API key not configured' });
     }
 
-    // Use form-data to create proper multipart/form-data request to ImgBB
+    // Build FormData correctly for ImgBB
     const formData = new FormData();
     formData.append('image', base64);
 
+    console.log('Uploading to ImgBB, base64 length:', base64.length);
+
     const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: 'POST',
-      body: formData as any,
+      body: formData,
+      headers: formData.getHeaders?.() || {},
     });
 
     const data = await response.json();
