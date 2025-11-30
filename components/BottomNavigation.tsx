@@ -7,6 +7,7 @@ import { useLanguage } from '@/lib/LanguageContext';
 export default function BottomNavigation() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [isSpinning, setIsSpinning] = useState(false);
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -18,6 +19,19 @@ export default function BottomNavigation() {
     });
     return () => unsub();
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsSpinning(true);
+      const timer = setTimeout(() => setIsSpinning(false), 800);
+      return () => clearTimeout(timer);
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
 
   const baseItems = [
     { href: '/', icon: '🏠', label: language === 'ar' ? 'الرئيسية' : 'Home' },
@@ -104,7 +118,7 @@ export default function BottomNavigation() {
 
       <Link
         href={centerItem.href}
-        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''}`}
+        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''} ${isSpinning ? 'spinning' : ''}`}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -124,7 +138,8 @@ export default function BottomNavigation() {
           zIndex: 10,
           marginBottom: '15px',
           fontSize: '0.7em',
-          fontWeight: isActive(centerItem.href) ? 600 : 500
+          fontWeight: isActive(centerItem.href) ? 600 : 500,
+          animation: isSpinning ? 'wheelRotate 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards' : 'none'
         }}
       >
         <span style={{ 
@@ -199,6 +214,24 @@ export default function BottomNavigation() {
           }
         }
 
+        @keyframes wheelRotate {
+          0% {
+            transform: rotate(0deg) scale(1);
+          }
+          25% {
+            transform: rotate(90deg) scale(1.05);
+          }
+          50% {
+            transform: rotate(180deg) scale(1.08);
+          }
+          75% {
+            transform: rotate(270deg) scale(1.05);
+          }
+          100% {
+            transform: rotate(360deg) scale(1);
+          }
+        }
+
         .nav-item {
           animation: slideInUp 0.5s ease-out both;
         }
@@ -213,7 +246,7 @@ export default function BottomNavigation() {
           animation: slideInUp 0.5s ease-out 0.15s both;
         }
 
-        .nav-item-center.nav-item-active {
+        .nav-item-center.nav-item-active:not(.spinning) {
           animation: pulse-center 2s ease-in-out infinite;
         }
 
