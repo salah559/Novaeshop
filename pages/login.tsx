@@ -909,26 +909,30 @@ export default function LoginPage() {
           justify-content: center;
           gap: 10px;
           transition: all 0.3s ease;
-          color: white;
+          color: #000;
+          background: #fff;
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .google-btn {
-          background: #4285F4;
+          background: #fff;
+          color: #000;
         }
 
         .google-btn:hover:not(:disabled) {
-          background: #3367D6;
-          box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+          background: #f5f5f5;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
           transform: translateY(-2px);
         }
 
         .facebook-btn {
-          background: #1877F2;
+          background: #fff;
+          color: #000;
         }
 
         .facebook-btn:hover:not(:disabled) {
-          background: #166FE5;
-          box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
+          background: #f5f5f5;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
           transform: translateY(-2px);
         }
 
