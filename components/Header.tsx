@@ -7,7 +7,6 @@ import { isAdmin } from '@/lib/adminCheck';
 export default function Header(){
   const [user, setUser] = useState<any>(null);
   const [isAdminUser, setIsAdminUser] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
@@ -233,112 +232,13 @@ export default function Header(){
               🔑 دخول
             </Link>
           )}
-
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="mobile-menu-btn"
-            style={{
-              background: 'rgba(57, 255, 20, 0.1)',
-              border: '2px solid rgba(57, 255, 20, 0.3)',
-              borderRadius: 'clamp(8px, 1vw, 10px)',
-              padding: 'clamp(8px, 1.5vw, 10px)',
-              color: '#39ff14',
-              cursor: 'pointer',
-              flexDirection: 'column',
-              gap: '4px',
-              fontSize: '1.2em',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.3s ease'
-            } as any}
-          >
-            {mobileMenuOpen ? '✕' : '☰'}
-          </button>
         </div>
       </div>
 
-      {mobileMenuOpen && (
-        <nav style={{
-          display: 'flex',
-          flexDirection: 'column',
-          padding: 'clamp(15px, 3vw, 20px)',
-          gap: 'clamp(10px, 2vw, 14px)',
-          borderTop: '1px solid rgba(57, 255, 20, 0.1)',
-          background: 'rgba(15, 15, 20, 0.98)',
-          maxHeight: 'calc(100vh - 150px)',
-          overflowY: 'auto'
-        }}>
-          {[
-            { href: '/', label: t('home') },
-            { href: '/products', label: t('products') },
-            { href: '/how-to-buy', label: 'كيف تشتري؟' },
-            { href: '/contact', label: t('contact') },
-            ...(user ? [
-              { href: '/account', label: 'حسابي' },
-              { href: '/mypurchases', label: t('myPurchases') },
-              { href: '/orders', label: 'طلباتي' }
-            ] : []),
-            ...(isAdminUser ? [{ href: '/admin', label: t('admin') }] : [])
-          ].map((item, i) => (
-            <Link 
-              key={i} 
-              href={item.href} 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{
-                color: isAdminUser && item.label === t('admin') ? '#39ff14' : 'rgba(255,255,255,0.8)',
-                fontWeight: isAdminUser && item.label === t('admin') ? 600 : 500,
-                padding: 'clamp(10px, 2vw, 12px)',
-                borderRadius: '8px',
-                transition: 'all 0.3s ease',
-                fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
-                borderLeft: '3px solid rgba(57, 255, 20, 0.2)'
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
-          {user && (
-            <button
-              onClick={() => {
-                logout();
-                setMobileMenuOpen(false);
-              }}
-              style={{
-                color: '#ff6b6b',
-                fontWeight: 600,
-                padding: 'clamp(10px, 2vw, 12px)',
-                borderRadius: '8px',
-                transition: 'all 0.3s ease',
-                fontSize: 'clamp(0.95em, 2.5vw, 1.05em)',
-                borderLeft: '3px solid rgba(255, 107, 107, 0.3)',
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                textAlign: 'right'
-              }}
-            >
-              🚪 تسجيل الخروج
-            </button>
-          )}
-        </nav>
-      )}
-
       <style jsx>{`
-        @media (min-width: 768px) {
-          .desktop-nav {
-            display: flex !important;
-          }
-          .mobile-menu-btn {
-            display: none !important;
-          }
-        }
-        
         @media (max-width: 767px) {
           .desktop-nav {
             display: none !important;
-          }
-          .mobile-menu-btn {
-            display: flex !important;
           }
         }
         
