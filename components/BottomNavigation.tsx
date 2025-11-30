@@ -8,9 +8,9 @@ export default function BottomNavigation() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [translateX, setTranslateX] = useState(0);
   const centerRef = useRef<HTMLAnchorElement>(null);
   const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement }>({});
+  const animationRef = useRef<any>(null);
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -25,28 +25,61 @@ export default function BottomNavigation() {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      if (centerRef.current) {
+      if (centerRef.current && animationRef.current === null) {
         const centerRect = centerRef.current.getBoundingClientRect();
         const targetItem = navItemsRef.current[router.pathname];
         
         if (targetItem) {
           const targetRect = targetItem.getBoundingClientRect();
-          const diff = targetRect.left - centerRect.left;
-          setTranslateX(diff);
+          const centerX = centerRect.left + centerRect.width / 2;
+          const targetX = targetRect.left + targetRect.width / 2;
+          const distance = targetX - centerX;
+          
+          setIsTransitioning(true);
+          
+          const startTime = Date.now();
+          const duration = 800;
+          const easeFunc = (t: number) => {
+            const c = 1.70158;
+            const c3 = c + 1;
+            return c3 * t * t * t - c * t * t;
+          };
+          
+          const animate = () => {
+            const now = Date.now();
+            const progress = Math.min((now - startTime) / duration, 1);
+            const easeProgress = easeFunc(progress);
+            
+            if (centerRef.current) {
+              const rotation = easeProgress * 360;
+              const moveDistance = distance * easeProgress;
+              const scale = 1 + (Math.sin(easeProgress * Math.PI) * 0.15);
+              
+              centerRef.current.style.transform = `translateX(${moveDistance}px) rotate(${rotation}deg) scale(${scale})`;
+            }
+            
+            if (progress < 1) {
+              animationRef.current = requestAnimationFrame(animate);
+            } else {
+              if (centerRef.current) {
+                centerRef.current.style.transform = 'none';
+              }
+              setIsTransitioning(false);
+              animationRef.current = null;
+            }
+          };
+          
+          animationRef.current = requestAnimationFrame(animate);
         }
       }
-      
-      setIsTransitioning(true);
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-        setTranslateX(0);
-      }, 800);
-      return () => clearTimeout(timer);
     };
 
     router.events.on('routeChangeStart', handleRouteChange);
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
   }, [router]);
 
@@ -139,7 +172,7 @@ export default function BottomNavigation() {
       <Link
         ref={centerRef}
         href={centerItem.href}
-        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''} ${isTransitioning ? 'transitioning' : ''}`}
+        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''}`}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -160,9 +193,8 @@ export default function BottomNavigation() {
           marginBottom: '15px',
           fontSize: '0.7em',
           fontWeight: isActive(centerItem.href) ? 600 : 500,
-          animation: isTransitioning ? `wheelMove 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards` : 'none',
-          '--tx': `${translateX}px`
-        } as any}
+          willChange: isTransitioning ? 'transform' : 'auto'
+        }}
       >
         <span style={{ 
           fontSize: '2em',
@@ -236,24 +268,6 @@ export default function BottomNavigation() {
           }
           50% {
             box-shadow: 0 -8px 20px rgba(57, 255, 20, 0.08), 0 0 50px rgba(255, 215, 0, 0.4);
-          }
-        }
-
-        @keyframes wheelMove {
-          0% {
-            transform: translateX(0) rotate(0deg) scale(1);
-          }
-          25% {
-            transform: translateX(calc(var(--tx) * 0.25)) rotate(90deg) scale(1.1);
-          }
-          50% {
-            transform: translateX(calc(var(--tx) * 0.5)) rotate(180deg) scale(1.15);
-          }
-          75% {
-            transform: translateX(calc(var(--tx) * 0.75)) rotate(270deg) scale(1.1);
-          }
-          100% {
-            transform: translateX(var(--tx)) rotate(360deg) scale(1);
           }
         }
 
