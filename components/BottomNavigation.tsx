@@ -7,11 +7,7 @@ import { useLanguage } from '@/lib/LanguageContext';
 export default function BottomNavigation() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const centerRef = useRef<HTMLAnchorElement>(null);
   const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement }>({});
-  const animationRef = useRef<any>(null);
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -36,76 +32,18 @@ export default function BottomNavigation() {
     ...(user ? [{ href: '/account', icon: '👤', label: language === 'ar' ? 'حسابي' : 'Account' }] : [{ href: '/login', icon: '🔑', label: language === 'ar' ? 'دخول' : 'Login' }])
   ];
 
-  const allItems = [...baseItems, centerItem, ...endItems];
-
   const isActive = (href: string) => router.pathname === href;
 
   useEffect(() => {
-    const handleRouteChange = () => {
-      const newIndex = allItems.findIndex(item => isActive(item.href));
-      if (newIndex !== -1) {
-        setActiveIndex(newIndex);
-      }
-
-      if (centerRef.current && animationRef.current === null) {
-        const centerRect = centerRef.current.getBoundingClientRect();
-        const targetItem = navItemsRef.current[router.pathname];
-        
-        if (targetItem) {
-          const targetRect = targetItem.getBoundingClientRect();
-          const centerX = centerRect.left + centerRect.width / 2;
-          const targetX = targetRect.left + targetRect.width / 2;
-          const distance = targetX - centerX;
-          
-          setIsTransitioning(true);
-          
-          const startTime = Date.now();
-          const duration = 800;
-          const easeFunc = (t: number) => {
-            const c = 1.70158;
-            const c3 = c + 1;
-            return c3 * t * t * t - c * t * t;
-          };
-          
-          const animate = () => {
-            const now = Date.now();
-            const progress = Math.min((now - startTime) / duration, 1);
-            const easeProgress = easeFunc(progress);
-            
-            if (centerRef.current) {
-              const rotation = easeProgress * 360;
-              const moveDistance = distance * easeProgress;
-              const scale = 1 + (Math.sin(easeProgress * Math.PI) * 0.15);
-              
-              centerRef.current.style.transform = `translateX(${moveDistance}px) rotate(${rotation}deg) scale(${scale})`;
-            }
-            
-            if (progress < 1) {
-              animationRef.current = requestAnimationFrame(animate);
-            } else {
-              if (centerRef.current) {
-                centerRef.current.style.transform = 'none';
-              }
-              setIsTransitioning(false);
-              animationRef.current = null;
-            }
-          };
-          
-          animationRef.current = requestAnimationFrame(animate);
-        }
-      }
-    };
-
-    router.events.on('routeChangeStart', handleRouteChange);
+    router.events.on('routeChangeStart', () => {
+      // Handle route change if needed
+    });
     return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      router.events.off('routeChangeStart', () => {});
     };
-  }, [router, allItems]);
+  }, [router]);
 
-  const NavItem = ({ item, idx }: any) => (
+  const NavItem = ({ item }: any) => (
     <Link
       ref={(el) => {
         if (el) navItemsRef.current[item.href] = el;
@@ -192,68 +130,9 @@ export default function BottomNavigation() {
         justifyContent: 'center',
         pointerEvents: 'auto'
       }}>
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          alignItems: 'flex-end'
-        }}>
-          {baseItems.map((item, idx) => (
-            <NavItem key={idx} item={item} idx={idx} />
-          ))}
-        </div>
-
-        <Link
-          ref={centerRef}
-          href={centerItem.href}
-          className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''}`}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0px',
-            textDecoration: 'none',
-            color: isActive(centerItem.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
-            transition: isTransitioning ? 'none' : 'all 0.3s ease',
-            width: '65px',
-            height: '65px',
-            borderRadius: '50%',
-            background: isActive(centerItem.href) 
-              ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(57, 255, 20, 0.15))'
-              : 'linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(255, 215, 0, 0.08))',
-            border: '2px solid rgba(255, 215, 0, 0.3)',
-            boxShadow: isActive(centerItem.href) 
-              ? '0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.15)'
-              : '0 0 20px rgba(57, 255, 20, 0.15), inset 0 0 15px rgba(255, 215, 0, 0.05)',
-            position: 'relative',
-            zIndex: 10,
-            marginBottom: '2px',
-            fontSize: '0.7em',
-            fontWeight: 600,
-            willChange: isTransitioning ? 'transform' : 'auto',
-            pointerEvents: 'auto'
-          }}
-        >
-          <span style={{ 
-            fontSize: '2.2em',
-            transition: 'transform 0.4s ease, filter 0.3s ease',
-            display: 'inline-block',
-            transform: isActive(centerItem.href) ? 'scale(1.15)' : 'scale(1)',
-            filter: isActive(centerItem.href) ? 'drop-shadow(0 0 12px rgba(255, 215, 0, 0.6))' : 'none'
-          }}>
-            {centerItem.icon}
-          </span>
-        </Link>
-
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          alignItems: 'flex-end'
-        }}>
-          {endItems.map((item, idx) => (
-            <NavItem key={idx} item={item} idx={idx + baseItems.length + 1} />
-          ))}
-        </div>
+        {[...baseItems, centerItem, ...endItems].map((item, idx) => (
+          <NavItem key={idx} item={item} />
+        ))}
       </div>
 
       <style jsx>{`
@@ -268,25 +147,8 @@ export default function BottomNavigation() {
           }
         }
 
-        @keyframes pulseGlow {
-          0%, 100% {
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.15), inset 0 0 15px rgba(255, 215, 0, 0.05);
-          }
-          50% {
-            box-shadow: 0 0 35px rgba(57, 255, 20, 0.25), inset 0 0 20px rgba(255, 215, 0, 0.1);
-          }
-        }
-
         .nav-item {
           animation: slideInUp 0.5s ease-out both;
-        }
-
-        .nav-item-center {
-          animation: slideInUp 0.5s ease-out 0.15s both;
-        }
-
-        .nav-item-center:not(.nav-item-active) {
-          animation: pulseGlow 3s ease-in-out infinite;
         }
 
         .nav-item:hover {
@@ -307,13 +169,8 @@ export default function BottomNavigation() {
         }
 
         @media (max-width: 480px) {
-          .nav-item-center {
-            width: 60px;
-            height: 60px;
-          }
-
-          .nav-item-center span:first-child {
-            font-size: 2em !important;
+          .nav-item {
+            padding: 8px 10px;
           }
         }
       `}</style>
