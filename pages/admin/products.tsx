@@ -332,98 +332,78 @@ export default function AdminProducts(){
           </h3>
           <form onSubmit={handleSubmit}>
             <div style={{display: 'grid', gap: 20}}>
-              <div>
-                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  اسم المنتج
-                </label>
-                <input 
-                  type="text"
-                  value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(57, 255, 20, 0.3)',
-                    borderRadius: 8,
-                    color: '#fff',
-                    fontSize: '1rem'
-                  }}
-                />
-              </div>
+              <input 
+                type="text"
+                placeholder="اسم المنتج"
+                value={formData.name}
+                onChange={e => setFormData({...formData, name: e.target.value})}
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(57, 255, 20, 0.4)',
+                  borderRadius: 8,
+                  color: '#fff',
+                  fontSize: '1rem'
+                }}
+              />
+
+              <textarea 
+                placeholder="الوصف"
+                value={formData.description}
+                onChange={e => setFormData({...formData, description: e.target.value})}
+                required
+                rows={3}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(57, 255, 20, 0.4)',
+                  borderRadius: 8,
+                  color: '#fff',
+                  fontSize: '1rem',
+                  resize: 'vertical'
+                }}
+              />
+
+              <input 
+                type="number"
+                placeholder="السعر (دج)"
+                value={formData.price}
+                onChange={e => setFormData({...formData, price: Number(e.target.value)})}
+                required
+                min="0"
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(57, 255, 20, 0.4)',
+                  borderRadius: 8,
+                  color: '#fff',
+                  fontSize: '1rem'
+                }}
+              />
+
+              <input 
+                type="text"
+                placeholder="الفئة"
+                value={formData.category}
+                onChange={e => setFormData({...formData, category: e.target.value})}
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(57, 255, 20, 0.4)',
+                  borderRadius: 8,
+                  color: '#fff',
+                  fontSize: '1rem'
+                }}
+              />
 
               <div>
-                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  الوصف
-                </label>
-                <textarea 
-                  value={formData.description}
-                  onChange={e => setFormData({...formData, description: e.target.value})}
-                  required
-                  rows={4}
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(57, 255, 20, 0.3)',
-                    borderRadius: 8,
-                    color: '#fff',
-                    fontSize: '1rem',
-                    resize: 'vertical'
-                  }}
-                />
-              </div>
-
-              <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20}}>
-                <div>
-                  <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                    السعر (دج)
-                  </label>
-                  <input 
-                    type="number"
-                    value={formData.price}
-                    onChange={e => setFormData({...formData, price: Number(e.target.value)})}
-                    required
-                    min="0"
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(57, 255, 20, 0.3)',
-                      borderRadius: 8,
-                      color: '#fff',
-                      fontSize: '1rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                    الفئة
-                  </label>
-                  <input 
-                    type="text"
-                    value={formData.category}
-                    onChange={e => setFormData({...formData, category: e.target.value})}
-                    required
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      background: 'rgba(255, 255, 255, 0.05)',
-                      border: '1px solid rgba(57, 255, 20, 0.3)',
-                      borderRadius: 8,
-                      color: '#fff',
-                      fontSize: '1rem'
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  📸 الصورة
-                </label>
+                <p style={{color: '#39ff14', marginBottom: 8, fontWeight: 600}}>📸 الصورة</p>
                 <input 
                   type="file"
                   accept="image/*"
@@ -431,22 +411,20 @@ export default function AdminProducts(){
                   disabled={uploadingImage}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(57, 255, 20, 0.3)',
+                    padding: '8px',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    border: '1px solid rgba(57, 255, 20, 0.4)',
                     borderRadius: 8,
                     color: '#fff',
-                    fontSize: '1rem'
+                    fontSize: '0.9rem'
                   }}
                 />
-                {uploadingImage && <p style={{color: '#39ff14', marginTop: 8}}>⏳ جاري رفع الصورة...</p>}
-                {formData.imageUrl && <p style={{color: '#39ff14', marginTop: 8}}>✅ تم رفع الصورة</p>}
+                {uploadingImage && <p style={{color: '#ffd700', marginTop: 8}}>⏳ جاري رفع...</p>}
+                {formData.imageUrl && <p style={{color: '#39ff14', marginTop: 8}}>✅ تم</p>}
               </div>
 
               <div>
-                <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  📁 الملف (صورة أو PDF)
-                </label>
+                <p style={{color: '#39ff14', marginBottom: 8, fontWeight: 600}}>📁 الملف</p>
                 <input 
                   type="file"
                   accept="image/*,.pdf"
@@ -454,49 +432,52 @@ export default function AdminProducts(){
                   disabled={uploadingFile}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(57, 255, 20, 0.3)',
+                    padding: '8px',
+                    background: 'rgba(255, 255, 255, 0.08)',
+                    border: '1px solid rgba(57, 255, 20, 0.4)',
                     borderRadius: 8,
                     color: '#fff',
-                    fontSize: '1rem'
+                    fontSize: '0.9rem'
                   }}
                 />
-                {uploadingFile && <p style={{color: '#39ff14', marginTop: 8}}>⏳ جاري رفع الملف...</p>}
-                {formData.fileUrl && <p style={{color: '#39ff14', marginTop: 8}}>✅ تم رفع الملف</p>}
+                {uploadingFile && <p style={{color: '#ffd700', marginTop: 8}}>⏳ جاري رفع...</p>}
+                {formData.fileUrl && <p style={{color: '#39ff14', marginTop: 8}}>✅ تم</p>}
               </div>
 
-              <div style={{display: 'flex', gap: 15, marginTop: 10}}>
-                <button 
-                  type="submit"
-                  className="btn"
-                  style={{
-                    flex: 1,
-                    padding: '14px',
-                    fontSize: '1.1em'
-                  }}
-                >
-                  {editingProduct ? '✓ حفظ التعديلات' : '✓ إضافة المنتج'}
-                </button>
-                <button 
-                  type="button"
-                  onClick={resetForm}
-                  style={{
-                    flex: 1,
-                    padding: '14px',
-                    background: 'rgba(255, 0, 0, 0.2)',
-                    color: '#ff6b6b',
-                    border: '1px solid rgba(255, 0, 0, 0.3)',
-                    borderRadius: 8,
-                    fontWeight: 600,
-                    fontSize: '1.1em',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  ✕ إلغاء
-                </button>
-              </div>
+              <button 
+                type="submit"
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  background: '#39ff14',
+                  color: '#0a0f14',
+                  border: 'none',
+                  borderRadius: 8,
+                  fontWeight: 700,
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  marginBottom: 10
+                }}
+              >
+                {editingProduct ? '✓ حفظ' : '✓ إضافة'}
+              </button>
+              <button 
+                type="button"
+                onClick={resetForm}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  background: 'rgba(255, 0, 0, 0.3)',
+                  color: '#ff6b6b',
+                  border: '1px solid rgba(255, 0, 0, 0.4)',
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  cursor: 'pointer'
+                }}
+              >
+                ✕ إلغاء
+              </button>
             </div>
           </form>
         </div>
