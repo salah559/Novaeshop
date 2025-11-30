@@ -20,11 +20,13 @@ export default function MyPurchases(){
       getDocs(purchasesQuery)
     ]);
     
-    const orders = ordersSnap.docs.map(d=>({
-      id: d.id,
-      ...d.data(),
-      type: 'order'
-    }));
+    const orders = ordersSnap.docs
+      .filter((d: any) => d.data().status === 'pending')
+      .map(d=>({
+        id: d.id,
+        ...d.data(),
+        type: 'order'
+      }));
     
     const purchasesData = purchasesSnap.docs.map(d=>({
       id: d.id,
@@ -38,7 +40,6 @@ export default function MyPurchases(){
       return dateB.getTime() - dateA.getTime();
     });
 
-    setCache(cacheKey, allData, 5);
     setPurchases(allData);
     setLoading(false);
   }
