@@ -121,6 +121,7 @@ export default function Admin(){
           productId: item.id,
           name: productData.name || item.name,
           downloadUrl: productData.fileUrl || null,
+          purchaseContent: productData.purchaseContent || null,
           createdAt: new Date()
         });
       }

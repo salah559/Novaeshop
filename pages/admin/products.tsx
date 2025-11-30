@@ -12,6 +12,7 @@ interface Product {
   category: string;
   imageUrl: string;
   fileUrl: string;
+  purchaseContent?: string;
 }
 
 export default function AdminProducts(){
@@ -30,7 +31,8 @@ export default function AdminProducts(){
     price: 0,
     category: '',
     imageUrl: '',
-    fileUrl: ''
+    fileUrl: '',
+    purchaseContent: ''
   });
 
   useEffect(()=> {
@@ -166,7 +168,8 @@ export default function AdminProducts(){
       price: product.price,
       category: product.category,
       imageUrl: product.imageUrl,
-      fileUrl: product.fileUrl
+      fileUrl: product.fileUrl,
+      purchaseContent: product.purchaseContent || ''
     });
     setShowForm(true);
   }
@@ -179,7 +182,8 @@ export default function AdminProducts(){
       price: 0,
       category: '',
       imageUrl: '',
-      fileUrl: ''
+      fileUrl: '',
+      purchaseContent: ''
     });
     setShowForm(false);
   }
@@ -330,6 +334,21 @@ export default function AdminProducts(){
               {uploadingFile && <p style={{ color: '#ffd700', marginTop: 8 }}>⏳ رفع...</p>}
               {formData.fileUrl && <p style={{ color: '#39ff14', marginTop: 8 }}>✅ تم</p>}
             </div>
+
+            <textarea 
+              placeholder="محتوى الشراء (نص طويل مع روابط - سيظهر للعميل بعد الشراء)"
+              value={formData.purchaseContent}
+              onChange={e => setFormData({...formData, purchaseContent: e.target.value})}
+              rows={4}
+              style={{
+                width: '100%',
+                padding: '10px',
+                background: 'rgba(0,0,0,0.3)',
+                border: '1px solid rgba(57, 255, 20, 0.4)',
+                borderRadius: 6,
+                color: '#fff'
+              }}
+            />
 
             <button 
               type="submit"

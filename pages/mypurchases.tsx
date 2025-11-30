@@ -166,6 +166,42 @@ export default function MyPurchases(){
                     <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)', textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'}}>{item.name}</h3>
                     <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}</p>
                   </div>
+                  {item.purchaseContent && (
+                    <div style={{
+                      background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%)',
+                      padding: 'clamp(14px, 3vw, 18px)',
+                      borderRadius: 10,
+                      borderLeft: '4px solid #ffd700',
+                      marginBottom: 'clamp(14px, 3vw, 20px)',
+                      wordBreak: 'break-word'
+                    }}>
+                      <p style={{color: '#ffd700', marginBottom: 10, fontSize: 'clamp(0.9em, 2.5vw, 1em)', fontWeight: 'bold'}}>📋 محتوى الشراء</p>
+                      <div style={{
+                        color: 'rgba(255,255,255,0.8)',
+                        fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
+                        lineHeight: 1.6,
+                        whiteSpace: 'pre-wrap'
+                      }}>
+                        {item.purchaseContent.split('\n').map((line: string, idx: number) => (
+                          <div key={idx} style={{marginBottom: 8}}>
+                            {line.includes('http') ? (
+                              line.split(/(\bhttps?:\/\/\S+)/g).map((part: string, i: number) => 
+                                part.match(/^https?:\/\//) ? (
+                                  <a key={i} href={part} target="_blank" rel="noopener noreferrer" style={{color: '#39ff14', textDecoration: 'underline'}}>
+                                    {part}
+                                  </a>
+                                ) : (
+                                  <span key={i}>{part}</span>
+                                )
+                              )
+                            ) : (
+                              line
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div style={{
                     background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(57, 255, 20, 0.05) 100%)',
                     padding: 'clamp(14px, 3vw, 18px)',
