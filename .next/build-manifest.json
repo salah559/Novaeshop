@@ -32,6 +32,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/account.js"
     ],
+    "/how-to-buy": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/how-to-buy.js"
+    ],
     "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

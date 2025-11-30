@@ -24,7 +24,7 @@ export default function BottomNavigation() {
     { href: '/products', icon: '🛍️', label: language === 'ar' ? 'المنتجات' : 'Products' },
     { href: '/how-to-buy', icon: '❓', label: language === 'ar' ? 'الشراء' : 'Guide' },
     { href: '/contact', icon: '📞', label: language === 'ar' ? 'تواصل' : 'Contact' },
-    ...(user ? [{ href: '/account', icon: '👤', label: language === 'ar' ? 'حسابي' : 'Account' }] : [])
+    ...(user ? [{ href: '/account', icon: '👤', label: language === 'ar' ? 'حسابي' : 'Account' }] : [{ href: '/login', icon: '🔑', label: language === 'ar' ? 'دخول' : 'Login' }])
   ];
 
   const isActive = (href: string) => router.pathname === href;
