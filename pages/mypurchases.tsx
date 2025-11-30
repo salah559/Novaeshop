@@ -179,50 +179,26 @@ export default function MyPurchases(){
                       }}>
                         {typeof item.purchaseContent === 'string' ? (
                           item.purchaseContent.split('\n').map((line: string, idx: number) => {
-                            const urlRegex = /(https?:\/\/[^\s\)]+)/g;
-                            const parts: any[] = [];
-                            let lastIndex = 0;
-                            let match;
-                            
-                            while ((match = urlRegex.exec(line)) !== null) {
-                              if (match.index > lastIndex) {
-                                parts.push({ type: 'text', content: line.substring(lastIndex, match.index) });
-                              }
-                              parts.push({ type: 'url', content: match[1] });
-                              lastIndex = match.index + match[0].length;
-                            }
-                            
-                            if (lastIndex < line.length) {
-                              parts.push({ type: 'text', content: line.substring(lastIndex) });
-                            }
-                            
+                            const trimmedLine = line.trim();
+                            const isUrl = trimmedLine.startsWith('http://') || trimmedLine.startsWith('https://');
                             return (
-                              <div key={idx} style={{marginBottom: 8}}>
-                                {parts.length > 0 ? (
-                                  parts.map((part: any, i: number) =>
-                                    part.type === 'url' ? (
-                                      <button
-                                        key={i}
-                                        onClick={() => window.open(part.content, '_blank')}
-                                        style={{
-                                          background: 'none',
-                                          border: 'none',
-                                          color: '#39ff14',
-                                          textDecoration: 'underline',
-                                          cursor: 'pointer',
-                                          padding: 0,
-                                          font: 'inherit',
-                                          marginRight: 4
-                                        }}
-                                      >
-                                        {part.content}
-                                      </button>
-                                    ) : (
-                                      <span key={i}>{part.content}</span>
-                                    )
-                                  )
+                              <div key={idx} style={{marginBottom: 8, wordBreak: 'break-word'}}>
+                                {isUrl ? (
+                                  <a
+                                    href={trimmedLine}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                      color: '#39ff14',
+                                      textDecoration: 'underline',
+                                      cursor: 'pointer',
+                                      display: 'inline-block'
+                                    }}
+                                  >
+                                    🔗 {trimmedLine}
+                                  </a>
                                 ) : (
-                                  line
+                                  trimmedLine
                                 )}
                               </div>
                             );
