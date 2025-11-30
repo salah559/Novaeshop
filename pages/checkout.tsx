@@ -32,7 +32,22 @@ export default function Checkout(){
     setLoading(true);
     try {
       const items = JSON.parse(localStorage.getItem('cart')||'[]');
+      
+      if (!items || items.length === 0) {
+        toast.error('السلة فارغة - يرجى إضافة منتجات قبل الشراء');
+        setLoading(false);
+        return;
+      }
+      
       const total = items.reduce((s:any,i:any)=>s+(i.price||0),0);
+      
+      if (total <= 0) {
+        toast.error('المبلغ الإجمالي يجب أن يكون أكبر من 0');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('Creating order with items:', items, 'total:', total, 'userId:', user?.uid);
       
       const reader = new FileReader();
       const base64Promise = new Promise<string>((resolve, reject) => {

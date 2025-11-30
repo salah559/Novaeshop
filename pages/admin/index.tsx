@@ -106,16 +106,32 @@ export default function Admin(){
     
     try {
       const order = orders.find(o => o.id === orderId);
-      if (!order) return;
+      if (!order) {
+        alert('❌ لم يتم العثور على الطلب');
+        return;
+      }
 
+      console.log('Order data:', order);
       const items = order.items || [];
+      
+      if (items.length === 0) {
+        alert('⚠️ لا يوجد منتجات في هذا الطلب');
+        return;
+      }
+      
+      if (!order.userId) {
+        alert('⚠️ لم يتم العثور على بيانات المستخدم');
+        return;
+      }
       
       for (const item of items) {
         const productDoc = await getDoc(doc(db, 'products', item.id));
         const productData = productDoc.exists() ? productDoc.data() : {};
         
+        console.log('Creating purchase for:', item.id, 'userId:', order.userId);
+        
         await addDoc(collection(db, 'purchases'), {
-          userId: order.userId || null,
+          userId: order.userId,
           productId: item.id,
           name: productData.name || item.name,
           downloadUrl: productData.fileUrl || null,
@@ -133,7 +149,7 @@ export default function Admin(){
       loadOrders();
       loadStats();
     } catch(e) {
-      alert('❌ حدث خطأ في تأكيد الطلب');
+      alert('❌ حدث خطأ في تأكيد الطلب: ' + (e as any).message);
       console.error(e);
     }
   }
