@@ -211,17 +211,19 @@ export default function MyPurchases(){
                                           background: '#39ff14',
                                           color: '#000',
                                           border: 'none',
-                                          padding: '4px 8px',
+                                          padding: '4px 6px',
                                           borderRadius: '4px',
                                           cursor: 'pointer',
                                           fontSize: 'inherit',
                                           fontFamily: 'inherit',
                                           fontWeight: 'bold',
-                                          marginLeft: '4px',
-                                          marginRight: '4px'
+                                          textDecoration: 'underline',
+                                          display: 'inline',
+                                          whiteSpace: 'pre-wrap',
+                                          wordBreak: 'break-all'
                                         }}
                                       >
-                                        🔗
+                                        {part.content}
                                       </button>
                                     ) : (
                                       <span key={i}>{part.content}</span>
