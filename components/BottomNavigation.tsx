@@ -1,13 +1,16 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { auth } from '@/lib/firebaseClient';
 import { useLanguage } from '@/lib/LanguageContext';
 
 export default function BottomNavigation() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [isSpinning, setIsSpinning] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [translateX, setTranslateX] = useState(0);
+  const centerRef = useRef<HTMLAnchorElement>(null);
+  const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement }>({});
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -22,8 +25,22 @@ export default function BottomNavigation() {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      setIsSpinning(true);
-      const timer = setTimeout(() => setIsSpinning(false), 800);
+      if (centerRef.current) {
+        const centerRect = centerRef.current.getBoundingClientRect();
+        const targetItem = navItemsRef.current[router.pathname];
+        
+        if (targetItem) {
+          const targetRect = targetItem.getBoundingClientRect();
+          const diff = targetRect.left - centerRect.left;
+          setTranslateX(diff);
+        }
+      }
+      
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setTranslateX(0);
+      }, 800);
       return () => clearTimeout(timer);
     };
 
@@ -84,6 +101,9 @@ export default function BottomNavigation() {
       }}>
         {baseItems.map((item, idx) => (
           <Link
+            ref={(el) => {
+              if (el) navItemsRef.current[item.href] = el;
+            }}
             key={idx}
             href={item.href}
             className={`nav-item nav-item-${idx} ${isActive(item.href) ? 'nav-item-active' : ''}`}
@@ -117,8 +137,9 @@ export default function BottomNavigation() {
       </div>
 
       <Link
+        ref={centerRef}
         href={centerItem.href}
-        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''} ${isSpinning ? 'spinning' : ''}`}
+        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''} ${isTransitioning ? 'transitioning' : ''}`}
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -127,7 +148,7 @@ export default function BottomNavigation() {
           gap: '4px',
           textDecoration: 'none',
           color: isActive(centerItem.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
-          transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          transition: isTransitioning ? 'none' : 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
           width: '70px',
           height: '70px',
           borderRadius: '50%',
@@ -139,8 +160,9 @@ export default function BottomNavigation() {
           marginBottom: '15px',
           fontSize: '0.7em',
           fontWeight: isActive(centerItem.href) ? 600 : 500,
-          animation: isSpinning ? 'wheelRotate 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards' : 'none'
-        }}
+          animation: isTransitioning ? `wheelMove 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards` : 'none',
+          '--tx': `${translateX}px`
+        } as any}
       >
         <span style={{ 
           fontSize: '2em',
@@ -161,6 +183,9 @@ export default function BottomNavigation() {
       }}>
         {endItems.map((item, idx) => (
           <Link
+            ref={(el) => {
+              if (el) navItemsRef.current[item.href] = el;
+            }}
             key={idx}
             href={item.href}
             className={`nav-item nav-item-${baseItems.length + 1 + idx} ${isActive(item.href) ? 'nav-item-active' : ''}`}
@@ -214,21 +239,21 @@ export default function BottomNavigation() {
           }
         }
 
-        @keyframes wheelRotate {
+        @keyframes wheelMove {
           0% {
-            transform: rotate(0deg) scale(1);
+            transform: translateX(0) rotate(0deg) scale(1);
           }
           25% {
-            transform: rotate(90deg) scale(1.05);
+            transform: translateX(calc(var(--tx) * 0.25)) rotate(90deg) scale(1.1);
           }
           50% {
-            transform: rotate(180deg) scale(1.08);
+            transform: translateX(calc(var(--tx) * 0.5)) rotate(180deg) scale(1.15);
           }
           75% {
-            transform: rotate(270deg) scale(1.05);
+            transform: translateX(calc(var(--tx) * 0.75)) rotate(270deg) scale(1.1);
           }
           100% {
-            transform: rotate(360deg) scale(1);
+            transform: translateX(var(--tx)) rotate(360deg) scale(1);
           }
         }
 
@@ -246,7 +271,7 @@ export default function BottomNavigation() {
           animation: slideInUp 0.5s ease-out 0.15s both;
         }
 
-        .nav-item-center.nav-item-active:not(.spinning) {
+        .nav-item-center.nav-item-active:not(.transitioning) {
           animation: pulse-center 2s ease-in-out infinite;
         }
 
