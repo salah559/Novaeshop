@@ -25,20 +25,21 @@ export default function Checkout(){
   },[]);
 
   useEffect(() => {
-    const updateCart = () => {
-      const items = JSON.parse(localStorage.getItem('cart') || '[]');
+    const updateCheckout = () => {
+      const checkoutData = JSON.parse(localStorage.getItem('checkoutData') || '{"items":[],"total":0}');
+      const items = checkoutData.items || [];
       setCartItems(items);
-      const newTotal = items.reduce((s: any, i: any) => s + (i.price || 0), 0);
+      const newTotal = checkoutData.total || items.reduce((s: any, i: any) => s + (i.price || 0), 0);
       setTotal(newTotal);
     };
 
-    updateCart();
-    const interval = setInterval(updateCart, 500);
-    window.addEventListener('storage', updateCart);
+    updateCheckout();
+    const interval = setInterval(updateCheckout, 500);
+    window.addEventListener('storage', updateCheckout);
 
     return () => {
       clearInterval(interval);
-      window.removeEventListener('storage', updateCart);
+      window.removeEventListener('storage', updateCheckout);
     };
   }, []);
 
@@ -51,15 +52,15 @@ export default function Checkout(){
     
     setLoading(true);
     try {
-      const items = JSON.parse(localStorage.getItem('cart')||'[]');
+      const checkoutData = JSON.parse(localStorage.getItem('checkoutData')||'{"items":[],"total":0}');
+      const items = checkoutData.items || [];
+      const total = checkoutData.total || items.reduce((s:any,i:any)=>s+(i.price||0),0);
       
       if (!items || items.length === 0) {
-        toast.error('السلة فارغة - يرجى إضافة منتجات قبل الشراء');
+        toast.error('لا يوجد منتج - يرجى اختيار منتج قبل الشراء');
         setLoading(false);
         return;
       }
-      
-      const total = items.reduce((s:any,i:any)=>s+(i.price||0),0);
       
       if (total <= 0) {
         toast.error('المبلغ الإجمالي يجب أن يكون أكبر من 0');
@@ -112,7 +113,7 @@ export default function Checkout(){
       });
       
       toast.success('تم إرسال الطلب بنجاح! سيتم مراجعته من قبل الأدمن.');
-      localStorage.removeItem('cart');
+      localStorage.removeItem('checkoutData');
       setTimeout(() => {
         window.location.href = '/mypurchases';
       }, 1500);

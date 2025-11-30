@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/firebaseClient';
+import { db, auth } from '@/lib/firebaseClient';
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
 
@@ -9,7 +9,6 @@ export default function ProductDetails(){
   const { id } = router.query;
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [inCart, setInCart] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -23,35 +22,24 @@ export default function ProductDetails(){
     }
     
     load();
-    checkCart();
   }, [id]);
 
-  function checkCart() {
-    if (typeof window === 'undefined') return;
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setInCart(cart.some((item: any) => item.id === id));
-  }
+  function buyNow() {
+    if (!product) return;
 
-  function addToCart() {
-    if (typeof window === 'undefined') return;
-    
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    
-    if (cart.some((item: any) => item.id === id)) {
-      alert('⚠️ هذا المنتج موجود بالفعل في السلة');
+    if (!auth.currentUser) {
+      alert('⚠️ يجب تسجيل الدخول أولاً');
+      router.push('/login');
       return;
     }
     
-    cart.push({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      imageUrl: product.imageUrl
-    });
+    const checkoutData = {
+      items: [product],
+      total: product.price
+    };
     
-    localStorage.setItem('cart', JSON.stringify(cart));
-    setInCart(true);
-    alert('✅ تمت إضافة المنتج إلى السلة');
+    localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+    router.push('/checkout');
   }
 
   if (loading) {
@@ -186,20 +174,20 @@ export default function ProductDetails(){
               </div>
             </div>
 
-            {!inCart ? (
-              <button
-                onClick={addToCart}
-                className="btn"
-                style={{
-                  width: '100%',
-                  fontSize: 'clamp(1.05em, 2.5vw, 1.2em)',
-                  padding: 'clamp(14px, 3vw, 18px)',
-                  borderRadius: 'clamp(12px, 3vw, 16px)'
-                }}
-              >
-                🛒 إضافة إلى السلة
-              </button>
-            ) : (
+            <button
+              onClick={buyNow}
+              className="btn"
+              style={{
+                width: '100%',
+                fontSize: 'clamp(1.05em, 2.5vw, 1.2em)',
+                padding: 'clamp(14px, 3vw, 18px)',
+                borderRadius: 'clamp(12px, 3vw, 16px)'
+              }}
+            >
+              💳 شراء الآن
+            </button>
+
+            {false && (
               <div style={{
                 width: '100%',
                 background: 'rgba(57, 255, 20, 0.15)',
