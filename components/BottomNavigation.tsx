@@ -8,6 +8,7 @@ export default function BottomNavigation() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [indicatorPos, setIndicatorPos] = useState(0);
   const centerRef = useRef<HTMLAnchorElement>(null);
   const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement }>({});
   const animationRef = useRef<any>(null);
@@ -25,6 +26,13 @@ export default function BottomNavigation() {
 
   useEffect(() => {
     const handleRouteChange = () => {
+      // تحديث موضع الـ indicator
+      const activeItem = navItemsRef.current[router.pathname];
+      if (activeItem) {
+        const rect = activeItem.getBoundingClientRect();
+        setIndicatorPos(rect.left + rect.width / 2);
+      }
+      
       if (centerRef.current && animationRef.current === null) {
         const centerRect = centerRef.current.getBoundingClientRect();
         const targetItem = navItemsRef.current[router.pathname];
@@ -130,7 +138,8 @@ export default function BottomNavigation() {
         gap: '10px',
         flex: 1,
         justifyContent: 'space-around',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        position: 'relative'
       }}>
         {baseItems.map((item, idx) => (
           <Link
@@ -149,7 +158,7 @@ export default function BottomNavigation() {
               padding: '8px 12px',
               textDecoration: 'none',
               color: isActive(item.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
-              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              transition: 'color 0.4s ease',
               borderRadius: '12px',
               fontSize: '0.7em',
               fontWeight: isActive(item.href) ? 600 : 500,
@@ -159,14 +168,29 @@ export default function BottomNavigation() {
           >
             <span style={{ 
               fontSize: '1.6em',
-              transition: 'transform 0.4s ease',
-              display: 'inline-block'
+              transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              display: 'inline-block',
+              transform: isActive(item.href) ? 'scale(1.2)' : 'scale(1)'
             }}>
               {item.icon}
             </span>
             <span>{item.label}</span>
           </Link>
         ))}
+        
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: `${indicatorPos - 15}px`,
+          width: '30px',
+          height: '3px',
+          background: 'linear-gradient(90deg, transparent, #ffd700, transparent)',
+          borderRadius: '2px',
+          transition: 'left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease',
+          opacity: baseItems.some(item => isActive(item.href)) ? 1 : 0,
+          zIndex: 8,
+          pointerEvents: 'none'
+        }} />
       </div>
 
       <Link
@@ -211,7 +235,8 @@ export default function BottomNavigation() {
         gap: '10px',
         flex: 1,
         justifyContent: 'space-around',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        position: 'relative'
       }}>
         {endItems.map((item, idx) => (
           <Link
@@ -230,7 +255,7 @@ export default function BottomNavigation() {
               padding: '8px 12px',
               textDecoration: 'none',
               color: isActive(item.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
-              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              transition: 'color 0.4s ease',
               borderRadius: '12px',
               fontSize: '0.7em',
               fontWeight: isActive(item.href) ? 600 : 500,
@@ -240,14 +265,29 @@ export default function BottomNavigation() {
           >
             <span style={{ 
               fontSize: '1.6em',
-              transition: 'transform 0.4s ease',
-              display: 'inline-block'
+              transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              display: 'inline-block',
+              transform: isActive(item.href) ? 'scale(1.2)' : 'scale(1)'
             }}>
               {item.icon}
             </span>
             <span>{item.label}</span>
           </Link>
         ))}
+        
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: `${indicatorPos - 15}px`,
+          width: '30px',
+          height: '3px',
+          background: 'linear-gradient(90deg, transparent, #ffd700, transparent)',
+          borderRadius: '2px',
+          transition: 'left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease',
+          opacity: endItems.some(item => isActive(item.href)) ? 1 : 0,
+          zIndex: 8,
+          pointerEvents: 'none'
+        }} />
       </div>
 
       <style jsx>{`
