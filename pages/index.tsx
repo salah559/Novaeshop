@@ -28,7 +28,7 @@ export default function Home(){
             marginBottom: 30
           }}>
             <span className="tag">
-              ✨ اختبر تجربة جديدة من التسوق
+              ✨ {t('newShoppingExperience')}
             </span>
           </div>
           
@@ -115,7 +115,7 @@ export default function Home(){
                 fontSize: '1em',
                 marginTop: 8,
                 fontWeight: 500
-              }}>منتج رقمي</div>
+              }}>{t('digitalProducts')}</div>
             </div>
             <div className="animate-fadeInUp animate-delay-2 glow-effect" style={{textAlign: 'center'}}>
               <div style={{
@@ -132,7 +132,7 @@ export default function Home(){
                 fontSize: '1em',
                 marginTop: 8,
                 fontWeight: 500
-              }}>عميل سعيد</div>
+              }}>{t('happyCustomers')}</div>
             </div>
             <div className="animate-fadeInUp animate-delay-3 glow-effect" style={{textAlign: 'center'}}>
               <div style={{
@@ -149,7 +149,7 @@ export default function Home(){
                 fontSize: '1em',
                 marginTop: 8,
                 fontWeight: 500
-              }}>دعم متواصل</div>
+              }}>{t('continuousSupport')}</div>
             </div>
           </div>
         </div>

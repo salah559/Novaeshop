@@ -59,8 +59,8 @@ export default function Account() {
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>👤 {t('contact')}</h2>
-        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>إدارة حسابك والمشتريات</p>
+        }}>👤 {t('myAccount')}</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>{t('manageAccount')}</p>
       </div>
 
       <div style={{
@@ -97,14 +97,14 @@ export default function Account() {
               👤
             </div>
             <div>
-              <p style={{color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>اسم الحساب</p>
+              <p style={{color: 'rgba(255,255,255,0.6)', margin: 0, fontSize: 'clamp(0.9em, 2.5vw, 1em)'}}>{t('accountName')}</p>
               <h3 style={{
                 color: '#39ff14',
                 margin: 0,
                 fontSize: 'clamp(1.2em, 4vw, 1.6em)',
                 textShadow: '0 0 10px rgba(57, 255, 20, 0.3)'
               }}>
-                {user.displayName || user.email || 'مستخدم'}
+                {user.displayName || user.email || t('contact')}
               </h3>
               <p style={{color: 'rgba(255,255,255,0.5)', margin: '4px 0 0 0', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>
                 {user.email}
@@ -140,7 +140,7 @@ export default function Account() {
                 fontSize: 'clamp(1.1em, 3vw, 1.3em)',
                 textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
               }}>{t('myPurchases')}</h3>
-              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>المنتجات المشتراة</p>
+              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>{t('purchasedProducts')}</p>
             </div>
           </Link>
 
@@ -163,8 +163,8 @@ export default function Account() {
                 margin: 0,
                 fontSize: 'clamp(1.1em, 3vw, 1.3em)',
                 textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'
-              }}>طلباتي</h3>
-              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>{t('orders')}</p>
+              }}>{t('myOrders')}</h3>
+              <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>{t('trackOrders')}</p>
             </div>
           </Link>
         </div>

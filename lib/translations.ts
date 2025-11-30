@@ -111,6 +111,26 @@ export const translations = {
     tip4: 'المنتجات متاحة للتحميل فوراً بعد التأكيد',
     readyToStart: 'هل انت مستعد للبدء؟',
     browseNow: 'تصفح المنتجات الآن',
+    
+    // Home page - missing
+    newShoppingExperience: 'اختبر تجربة جديدة من التسوق',
+    digitalProducts: 'منتج رقمي',
+    happyCustomers: 'عميل سعيد',
+    continuousSupport: 'دعم متواصل',
+    
+    // Products page
+    digitalProductsTitle: 'المنتجات الرقمية',
+    chooseProducts: 'اختر من مجموعتنا المتنوعة من المنتجات الرقمية عالية الجودة',
+    pleaseSignInFirst: 'يرجى تسجيل الدخول أولاً',
+    
+    // Account page
+    accountName: 'اسم الحساب',
+    myAccount: 'حسابي',
+    manageAccount: 'إدارة حسابك والمشتريات',
+    purchasedProducts: 'المنتجات المشتراة',
+    trackOrders: 'تتبع الطلبات',
+    myOrders: 'طلباتي',
+    orders: 'الطلبات',
   },
   
   en: {
@@ -224,6 +244,26 @@ export const translations = {
     tip4: 'Products are available for download immediately after confirmation',
     readyToStart: 'Ready to get started?',
     browseNow: 'Browse Products Now',
+    
+    // Home page - missing
+    newShoppingExperience: 'Experience a new shopping experience',
+    digitalProducts: 'Digital Product',
+    happyCustomers: 'Happy Customers',
+    continuousSupport: 'Continuous Support',
+    
+    // Products page
+    digitalProductsTitle: 'Digital Products',
+    chooseProducts: 'Choose from our diverse collection of high-quality digital products',
+    pleaseSignInFirst: 'Please sign in first',
+    
+    // Account page
+    accountName: 'Account Name',
+    myAccount: 'My Account',
+    manageAccount: 'Manage your account and purchases',
+    purchasedProducts: 'Purchased Products',
+    trackOrders: 'Track Orders',
+    myOrders: 'My Orders',
+    orders: 'Orders',
   },
   
   fr: {
@@ -337,6 +377,26 @@ export const translations = {
     tip4: 'Les produits sont disponibles en téléchargement immédiatement après la confirmation',
     readyToStart: 'Prêt à commencer?',
     browseNow: 'Parcourir les Produits Maintenant',
+    
+    // Home page - missing
+    newShoppingExperience: 'Découvrez une nouvelle expérience shopping',
+    digitalProducts: 'Produit Numérique',
+    happyCustomers: 'Clients Heureux',
+    continuousSupport: 'Support Continu',
+    
+    // Products page
+    digitalProductsTitle: 'Produits Numériques',
+    chooseProducts: 'Choisissez parmi notre collection diversifiée de produits numériques de haute qualité',
+    pleaseSignInFirst: 'Veuillez d\'abord vous connecter',
+    
+    // Account page
+    accountName: 'Nom du Compte',
+    myAccount: 'Mon Compte',
+    manageAccount: 'Gérez votre compte et vos achats',
+    purchasedProducts: 'Produits Achetés',
+    trackOrders: 'Suivi des Commandes',
+    myOrders: 'Mes Commandes',
+    orders: 'Commandes',
   }
 };
 

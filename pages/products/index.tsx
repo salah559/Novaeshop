@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { useLanguage } from '@/lib/LanguageContext';
 import { db, auth } from '@/lib/firebaseClient';
 import { collection, getDocs } from 'firebase/firestore';
 import { ProductPreview } from '@/components/ProductPreview';
@@ -10,6 +11,7 @@ import { getCache, setCache } from '@/lib/cache';
 
 export default function Products(){
   const router = useRouter();
+  const { t } = useLanguage();
   const toast = useToast();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,7 @@ export default function Products(){
   const handleBuyNow = useCallback((product: any) => {
     setPreviewProduct(null);
     if (!auth.currentUser) {
-      toast.info('يرجى تسجيل الدخول أولاً');
+      toast.info(t('pleaseSignInFirst'));
       router.push('/login');
       return;
     }
@@ -119,8 +121,8 @@ export default function Products(){
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>المنتجات الرقمية</h2>
-        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>اختر من مجموعتنا المتنوعة من المنتجات الرقمية عالية الجودة</p>
+        }}>{t('digitalProductsTitle')}</h2>
+        <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>{t('chooseProducts')}</p>
       </div>
 
       <div style={{

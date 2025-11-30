@@ -3,9 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/account": "pages/account.js",
-  "/contact": "pages/contact.js",
-  "/how-to-buy": "pages/how-to-buy.js",
-  "/products": "pages/products.js",
-  "/cart": "pages/cart.js"
+  "/products": "pages/products.js"
 }
