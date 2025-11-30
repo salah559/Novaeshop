@@ -3,16 +3,19 @@ import { useLanguage } from '@/lib/LanguageContext';
 import { auth, logout } from '@/lib/firebaseClient';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { isAdmin } from '@/lib/adminCheck';
 
 export default function Account() {
   const { t } = useLanguage();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(u => {
       setUser(u);
+      setIsAdminUser(isAdmin(u?.email));
       setLoading(false);
       if (!u) {
         router.push('/login');
@@ -167,6 +170,33 @@ export default function Account() {
               <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>{t('trackOrders')}</p>
             </div>
           </Link>
+
+          {isAdminUser && (
+            <Link href="/admin" className="card" style={{
+              padding: 'clamp(20px, 4vw, 28px)',
+              textAlign: 'center',
+              textDecoration: 'none',
+              borderRadius: 'clamp(12px, 3vw, 16px)',
+              transition: 'all 0.3s ease',
+              border: '2px solid rgba(255, 215, 0, 0.3)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 'clamp(12px, 2vw, 16px)',
+              background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%)'
+            }}>
+              <div style={{fontSize: 'clamp(2.5em, 8vw, 3.5em)'}}>⚙️</div>
+              <div>
+                <h3 style={{
+                  color: '#ffd700',
+                  margin: 0,
+                  fontSize: 'clamp(1.1em, 3vw, 1.3em)',
+                  textShadow: '0 0 10px rgba(255, 215, 0, 0.3)'
+                }}>{t('admin')}</h3>
+                <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: '4px 0 0 0'}}>إدارة النظام</p>
+              </div>
+            </Link>
+          )}
         </div>
 
         {/* Logout Button */}
