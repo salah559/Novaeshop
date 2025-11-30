@@ -63,7 +63,7 @@ export default function Header(){
           {[
             { href: '/', label: t('home') },
             { href: '/products', label: t('products') },
-            { href: '/how-to-buy', label: 'كيف تشتري؟' },
+            { href: '/how-to-buy', label: t('howToBuy') },
           ].map((item, i) => (
             <Link key={i} href={item.href} style={{
               color: 'rgba(255,255,255,0.75)',
@@ -86,7 +86,7 @@ export default function Header(){
                 transition: 'all 0.3s ease',
                 fontSize: 'clamp(0.85em, 1.5vw, 1em)',
                 whiteSpace: 'nowrap'
-              }}>حسابي</Link>
+              }}>{t('myAccount')}</Link>
               <Link href="/mypurchases" style={{
                 color: 'rgba(255,255,255,0.75)',
                 fontWeight: 500,

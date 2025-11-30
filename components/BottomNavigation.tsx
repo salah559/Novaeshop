@@ -8,7 +8,7 @@ export default function BottomNavigation() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const navItemsRef = useRef<{ [key: string]: HTMLAnchorElement }>({});
-  const { language } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -21,15 +21,15 @@ export default function BottomNavigation() {
   }, []);
 
   const baseItems = [
-    { href: '/', icon: '🏠', label: language === 'ar' ? 'الرئيسية' : 'Home' },
-    { href: '/products', icon: '🛍️', label: language === 'ar' ? 'المنتجات' : 'Products' },
+    { href: '/', icon: '🏠', label: t('home') },
+    { href: '/products', icon: '🛍️', label: t('products') },
   ];
   
-  const centerItem = { href: '/how-to-buy', icon: '❓', label: language === 'ar' ? 'الشراء' : 'Guide' };
+  const centerItem = { href: '/how-to-buy', icon: '❓', label: t('howToBuy') };
   
   const endItems = [
-    { href: '/contact', icon: '📞', label: language === 'ar' ? 'تواصل' : 'Contact' },
-    ...(user ? [{ href: '/account', icon: '👤', label: language === 'ar' ? 'حسابي' : 'Account' }] : [{ href: '/login', icon: '🔑', label: language === 'ar' ? 'دخول' : 'Login' }])
+    { href: '/contact', icon: '📞', label: t('contact') },
+    ...(user ? [{ href: '/account', icon: '👤', label: t('myAccount') }] : [{ href: '/login', icon: '🔑', label: t('login') }])
   ];
 
   const isActive = (href: string) => router.pathname === href;

@@ -12,6 +12,7 @@ export const translations = {
     admin: 'لوحة التحكم',
     login: 'تسجيل الدخول',
     logout: 'تسجيل الخروج',
+    howToBuy: 'كيف تشتري؟',
     
     // Home page
     welcomeTitle: 'مرحباً بك في Enova',
@@ -145,6 +146,7 @@ export const translations = {
     admin: 'Admin Panel',
     login: 'Sign In',
     logout: 'Sign Out',
+    howToBuy: 'How to Buy',
     
     // Home page
     welcomeTitle: 'Welcome to Enova',
@@ -278,6 +280,7 @@ export const translations = {
     admin: 'Panneau Admin',
     login: 'Se Connecter',
     logout: 'Se Déconnecter',
+    howToBuy: 'Comment Acheter',
     
     // Home page
     welcomeTitle: 'Bienvenue sur Enova',
