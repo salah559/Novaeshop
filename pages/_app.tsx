@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Header from '@/components/Header'
+import BottomNavigation from '@/components/BottomNavigation'
 import { LanguageProvider } from '@/lib/LanguageContext'
 import { ToastContainer } from '@/components/Toast'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
@@ -44,14 +45,27 @@ export default function App({ Component, pageProps }: AppProps) {
           animation: 'progress 0.3s ease-in-out'
         }} />
       )}
-      <main className="container">
+      <main className="container" style={{ paddingBottom: '80px' }}>
         <Component {...pageProps} />
       </main>
+      <BottomNavigation />
       <style jsx global>{`
         @keyframes progress {
           0% { width: 0; }
           50% { width: 70%; }
           100% { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+          main.container {
+            padding-bottom: 90px !important;
+          }
+        }
+
+        @media (min-width: 769px) {
+          main.container {
+            padding-bottom: 20px !important;
+          }
         }
       `}</style>
     </LanguageProvider>
