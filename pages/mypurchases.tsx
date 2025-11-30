@@ -142,40 +142,39 @@ export default function MyPurchases(){
           <Link href="/products" className="btn" style={{fontSize: 'clamp(1em, 2.5vw, 1.15em)', padding: 'clamp(12px, 2.5vw, 16px) clamp(28px, 6vw, 36px)'}}>🛍️ تصفح المنتجات</Link>
         </div>
       ) : (
-        <div style={{
-          display: 'grid',
-          gap: 'clamp(18px, 4vw, 28px)',
-          maxWidth: 900,
-          margin: '0 auto'
-        }}>
-          {purchases.map((item, idx) => (
-            <div key={item.id} className="card animate-fadeInUp" style={{
-              padding: 'clamp(20px, 4vw, 28px)',
-              borderLeft: item.type === 'purchase' ? '4px solid #39ff14' : '4px solid #ffa500',
-              animationDelay: `${idx * 0.05}s`,
-              opacity: 0
+        <div style={{maxWidth: 1000, margin: '0 auto'}}>
+          {purchases.map((item) => (
+            <div key={item.id} style={{
+              padding: '20px',
+              marginBottom: '20px',
+              background: '#111',
+              border: '1px solid #333',
+              borderRadius: '8px'
             }}>
+              <h3 style={{color: '#39ff14', marginBottom: '8px', fontSize: '1.2em'}}>
+                {item.type === 'purchase' ? item.name : `الطلب #${item.id?.substring(0, 8)}`}
+              </h3>
+              <p style={{color: '#999', fontSize: '0.9em', marginBottom: '15px'}}>
+                {item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}
+              </p>
+              
               {item.type === 'purchase' ? (
                 <>
-                  <div style={{marginBottom: 'clamp(14px, 3vw, 20px)'}}>
-                    <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)', textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'}}>{item.name}</h3>
-                    <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}</p>
-                  </div>
                   {item.purchaseContent && item.purchaseContent.trim() && (
                     <div style={{
-                      background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%)',
-                      padding: 'clamp(14px, 3vw, 18px)',
-                      borderRadius: 10,
-                      borderLeft: '4px solid #ffd700',
-                      marginBottom: 'clamp(14px, 3vw, 20px)',
-                      wordBreak: 'break-word'
+                      background: '#0a0a0a',
+                      padding: '15px',
+                      borderRadius: '6px',
+                      border: '1px solid #444',
+                      marginBottom: '15px'
                     }}>
-                      <p style={{color: '#ffd700', marginBottom: 10, fontSize: 'clamp(0.9em, 2.5vw, 1em)', fontWeight: 'bold'}}>📋 محتوى الشراء</p>
+                      <p style={{color: '#ffd700', marginBottom: '10px', fontWeight: 'bold'}}>محتوى الشراء:</p>
                       <div style={{
-                        color: 'rgba(255,255,255,0.8)',
-                        fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
-                        lineHeight: 1.8,
+                        color: '#ccc',
+                        fontSize: '0.95em',
+                        lineHeight: 1.6,
                         whiteSpace: 'pre-wrap',
+                        wordBreak: 'break-word',
                         fontFamily: 'monospace'
                       }}>
                         {typeof item.purchaseContent === 'string' 
@@ -187,24 +186,9 @@ export default function MyPurchases(){
                   )}
                 </>
               ) : (
-                <>
-                  <div style={{marginBottom: 'clamp(14px, 3vw, 20px)'}}>
-                    <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)'}}>الطلب #{item.id?.substring(0, 8)}</h3>
-                    <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}</p>
-                  </div>
-                  <div style={{
-                    background: 'rgba(255, 165, 0, 0.08)',
-                    padding: 'clamp(14px, 3vw, 18px)',
-                    borderRadius: 10,
-                    marginBottom: 'clamp(14px, 3vw, 20px)'
-                  }}>
-                    <div style={{display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10}}>
-                      <span style={{fontSize: '1.3em'}}>⏳</span>
-                      <p style={{color: '#ffa500', fontSize: 'clamp(0.95em, 2.5vw, 1.05em)', margin: 0, fontWeight: 600}}>قيد المراجعة</p>
-                    </div>
-                    <p style={{color: 'rgba(255,255,255,0.6)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)', margin: 0}}>المجموع: <strong style={{color: '#ffd700'}}>{item.total} دج</strong></p>
-                  </div>
-                </>
+                <div style={{color: '#ffa500'}}>
+                  قيد المراجعة - المجموع: {item.total} دج
+                </div>
               )}
             </div>
           ))}
