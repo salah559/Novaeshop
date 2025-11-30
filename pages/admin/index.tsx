@@ -165,439 +165,196 @@ export default function Admin(){
 
   if (!user || !isAuthorized) {
     return (
-      <div>
-        <div style={{
-          textAlign: 'center',
-          marginBottom: 40,
-          padding: '30px 20px',
-          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-          borderRadius: 16
-        }}>
-          <h2 style={{
-            fontSize: '2.5em',
-            marginBottom: 10,
-            background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
-          }}>غير مصرح</h2>
-        </div>
-        <div className="card" style={{
-          textAlign: 'center',
-          padding: 60,
-          maxWidth: 600,
-          margin: '0 auto'
-        }}>
-          <div style={{fontSize: '4em', marginBottom: 20}}>🚫</div>
-          <h3 style={{color: '#39ff14', marginBottom: 15}}>وصول محظور</h3>
-          <p style={{color: '#c0c0c0'}}>هذه الصفحة مخصصة للمدراء فقط</p>
-        </div>
+      <div style={{ padding: '60px 20px', textAlign: 'center' }}>
+        <h2 style={{ color: '#39ff14', marginBottom: 20 }}>🚫 غير مصرح</h2>
+        <p style={{ color: '#ccc' }}>هذه الصفحة للمسؤولين فقط</p>
       </div>
     );
   }
 
   return (
-    <div>
-      <div style={{
-        textAlign: 'center',
-        marginBottom: 40,
-        padding: '30px 20px',
-        background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0) 100%)',
-        borderRadius: 16
-      }}>
-        <h2 style={{
-          fontSize: '2.5em',
-          marginBottom: 10,
-          background: 'linear-gradient(135deg, #39ff14 0%, #39ff14 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text'
-        }}>لوحة الأدمن</h2>
-        <p style={{color: '#c0c0c0'}}>إدارة الطلبات والمدفوعات</p>
-      </div>
+    <div style={{ padding: '20px' }}>
+      <h2 style={{ color: '#39ff14', marginBottom: 20 }}>📦 إدارة الطلبات</h2>
 
-      {/* Statistics Dashboard */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: 20,
-        marginBottom: 40
-      }}>
-        <div className="card" style={{
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(255, 165, 0, 0.4)'
-        }}>
-          <div style={{fontSize: '2.5em', marginBottom: 10}}>⏳</div>
-          <h3 style={{color: '#FFA500', fontSize: '2em', margin: '10px 0'}}>{stats.pending}</h3>
-          <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>طلبات معلقة</p>
-        </div>
-
-        <div className="card" style={{
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(57, 255, 20, 0.4)'
-        }}>
-          <div style={{fontSize: '2.5em', marginBottom: 10}}>✅</div>
-          <h3 style={{color: '#39ff14', fontSize: '2em', margin: '10px 0'}}>{stats.confirmed}</h3>
-          <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>طلبات مؤكدة</p>
-        </div>
-
-        <div className="card" style={{
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(255, 107, 107, 0.4)'
-        }}>
-          <div style={{fontSize: '2.5em', marginBottom: 10}}>❌</div>
-          <h3 style={{color: '#ff6b6b', fontSize: '2em', margin: '10px 0'}}>{stats.rejected}</h3>
-          <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>طلبات مرفوضة</p>
-        </div>
-
-        <div className="card" style={{
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(57, 255, 20, 0.4)'
-        }}>
-          <div style={{fontSize: '2.5em', marginBottom: 10}}>💰</div>
-          <h3 style={{color: '#39ff14', fontSize: '1.5em', margin: '10px 0'}}>{stats.totalRevenue.toLocaleString()} دج</h3>
-          <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>إجمالي المبيعات</p>
-        </div>
-
-        <div className="card" style={{
-          textAlign: 'center',
-          background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%)',
-          border: '2px solid rgba(57, 255, 20, 0.4)'
-        }}>
-          <div style={{fontSize: '2.5em', marginBottom: 10}}>📅</div>
-          <h3 style={{color: '#39ff14', fontSize: '2em', margin: '10px 0'}}>{stats.todayOrders}</h3>
-          <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>طلبات اليوم</p>
-        </div>
-      </div>
-
-      {/* Navigation tabs */}
-      <div style={{
-        display: 'flex',
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
         gap: 15,
-        marginBottom: 30,
-        justifyContent: 'center',
-        flexWrap: 'wrap'
+        marginBottom: 30 
       }}>
-        <div style={{
-          padding: '12px 24px',
-          background: '#39ff14',
-          border: '1px solid #39ff14',
-          borderRadius: 8,
-          color: '#0a0f14',
-          fontWeight: 600
-        }}>
-          📦 الطلبات
+        <div style={{ background: 'rgba(255,165,0,0.1)', border: '1px solid rgba(255,165,0,0.3)', borderRadius: 8, padding: 15, textAlign: 'center' }}>
+          <div style={{fontSize: '1.5em', marginBottom: 8}}>⏳</div>
+          <p style={{color: '#FFA500', fontWeight: 'bold', fontSize: '1.2em'}}>{stats.pending}</p>
+          <p style={{color: '#999', fontSize: '0.8em'}}>معلقة</p>
         </div>
-        <Link href="/admin/products" style={{
-          padding: '12px 24px',
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(57, 255, 20, 0.3)',
-          borderRadius: 8,
-          color: '#c0c0c0',
-          fontWeight: 600,
-          textDecoration: 'none',
-          transition: 'all 0.3s ease'
-        }}>
-          🛍️ المنتجات
-        </Link>
+        <div style={{ background: 'rgba(57,255,20,0.1)', border: '1px solid rgba(57,255,20,0.3)', borderRadius: 8, padding: 15, textAlign: 'center' }}>
+          <div style={{fontSize: '1.5em', marginBottom: 8}}>✅</div>
+          <p style={{color: '#39ff14', fontWeight: 'bold', fontSize: '1.2em'}}>{stats.confirmed}</p>
+          <p style={{color: '#999', fontSize: '0.8em'}}>مؤكدة</p>
+        </div>
+        <div style={{ background: 'rgba(255,100,100,0.1)', border: '1px solid rgba(255,100,100,0.3)', borderRadius: 8, padding: 15, textAlign: 'center' }}>
+          <div style={{fontSize: '1.5em', marginBottom: 8}}>❌</div>
+          <p style={{color: '#ff6b6b', fontWeight: 'bold', fontSize: '1.2em'}}>{stats.rejected}</p>
+          <p style={{color: '#999', fontSize: '0.8em'}}>مرفوضة</p>
+        </div>
       </div>
 
-      {/* Filter buttons */}
-      <div style={{
-        display: 'flex',
-        gap: 10,
-        marginBottom: 30,
-        justifyContent: 'center',
-        flexWrap: 'wrap'
-      }}>
-        <button
-          onClick={() => setFilter('pending')}
-          style={{
-            padding: '10px 20px',
-            background: filter === 'pending' ? 'rgba(255, 165, 0, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-            border: `2px solid ${filter === 'pending' ? '#FFA500' : 'rgba(255, 165, 0, 0.3)'}`,
-            borderRadius: 8,
-            color: filter === 'pending' ? '#FFA500' : '#c0c0c0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-        >
-          ⏳ معلقة ({stats.pending})
+      <div style={{ marginBottom: 20, display: 'flex', gap: 10 }}>
+        <Link href="/admin/products" style={{ color: '#39ff14', textDecoration: 'underline' }}>🛍️ المنتجات</Link>
+        <span style={{ color: '#39ff14', fontWeight: 'bold' }}>📦 الطلبات</span>
+      </div>
+
+      <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
+        <button onClick={() => setFilter('pending')} style={{ padding: '8px 16px', background: filter === 'pending' ? '#39ff14' : 'rgba(57,255,20,0.2)', color: filter === 'pending' ? '#000' : '#39ff14', border: 'none', borderRadius: 6, fontWeight: 'bold', cursor: 'pointer' }}>
+          ⏳ معلقة
         </button>
-        <button
-          onClick={() => setFilter('confirmed')}
-          style={{
-            padding: '10px 20px',
-            background: filter === 'confirmed' ? 'rgba(57, 255, 20, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-            border: `2px solid ${filter === 'confirmed' ? '#39ff14' : 'rgba(57, 255, 20, 0.3)'}`,
-            borderRadius: 8,
-            color: filter === 'confirmed' ? '#39ff14' : '#c0c0c0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-        >
-          ✅ مؤكدة ({stats.confirmed})
+        <button onClick={() => setFilter('confirmed')} style={{ padding: '8px 16px', background: filter === 'confirmed' ? '#39ff14' : 'rgba(57,255,20,0.2)', color: filter === 'confirmed' ? '#000' : '#39ff14', border: 'none', borderRadius: 6, fontWeight: 'bold', cursor: 'pointer' }}>
+          ✅ مؤكدة
         </button>
-        <button
-          onClick={() => setFilter('rejected')}
-          style={{
-            padding: '10px 20px',
-            background: filter === 'rejected' ? 'rgba(255, 107, 107, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-            border: `2px solid ${filter === 'rejected' ? '#ff6b6b' : 'rgba(255, 107, 107, 0.3)'}`,
-            borderRadius: 8,
-            color: filter === 'rejected' ? '#ff6b6b' : '#c0c0c0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-        >
-          ❌ مرفوضة ({stats.rejected})
+        <button onClick={() => setFilter('rejected')} style={{ padding: '8px 16px', background: filter === 'rejected' ? '#ff6b6b' : 'rgba(255,100,100,0.2)', color: filter === 'rejected' ? '#000' : '#ff6b6b', border: 'none', borderRadius: 6, fontWeight: 'bold', cursor: 'pointer' }}>
+          ❌ مرفوضة
         </button>
-        <button
-          onClick={() => setFilter('all')}
-          style={{
-            padding: '10px 20px',
-            background: filter === 'all' ? 'rgba(57, 255, 20, 0.3)' : 'rgba(255, 255, 255, 0.05)',
-            border: `2px solid ${filter === 'all' ? '#39ff14' : 'rgba(57, 255, 20, 0.3)'}`,
-            borderRadius: 8,
-            color: filter === 'all' ? '#39ff14' : '#c0c0c0',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-        >
-          📋 الكل ({stats.pending + stats.confirmed + stats.rejected})
+        <button onClick={() => setFilter('all')} style={{ padding: '8px 16px', background: filter === 'all' ? '#39ff14' : 'rgba(57,255,20,0.2)', color: filter === 'all' ? '#000' : '#39ff14', border: 'none', borderRadius: 6, fontWeight: 'bold', cursor: 'pointer' }}>
+          📋 الكل
         </button>
       </div>
 
       {loading ? (
-        <div style={{textAlign: 'center', padding: 60}}>
-          <div style={{
-            width: 60,
-            height: 60,
-            border: '4px solid rgba(57, 255, 20, 0.2)',
-            borderTop: '4px solid #39ff14',
-            borderRadius: '50%',
-            margin: '0 auto 20px',
-            animation: 'spin 1s linear infinite'
-          }}></div>
-          <p style={{color: '#39ff14'}}>جاري تحميل الطلبات...</p>
-        </div>
+        <p style={{ color: '#39ff14', textAlign: 'center', padding: 40 }}>جاري التحميل...</p>
+      ) : orders.length === 0 ? (
+        <div style={{ color: '#39ff14', textAlign: 'center', padding: 40 }}>لا توجد طلبات</div>
       ) : (
-        <div style={{
-          display: 'grid',
-          gap: 25
-        }}>
-          {orders.length === 0 ? (
-            <div className="card" style={{
-              textAlign: 'center',
-              padding: 60
+        <div style={{ display: 'grid', gap: 20 }}>
+          {orders.map(o => (
+            <div key={o.id} style={{
+              background: 'rgba(57,255,20,0.05)',
+              border: '1px solid rgba(57,255,20,0.3)',
+              borderRadius: 8,
+              padding: 20
             }}>
-              <div style={{fontSize: '4em', marginBottom: 20}}>📋</div>
-              <h3 style={{color: '#39ff14', marginBottom: 15}}>لا توجد طلبات</h3>
-              <p style={{color: '#c0c0c0'}}>
-                {filter === 'pending' && 'لا توجد طلبات معلقة في الوقت الحالي'}
-                {filter === 'confirmed' && 'لا توجد طلبات مؤكدة'}
-                {filter === 'rejected' && 'لا توجد طلبات مرفوضة'}
-                {filter === 'all' && 'لا توجد أي طلبات'}
-              </p>
-            </div>
-          ) : (
-            orders.map(o=>(
-              <div key={o.id} className="card" style={{
-                background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.05) 0%, rgba(0, 0, 0, 0.3) 100%)',
-                border: '1px solid rgba(57, 255, 20, 0.4)'
-              }}>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                  gap: 20,
-                  marginBottom: 20
-                }}>
-                  <div>
-                    <h4 style={{color: '#39ff14', marginBottom: 8}}>معلومات الطلب</h4>
-                    <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 5}}>
-                      <strong style={{color: '#fff'}}>رقم الطلب:</strong> {o.id.substring(0, 8)}...
-                    </p>
-                    <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 5}}>
-                      <strong style={{color: '#fff'}}>البريد:</strong> {o.email || 'غير متوفر'}
-                    </p>
-                    <p style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 5}}>
-                      <strong style={{color: '#fff'}}>الحالة:</strong>{' '}
-                      <span style={{
-                        color: o.status === 'pending' ? '#FFA500' : o.status === 'confirmed' ? '#39ff14' : '#ff6b6b',
-                        fontWeight: 600
-                      }}>
-                        {o.status === 'pending' ? '⏳ معلق' : o.status === 'confirmed' ? '✅ مؤكد' : '❌ مرفوض'}
-                      </span>
-                    </p>
-                    <p style={{color: '#c0c0c0', fontSize: '0.9em'}}>
-                      <strong style={{color: '#fff'}}>المبلغ:</strong> 
-                      <span style={{
-                        color: '#39ff14',
-                        marginRight: 8,
-                        fontSize: '1.2em',
-                        fontWeight: 700
-                      }}>{o.total} دج</span>
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 style={{color: '#39ff14', marginBottom: 8}}>المنتجات</h4>
-                    {o.items && o.items.map((item: any, idx: number) => (
-                      <p key={idx} style={{color: '#c0c0c0', fontSize: '0.9em', marginBottom: 3}}>
-                        • {item.name} - {item.price} دج
-                      </p>
-                    ))}
-                  </div>
-                </div>
-
-                <div style={{
-                  background: 'rgba(0, 0, 0, 0.3)',
-                  borderRadius: 12,
-                  padding: 15,
-                  marginBottom: 20
-                }}>
-                  <h4 style={{color: '#39ff14', marginBottom: 12}}>إيصال الدفع</h4>
-                  <img 
-                    src={o.paymentImageUrl} 
-                    alt="إيصال الدفع"
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: 300,
-                      borderRadius: 8,
-                      border: '2px solid rgba(57, 255, 20, 0.3)',
-                      objectFit: 'contain',
-                      cursor: 'pointer'
-                    }}
-                    onClick={() => window.open(o.paymentImageUrl, '_blank')}
-                    title="اضغط لفتح الصورة بحجم كامل"
-                  />
-                </div>
-
-                {o.status === 'rejected' && o.rejectionReason && (
-                  <div style={{
-                    padding: '15px',
-                    background: 'rgba(255, 107, 107, 0.1)',
-                    border: '1px solid rgba(255, 107, 107, 0.3)',
-                    borderRadius: 8,
-                    marginBottom: 20,
-                    color: '#ff6b6b'
-                  }}>
-                    <strong>سبب الرفض:</strong> {o.rejectionReason}
-                  </div>
-                )}
-
-                {o.status === 'pending' && (
-                  <>
-                    {rejecting === o.id ? (
-                      <div style={{
-                        padding: '20px',
-                        background: 'rgba(255, 107, 107, 0.1)',
-                        border: '2px solid rgba(255, 107, 107, 0.3)',
-                        borderRadius: 12,
-                        marginBottom: 15
-                      }}>
-                        <h4 style={{color: '#ff6b6b', marginBottom: 15}}>رفض الطلب</h4>
-                        <textarea
-                          value={rejectionReason}
-                          onChange={e => setRejectionReason(e.target.value)}
-                          placeholder="اكتب سبب رفض الطلب (مثال: الإيصال غير واضح، المبلغ غير صحيح، ...)"
-                          style={{
-                            width: '100%',
-                            padding: '12px',
-                            background: 'rgba(0, 0, 0, 0.3)',
-                            border: '1px solid rgba(255, 107, 107, 0.3)',
-                            borderRadius: 8,
-                            color: '#fff',
-                            fontSize: '1rem',
-                            marginBottom: 15,
-                            minHeight: 80,
-                            resize: 'vertical'
-                          }}
-                        />
-                        <div style={{display: 'flex', gap: 10}}>
-                          <button
-                            onClick={() => rejectOrder(o.id)}
-                            style={{
-                              flex: 1,
-                              padding: '12px',
-                              background: 'rgba(255, 0, 0, 0.3)',
-                              color: '#ff6b6b',
-                              border: '2px solid rgba(255, 0, 0, 0.5)',
-                              borderRadius: 8,
-                              fontWeight: 600,
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease'
-                            }}
-                          >
-                            ✓ تأكيد الرفض
-                          </button>
-                          <button
-                            onClick={() => {
-                              setRejecting(null);
-                              setRejectionReason('');
-                            }}
-                            style={{
-                              flex: 1,
-                              padding: '12px',
-                              background: 'rgba(255, 255, 255, 0.05)',
-                              color: '#c0c0c0',
-                              border: '1px solid rgba(255, 255, 255, 0.2)',
-                              borderRadius: 8,
-                              fontWeight: 600,
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease'
-                            }}
-                          >
-                            إلغاء
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <div style={{display: 'flex', gap: 15}}>
-                        <button 
-                          onClick={()=>confirm(o.id)} 
-                          className="btn" 
-                          style={{
-                            flex: 2,
-                            fontSize: '1.1em',
-                            padding: '14px',
-                            boxShadow: '0 0 30px rgba(57, 255, 20, 0.4)'
-                          }}
-                        >
-                          ✓ تأكيد الدفع وتفعيل الطلب
-                        </button>
-                        <button 
-                          onClick={() => setRejecting(o.id)}
-                          style={{
-                            flex: 1,
-                            padding: '14px',
-                            background: 'rgba(255, 0, 0, 0.2)',
-                            color: '#ff6b6b',
-                            border: '2px solid rgba(255, 0, 0, 0.4)',
-                            borderRadius: 8,
-                            fontWeight: 600,
-                            fontSize: '1.1em',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease'
-                          }}
-                        >
-                          ✗ رفض الطلب
-                        </button>
-                      </div>
-                    )}
-                  </>
-                )}
+              <div style={{ marginBottom: 15 }}>
+                <h3 style={{color: '#39ff14', marginBottom: 10}}>الطلب #{o.id.substring(0, 8)}</h3>
+                <p style={{color: '#ccc', marginBottom: 5}}><strong>البريد:</strong> {o.email}</p>
+                <p style={{color: '#ccc', marginBottom: 5}}><strong>المبلغ:</strong> <span style={{color: '#39ff14', fontWeight: 'bold', fontSize: '1.1em'}}>{o.total} دج</span></p>
+                <p style={{color: '#ccc'}}><strong>الحالة:</strong> <span style={{color: o.status === 'pending' ? '#FFA500' : o.status === 'confirmed' ? '#39ff14' : '#ff6b6b', fontWeight: 'bold'}}>
+                  {o.status === 'pending' ? '⏳ معلق' : o.status === 'confirmed' ? '✅ مؤكد' : '❌ مرفوض'}
+                </span></p>
               </div>
-            ))
-          )}
+
+              {o.items && o.items.length > 0 && (
+                <div style={{ marginBottom: 15 }}>
+                  <p style={{color: '#39ff14', fontWeight: 'bold', marginBottom: 8}}>المنتجات:</p>
+                  {o.items.map((item: any, idx: number) => (
+                    <p key={idx} style={{color: '#ccc', marginLeft: 10}}>• {item.name} - {item.price} دج</p>
+                  ))}
+                </div>
+              )}
+
+              {o.paymentImageUrl && (
+                <div style={{ marginBottom: 15 }}>
+                  <p style={{color: '#39ff14', fontWeight: 'bold', marginBottom: 8}}>إيصال الدفع:</p>
+                  <img src={o.paymentImageUrl} alt="إيصال" style={{maxWidth: '100%', maxHeight: 200, borderRadius: 6, border: '1px solid rgba(57,255,20,0.3)', cursor: 'pointer'}} onClick={() => window.open(o.paymentImageUrl, '_blank')} />
+                </div>
+              )}
+
+              {o.status === 'rejected' && o.rejectionReason && (
+                <div style={{ padding: 10, background: 'rgba(255,100,100,0.1)', border: '1px solid rgba(255,100,100,0.3)', borderRadius: 6, marginBottom: 15, color: '#ff6b6b' }}>
+                  <strong>سبب الرفض:</strong> {o.rejectionReason}
+                </div>
+              )}
+
+              {o.status === 'pending' && (
+                <>
+                  {rejecting === o.id ? (
+                    <div>
+                      <textarea
+                        value={rejectionReason}
+                        onChange={e => setRejectionReason(e.target.value)}
+                        placeholder="سبب الرفض"
+                        style={{
+                          width: '100%',
+                          padding: '10px',
+                          background: 'rgba(0,0,0,0.3)',
+                          border: '1px solid rgba(255,100,100,0.3)',
+                          borderRadius: 6,
+                          color: '#fff',
+                          marginBottom: 10,
+                          minHeight: 80
+                        }}
+                      />
+                      <button
+                        onClick={() => rejectOrder(o.id)}
+                        style={{
+                          width: '100%',
+                          padding: '10px',
+                          background: '#ff6b6b',
+                          color: '#000',
+                          border: 'none',
+                          borderRadius: 6,
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          marginBottom: 8
+                        }}
+                      >
+                        ✓ تأكيد الرفض
+                      </button>
+                      <button
+                        onClick={() => {
+                          setRejecting(null);
+                          setRejectionReason('');
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '10px',
+                          background: 'rgba(200,200,200,0.2)',
+                          color: '#ccc',
+                          border: '1px solid rgba(200,200,200,0.3)',
+                          borderRadius: 6,
+                          fontWeight: 'bold',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        إلغاء
+                      </button>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      <button 
+                        onClick={() => confirm(o.id)}
+                        style={{
+                          flex: 2,
+                          padding: '12px',
+                          background: '#39ff14',
+                          color: '#000',
+                          border: 'none',
+                          borderRadius: 6,
+                          fontWeight: 'bold',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        ✓ تأكيد الدفع
+                      </button>
+                      <button 
+                        onClick={() => setRejecting(o.id)}
+                        style={{
+                          flex: 1,
+                          padding: '12px',
+                          background: 'rgba(255,100,100,0.2)',
+                          color: '#ff6b6b',
+                          border: '1px solid rgba(255,100,100,0.3)',
+                          borderRadius: 6,
+                          fontWeight: 'bold',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        ✗ رفض
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          ))}
         </div>
       )}
 
