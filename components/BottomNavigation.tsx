@@ -50,7 +50,7 @@ export default function BottomNavigation() {
         <Link
           key={idx}
           href={item.href}
-          className={`nav-item nav-item-${idx}`}
+          className={`nav-item nav-item-${idx} ${isActive(item.href) ? 'nav-item-active' : ''}`}
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -70,14 +70,15 @@ export default function BottomNavigation() {
             boxShadow: isActive(item.href) ? '0 0 20px rgba(57, 255, 20, 0.25)' : 'none',
             transform: isActive(item.href) ? 'scale(1.1) translateY(-2px)' : 'scale(1)',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'visible'
           }}
         >
           <span style={{ 
             fontSize: '1.4em',
             transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            transform: isActive(item.href) ? 'scale(1.15) rotate(10deg)' : 'scale(1) rotate(0deg)',
-            display: 'inline-block'
+            transform: isActive(item.href) ? 'scale(1.15) rotate(360deg)' : 'scale(1) rotate(0deg)',
+            display: 'inline-block',
+            ...(isActive(item.href) && { animation: 'spinWheel 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards' })
           }}>
             {item.icon}
           </span>
@@ -102,26 +103,57 @@ export default function BottomNavigation() {
           }
         }
 
-        @keyframes pulse-glow {
-          0%, 100% {
-            box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
+        @keyframes spinWheel {
+          0% {
+            transform: scale(1) rotateY(0deg) rotateZ(0deg);
+            opacity: 1;
           }
           50% {
-            box-shadow: 0 0 24px rgba(57, 255, 20, 0.35);
+            transform: scale(1.2) rotateY(180deg) rotateZ(180deg);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(1.15) rotateY(360deg) rotateZ(360deg);
+            opacity: 1;
           }
         }
 
-        @keyframes icon-bounce {
-          0%, 100% {
-            transform: scale(1) rotate(0deg);
+        @keyframes wheelSpin {
+          0% {
+            transform: scale(1.15) rotate(0deg);
+          }
+          25% {
+            transform: scale(1.15) rotate(90deg);
           }
           50% {
-            transform: scale(1.2) rotate(15deg);
+            transform: scale(1.15) rotate(180deg);
+          }
+          75% {
+            transform: scale(1.15) rotate(270deg);
+          }
+          100% {
+            transform: scale(1.15) rotate(360deg);
+          }
+        }
+
+        @keyframes pageTransition {
+          0% {
+            transform: scale(1) rotate(0deg);
+            filter: brightness(1);
+          }
+          50% {
+            transform: scale(1.25) rotate(180deg);
+            filter: brightness(1.3);
+          }
+          100% {
+            transform: scale(1.15) rotate(360deg);
+            filter: brightness(1);
           }
         }
 
         .nav-item {
           animation: slideInUp 0.5s ease-out both;
+          perspective: 1000px;
         }
 
         .nav-item-0 { animation-delay: 0.05s; }
@@ -130,13 +162,17 @@ export default function BottomNavigation() {
         .nav-item-3 { animation-delay: 0.2s; }
         .nav-item-4 { animation-delay: 0.25s; }
 
+        .nav-item-active span:first-child {
+          animation: pageTransition 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+        }
+
         .nav-item:hover {
           transform: scale(1.15) translateY(-4px) !important;
           color: #ffd700 !important;
         }
 
-        .nav-item:active {
-          animation: icon-bounce 0.6s ease-in-out;
+        .nav-item:active span:first-child {
+          animation: wheelSpin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         @media (max-width: 768px) {
