@@ -175,15 +175,76 @@ export default function MyPurchases(){
                         color: 'rgba(255,255,255,0.8)',
                         fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
                         lineHeight: 1.8,
-                        whiteSpace: 'pre-wrap',
-                        userSelect: 'text'
+                        whiteSpace: 'pre-wrap'
                       }}>
                         {typeof item.purchaseContent === 'string' ? (
-                          item.purchaseContent.split('\n').map((line: string, idx: number) => (
-                            <div key={idx} style={{marginBottom: 12}}>
-                              {line}
-                            </div>
-                          ))
+                          item.purchaseContent.split('\n').map((line: string, idx: number) => {
+                            const urlRegex = /(https?:\/\/[^\s]+)/g;
+                            const parts: any[] = [];
+                            let lastIndex = 0;
+                            let match;
+
+                            while ((match = urlRegex.exec(line)) !== null) {
+                              if (match.index > lastIndex) {
+                                parts.push({ type: 'text', content: line.substring(lastIndex, match.index) });
+                              }
+                              parts.push({ type: 'url', content: match[1] });
+                              lastIndex = match.index + match[0].length;
+                            }
+
+                            if (lastIndex < line.length) {
+                              parts.push({ type: 'text', content: line.substring(lastIndex) });
+                            }
+
+                            if (parts.length === 0) {
+                              parts.push({ type: 'text', content: line });
+                            }
+
+                            return (
+                              <div key={idx} style={{marginBottom: 12}}>
+                                {parts.map((part: any, i: number) =>
+                                  part.type === 'url' ? (
+                                    <button
+                                      key={i}
+                                      type="button"
+                                      onClick={() => {
+                                        window.open(part.content, '_blank');
+                                      }}
+                                      style={{
+                                        background: 'rgba(57, 255, 20, 0.25)',
+                                        border: '1px solid #39ff14',
+                                        color: '#39ff14',
+                                        padding: '2px 6px',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        fontSize: 'inherit',
+                                        fontWeight: 600,
+                                        marginLeft: 2,
+                                        marginRight: 2,
+                                        display: 'inline-block',
+                                        wordBreak: 'break-all',
+                                        maxWidth: '95%'
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        (e.currentTarget as any).style.background = 'rgba(57, 255, 20, 0.5)';
+                                        (e.currentTarget as any).style.transform = 'scale(1.02)';
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        (e.currentTarget as any).style.background = 'rgba(57, 255, 20, 0.25)';
+                                        (e.currentTarget as any).style.transform = 'scale(1)';
+                                      }}
+                                    >
+                                      {part.content.length > 50 ? part.content.substring(0, 50) + '...' : part.content}
+                                    </button>
+                                  ) : (
+                                    <span key={i} style={{userSelect: 'text'}}>
+                                      {part.content}
+                                    </span>
+                                  )
+                                )}
+                              </div>
+                            );
+                          })
                         ) : (
                           <span>{JSON.stringify(item.purchaseContent)}</span>
                         )}
