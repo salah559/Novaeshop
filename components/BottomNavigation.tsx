@@ -19,10 +19,14 @@ export default function BottomNavigation() {
     return () => unsub();
   }, []);
 
-  const navItems = [
+  const baseItems = [
     { href: '/', icon: '🏠', label: language === 'ar' ? 'الرئيسية' : 'Home' },
     { href: '/products', icon: '🛍️', label: language === 'ar' ? 'المنتجات' : 'Products' },
-    { href: '/how-to-buy', icon: '❓', label: language === 'ar' ? 'الشراء' : 'Guide' },
+  ];
+  
+  const centerItem = { href: '/how-to-buy', icon: '❓', label: language === 'ar' ? 'الشراء' : 'Guide' };
+  
+  const endItems = [
     { href: '/contact', icon: '📞', label: language === 'ar' ? 'تواصل' : 'Contact' },
     ...(user ? [{ href: '/account', icon: '👤', label: language === 'ar' ? 'حسابي' : 'Account' }] : [{ href: '/login', icon: '🔑', label: language === 'ar' ? 'دخول' : 'Login' }])
   ];
@@ -36,60 +40,143 @@ export default function BottomNavigation() {
       left: 0,
       right: 0,
       display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      background: 'rgba(5, 7, 8, 0.95)',
-      backdropFilter: 'blur(20px)',
-      borderTop: '2px solid rgba(57, 255, 20, 0.15)',
-      padding: '8px 0',
+      justifyContent: 'space-between',
+      alignItems: 'flex-end',
+      background: 'transparent',
+      padding: '0 20px 20px 20px',
       zIndex: 95,
-      boxShadow: '0 -4px 30px rgba(57, 255, 20, 0.1)',
-      height: '70px'
+      height: 'auto',
+      paddingBottom: '30px'
     }} className="bottom-nav">
-      {navItems.map((item, idx) => (
-        <Link
-          key={idx}
-          href={item.href}
-          className={`nav-item nav-item-${idx} ${isActive(item.href) ? 'nav-item-active' : ''}`}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '4px',
-            padding: '8px 12px',
-            textDecoration: 'none',
-            color: isActive(item.href) ? '#39ff14' : 'rgba(255, 255, 255, 0.6)',
-            transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            borderRadius: '12px',
-            flex: 1,
-            fontSize: '0.7em',
-            fontWeight: isActive(item.href) ? 600 : 500,
-            background: isActive(item.href) ? 'rgba(57, 255, 20, 0.08)' : 'transparent',
-            border: isActive(item.href) ? '1px solid rgba(57, 255, 20, 0.2)' : '1px solid transparent',
-            boxShadow: isActive(item.href) ? '0 0 20px rgba(57, 255, 20, 0.25)' : 'none',
-            transform: isActive(item.href) ? 'scale(1.1) translateY(-2px)' : 'scale(1)',
-            position: 'relative',
-            overflow: 'visible'
-          }}
-        >
-          <span style={{ 
-            fontSize: '1.4em',
-            transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            transform: isActive(item.href) ? 'scale(1.15) rotate(360deg)' : 'scale(1) rotate(0deg)',
-            display: 'inline-block',
-            ...(isActive(item.href) && { animation: 'spinWheel 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards' })
-          }}>
-            {item.icon}
-          </span>
-          <span style={{
-            transition: 'all 0.4s ease',
-            opacity: 1
-          }}>
-            {item.label}
-          </span>
-        </Link>
-      ))}
+      <div style={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: 'rgba(20, 25, 40, 0.98)',
+        backdropFilter: 'blur(20px)',
+        height: '80px',
+        borderRadius: '40px 40px 0 0',
+        boxShadow: '0 -8px 40px rgba(57, 255, 20, 0.12)',
+        zIndex: -1
+      }} />
+
+      <div style={{
+        display: 'flex',
+        gap: '10px',
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'flex-end'
+      }}>
+        {baseItems.map((item, idx) => (
+          <Link
+            key={idx}
+            href={item.href}
+            className={`nav-item nav-item-${idx} ${isActive(item.href) ? 'nav-item-active' : ''}`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              padding: '8px 12px',
+              textDecoration: 'none',
+              color: isActive(item.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
+              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              borderRadius: '12px',
+              fontSize: '0.7em',
+              fontWeight: isActive(item.href) ? 600 : 500,
+              position: 'relative',
+              overflow: 'visible'
+            }}
+          >
+            <span style={{ 
+              fontSize: '1.6em',
+              transition: 'transform 0.4s ease',
+              display: 'inline-block'
+            }}>
+              {item.icon}
+            </span>
+            <span>{item.label}</span>
+          </Link>
+        ))}
+      </div>
+
+      <Link
+        href={centerItem.href}
+        className={`nav-item-center ${isActive(centerItem.href) ? 'nav-item-active' : ''}`}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '4px',
+          textDecoration: 'none',
+          color: isActive(centerItem.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
+          transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+          width: '70px',
+          height: '70px',
+          borderRadius: '50%',
+          background: isActive(centerItem.href) ? 'linear-gradient(135deg, rgba(57, 255, 20, 0.15), rgba(255, 215, 0, 0.1))' : 'rgba(30, 35, 50, 0.8)',
+          border: isActive(centerItem.href) ? '2px solid rgba(255, 215, 0, 0.4)' : '2px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: isActive(centerItem.href) ? '0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(255, 215, 0, 0.1)' : '0 -8px 20px rgba(57, 255, 20, 0.08)',
+          position: 'relative',
+          zIndex: 10,
+          marginBottom: '15px',
+          fontSize: '0.7em',
+          fontWeight: isActive(centerItem.href) ? 600 : 500
+        }}
+      >
+        <span style={{ 
+          fontSize: '2em',
+          transition: 'transform 0.4s ease',
+          display: 'inline-block'
+        }}>
+          {centerItem.icon}
+        </span>
+        <span style={{fontSize: '0.8em'}}>{centerItem.label}</span>
+      </Link>
+
+      <div style={{
+        display: 'flex',
+        gap: '10px',
+        flex: 1,
+        justifyContent: 'space-around',
+        alignItems: 'flex-end'
+      }}>
+        {endItems.map((item, idx) => (
+          <Link
+            key={idx}
+            href={item.href}
+            className={`nav-item nav-item-${baseItems.length + 1 + idx} ${isActive(item.href) ? 'nav-item-active' : ''}`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              padding: '8px 12px',
+              textDecoration: 'none',
+              color: isActive(item.href) ? '#ffd700' : 'rgba(255, 255, 255, 0.6)',
+              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              borderRadius: '12px',
+              fontSize: '0.7em',
+              fontWeight: isActive(item.href) ? 600 : 500,
+              position: 'relative',
+              overflow: 'visible'
+            }}
+          >
+            <span style={{ 
+              fontSize: '1.6em',
+              transition: 'transform 0.4s ease',
+              display: 'inline-block'
+            }}>
+              {item.icon}
+            </span>
+            <span>{item.label}</span>
+          </Link>
+        ))}
+      </div>
 
       <style jsx>{`
         @keyframes slideInUp {
@@ -103,57 +190,17 @@ export default function BottomNavigation() {
           }
         }
 
-        @keyframes spinWheel {
-          0% {
-            transform: scale(1) rotateY(0deg) rotateZ(0deg);
-            opacity: 1;
+        @keyframes pulse-center {
+          0%, 100% {
+            box-shadow: 0 -8px 20px rgba(57, 255, 20, 0.08), 0 0 30px rgba(255, 215, 0, 0.2);
           }
           50% {
-            transform: scale(1.2) rotateY(180deg) rotateZ(180deg);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(1.15) rotateY(360deg) rotateZ(360deg);
-            opacity: 1;
-          }
-        }
-
-        @keyframes wheelSpin {
-          0% {
-            transform: scale(1.15) rotate(0deg);
-          }
-          25% {
-            transform: scale(1.15) rotate(90deg);
-          }
-          50% {
-            transform: scale(1.15) rotate(180deg);
-          }
-          75% {
-            transform: scale(1.15) rotate(270deg);
-          }
-          100% {
-            transform: scale(1.15) rotate(360deg);
-          }
-        }
-
-        @keyframes pageTransition {
-          0% {
-            transform: scale(1) rotate(0deg);
-            filter: brightness(1);
-          }
-          50% {
-            transform: scale(1.25) rotate(180deg);
-            filter: brightness(1.3);
-          }
-          100% {
-            transform: scale(1.15) rotate(360deg);
-            filter: brightness(1);
+            box-shadow: 0 -8px 20px rgba(57, 255, 20, 0.08), 0 0 50px rgba(255, 215, 0, 0.4);
           }
         }
 
         .nav-item {
           animation: slideInUp 0.5s ease-out both;
-          perspective: 1000px;
         }
 
         .nav-item-0 { animation-delay: 0.05s; }
@@ -162,17 +209,17 @@ export default function BottomNavigation() {
         .nav-item-3 { animation-delay: 0.2s; }
         .nav-item-4 { animation-delay: 0.25s; }
 
-        .nav-item-active span:first-child {
-          animation: pageTransition 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards !important;
+        .nav-item-center {
+          animation: slideInUp 0.5s ease-out 0.15s both;
+        }
+
+        .nav-item-center.nav-item-active {
+          animation: pulse-center 2s ease-in-out infinite;
         }
 
         .nav-item:hover {
-          transform: scale(1.15) translateY(-4px) !important;
+          transform: translateY(-4px);
           color: #ffd700 !important;
-        }
-
-        .nav-item:active span:first-child {
-          animation: wheelSpin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         @media (max-width: 768px) {
@@ -188,17 +235,14 @@ export default function BottomNavigation() {
         }
 
         @media (max-width: 480px) {
-          .bottom-nav {
+          .nav-item-center {
+            width: 65px;
             height: 65px;
-            padding: 6px 0;
+            margin-bottom: 12px;
           }
 
-          .bottom-nav a span:last-child {
-            font-size: 0.65em;
-          }
-
-          .nav-item:hover {
-            transform: scale(1.12) translateY(-3px) !important;
+          .nav-item-center span:first-child {
+            font-size: 1.8em !important;
           }
         }
       `}</style>

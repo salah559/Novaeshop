@@ -4,5 +4,7 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/products": "pages/products.js",
-  "/how-to-buy": "pages/how-to-buy.js"
+  "/how-to-buy": "pages/how-to-buy.js",
+  "/login": "pages/login.js",
+  "/contact": "pages/contact.js"
 }
