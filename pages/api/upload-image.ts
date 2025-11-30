@@ -14,8 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    let imageBuffer: Buffer | null = null;
-    let fileName: string = '';
+    let base64: string | null = null;
 
     const contentType = req.headers['content-type'] || '';
     
@@ -30,14 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         req.on('error', reject);
       });
       const data = JSON.parse(body);
-      const base64 = data.image;
-      
-      if (!base64) {
-        return res.status(400).json({ error: 'No image data provided' });
-      }
-
-      imageBuffer = Buffer.from(base64, 'base64');
-      fileName = `receipts/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+      base64 = data.image;
     } else {
       // Handle multipart/form-data (from admin/products)
       const form = new IncomingForm();
@@ -49,40 +41,46 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       const file = fileArray[0];
-      imageBuffer = await fs.readFile(file.filepath);
-      fileName = `products/${Date.now()}-${file.originalFilename || 'image'}`;
+      const fileData = await fs.readFile(file.filepath);
+      base64 = fileData.toString('base64');
     }
 
-    if (!imageBuffer) {
+    if (!base64) {
       return res.status(400).json({ error: 'No image data provided' });
     }
 
-    console.log('Uploading to Firebase Storage:', fileName, 'size:', imageBuffer.length);
-
-    const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
-    const encodedFileName = encodeURIComponent(fileName);
-    const url = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodedFileName}?uploadType=media&name=${encodedFileName}`;
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'image/jpeg',
-      },
-      body: imageBuffer,
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      console.error('Firebase upload failed:', error);
-      return res.status(500).json({ error: 'Failed to upload image to Firebase' });
+    // Upload to ImgBB
+    const apiKey = process.env.IMGBB_API_KEY;
+    if (!apiKey) {
+      console.error('IMGBB_API_KEY not found');
+      return res.status(500).json({ error: 'ImgBB API key not configured' });
     }
 
-    const mediaUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodedFileName}?alt=media`;
-    console.log('Upload successful:', mediaUrl);
+    console.log('Uploading to ImgBB, base64 length:', base64.length);
+
+    // Send to ImgBB using URLSearchParams
+    const formData = new URLSearchParams();
+    formData.append('image', base64);
+
+    const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const imgbbData = await imgbbResponse.json();
+    console.log('ImgBB response status:', imgbbResponse.status, 'data:', JSON.stringify(imgbbData).substring(0, 200));
+
+    if (!imgbbData.success) {
+      console.error('ImgBB upload failed:', imgbbData);
+      return res.status(500).json({ error: imgbbData.error?.message || 'Failed to upload to ImgBB' });
+    }
+
+    const imageUrl = imgbbData.data.display_url;
+    console.log('Image uploaded to ImgBB:', imageUrl);
 
     return res.status(200).json({
       success: true,
-      url: mediaUrl,
+      url: imageUrl,
     });
   } catch (error: any) {
     console.error('Upload error:', error);
