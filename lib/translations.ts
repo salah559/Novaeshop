@@ -78,6 +78,7 @@ export const translations = {
     changeNumber: 'تغيير الرقم',
     or: 'أو',
     continueWithGoogle: 'المتابعة باستخدام Google',
+    continueWithFacebook: 'المتابعة باستخدام Facebook',
     passwordMismatch: 'كلمة المرور غير متطابقة',
     authError: 'حدث خطأ أثناء تسجيل الدخول',
     
@@ -217,6 +218,7 @@ export const translations = {
     changeNumber: 'Change Number',
     or: 'OR',
     continueWithGoogle: 'Continue with Google',
+    continueWithFacebook: 'Continue with Facebook',
     passwordMismatch: 'Passwords do not match',
     authError: 'An error occurred during authentication',
     
@@ -356,6 +358,7 @@ export const translations = {
     changeNumber: 'Changer le Numéro',
     or: 'OU',
     continueWithGoogle: 'Continuer avec Google',
+    continueWithFacebook: 'Continuer avec Facebook',
     passwordMismatch: 'Les mots de passe ne correspondent pas',
     authError: 'Une erreur s\'est produite lors de l\'authentification',
     

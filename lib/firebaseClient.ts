@@ -1,6 +1,6 @@
 // Firebase client initialization (for browser)
 import { initializeApp, getApps } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithRedirect, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getRedirectResult } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithRedirect, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, getRedirectResult } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -26,6 +26,7 @@ setPersistence(auth, browserLocalPersistence).catch((error) => {
 });
 
 export const provider = new GoogleAuthProvider();
+export const facebookProvider = new FacebookAuthProvider();
 export const db = getFirestore();
 export const storage = getStorage();
 
@@ -39,6 +40,21 @@ export async function signInWithGoogle() {
     console.log('Popup blocked, using redirect...', popupError);
     if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/cancelled-popup-request') {
       return signInWithRedirect(auth, provider);
+    }
+    throw popupError;
+  }
+}
+
+export async function signInWithFacebook() {
+  try {
+    // Try popup first (works better in most environments)
+    const { signInWithPopup } = await import('firebase/auth');
+    return await signInWithPopup(auth, facebookProvider);
+  } catch (popupError: any) {
+    // If popup is blocked or fails, fallback to redirect
+    console.log('Popup blocked, using redirect...', popupError);
+    if (popupError.code === 'auth/popup-blocked' || popupError.code === 'auth/cancelled-popup-request') {
+      return signInWithRedirect(auth, facebookProvider);
     }
     throw popupError;
   }

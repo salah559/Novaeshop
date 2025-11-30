@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/LanguageContext';
-import { auth, signInEmail, registerEmail, signInWithGoogle } from '@/lib/firebaseClient';
+import { auth, signInEmail, registerEmail, signInWithGoogle, signInWithFacebook } from '@/lib/firebaseClient';
 import { RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from 'firebase/auth';
 
 type AuthMode = 'signin' | 'signup';
@@ -284,6 +284,48 @@ export default function LoginPage() {
     }
   };
 
+  const handleFacebookAuth = async () => {
+    setError('');
+    setLoading(true);
+
+    try {
+      await signInWithFacebook();
+    } catch (err: any) {
+      console.error('Facebook auth error:', err.code, err.message);
+      
+      let errorMessage = '';
+      
+      switch (err.code) {
+        case 'auth/popup-closed-by-user':
+          errorMessage = '⚠️ تم إغلاق نافذة تسجيل الدخول. حاول مرة أخرى.';
+          break;
+        
+        case 'auth/popup-blocked':
+          errorMessage = '🚫 تم حظر النافذة المنبثقة. سمح بالنوافذ المنبثقة وحاول مرة أخرى.';
+          break;
+        
+        case 'auth/cancelled-popup-request':
+          errorMessage = '⚠️ تم إلغاء طلب تسجيل الدخول.';
+          break;
+        
+        case 'auth/account-exists-with-different-credential':
+          errorMessage = '📧 يوجد حساب بنفس البريد الإلكتروني بطريقة تسجيل دخول مختلفة.';
+          break;
+        
+        case 'auth/network-request-failed':
+          errorMessage = '📡 فشل الاتصال بالإنترنت. تحقق من اتصالك.';
+          break;
+        
+        default:
+          errorMessage = `❌ حدث خطأ في تسجيل الدخول بـ Facebook: ${err.message || 'خطأ غير معروف'}`;
+      }
+      
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const resetForm = () => {
     setEmail('');
     setPassword('');
@@ -504,20 +546,33 @@ export default function LoginPage() {
           {/* reCAPTCHA Container (مخفي) */}
           <div id="recaptcha-container"></div>
 
-          {/* Google Sign In */}
-          <button
-            className="google-btn"
-            onClick={handleGoogleAuth}
-            disabled={loading}
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
-              <path d="M9.003 18c2.43 0 4.467-.806 5.956-2.18L12.05 13.56c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z" fill="#34A853"/>
-              <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
-              <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#EA4335"/>
-            </svg>
-            {t('continueWithGoogle')}
-          </button>
+          {/* Social Sign In Buttons */}
+          <div className="social-buttons">
+            <button
+              className="social-btn google-btn"
+              onClick={handleGoogleAuth}
+              disabled={loading}
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+                <path d="M9.003 18c2.43 0 4.467-.806 5.956-2.18L12.05 13.56c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z" fill="#34A853"/>
+                <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+                <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#EA4335"/>
+              </svg>
+              {t('continueWithGoogle')}
+            </button>
+
+            <button
+              className="social-btn facebook-btn"
+              onClick={handleFacebookAuth}
+              disabled={loading}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/>
+              </svg>
+              {t('continueWithFacebook')}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -835,30 +890,50 @@ export default function LoginPage() {
           font-size: 0.9em;
         }
 
-        .google-btn {
+        .social-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .social-btn {
           width: 100%;
-          padding: 16px;
-          background: #fff;
-          border: 1px solid #dadce0;
-          border-radius: 8px;
-          color: #3c4043;
-          font-weight: 600;
+          padding: 14px;
+          border: none;
+          border-radius: 12px;
           font-size: clamp(0.95rem, 2.5vw, 1rem);
+          font-weight: 600;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 12px;
+          gap: 10px;
           transition: all 0.3s ease;
+          color: white;
+        }
+
+        .google-btn {
+          background: #4285F4;
         }
 
         .google-btn:hover:not(:disabled) {
-          background: #f8f9fa;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+          background: #3367D6;
+          box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+          transform: translateY(-2px);
         }
 
-        .google-btn:disabled {
-          opacity: 0.6;
+        .facebook-btn {
+          background: #1877F2;
+        }
+
+        .facebook-btn:hover:not(:disabled) {
+          background: #166FE5;
+          box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
+          transform: translateY(-2px);
+        }
+
+        .social-btn:disabled {
+          opacity: 0.7;
           cursor: not-allowed;
         }
 
