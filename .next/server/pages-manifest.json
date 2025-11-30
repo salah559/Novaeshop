@@ -2,9 +2,9 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
   "/how-to-buy": "pages/how-to-buy.js",
-  "/account": "pages/account.js",
+  "/": "pages/index.js",
   "/products": "pages/products.js",
+  "/account": "pages/account.js",
   "/contact": "pages/contact.js"
 }
