@@ -161,75 +161,97 @@ export default function MyPurchases(){
                     <h3 style={{color: '#fff', marginBottom: 8, fontSize: 'clamp(1.05em, 3vw, 1.25em)', textShadow: '0 0 10px rgba(57, 255, 20, 0.2)'}}>{item.name}</h3>
                     <p style={{color: 'rgba(255,255,255,0.5)', fontSize: 'clamp(0.85em, 2.5vw, 0.95em)'}}>{item.createdAt?.toDate?.().toLocaleDateString('ar-DZ')}</p>
                   </div>
-                  {item.purchaseContent && item.purchaseContent.trim() && (
-                    <div style={{
-                      background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%)',
-                      padding: 'clamp(14px, 3vw, 18px)',
-                      borderRadius: 10,
-                      borderLeft: '4px solid #ffd700',
-                      marginBottom: 'clamp(14px, 3vw, 20px)',
-                      wordBreak: 'break-word'
-                    }}>
-                      <p style={{color: '#ffd700', marginBottom: 10, fontSize: 'clamp(0.9em, 2.5vw, 1em)', fontWeight: 'bold'}}>📋 محتوى الشراء</p>
-                      <div style={{
-                        color: 'rgba(255,255,255,0.8)',
-                        fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
-                        lineHeight: 1.6,
-                        whiteSpace: 'pre-wrap'
-                      }}>
-                        {typeof item.purchaseContent === 'string' ? (
-                          item.purchaseContent.split('\n').map((line: string, idx: number) => {
-                            const trimmedLine = line.trim();
-                            const isUrl = trimmedLine.startsWith('http://') || trimmedLine.startsWith('https://');
-                            return (
-                              <div key={idx} style={{marginBottom: 12}}>
-                                {isUrl ? (
-                                  <button
-                                    type="button"
-                                    onClick={() => { 
-                                      const link = document.createElement('a');
-                                      link.href = trimmedLine;
-                                      link.target = '_blank';
-                                      link.rel = 'noopener noreferrer';
-                                      document.body.appendChild(link);
-                                      link.click();
-                                      document.body.removeChild(link);
-                                    }}
-                                    style={{
-                                      background: 'rgba(57, 255, 20, 0.2)',
-                                      border: '1px solid #39ff14',
-                                      color: '#39ff14',
-                                      padding: '8px 12px',
-                                      borderRadius: '6px',
-                                      cursor: 'pointer',
-                                      fontSize: 'inherit',
-                                      maxWidth: '100%',
-                                      wordBreak: 'break-word',
-                                      textAlign: 'left',
-                                      fontFamily: 'monospace',
-                                      transition: 'all 0.2s ease'
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      (e.target as HTMLElement).style.background = 'rgba(57, 255, 20, 0.4)';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      (e.target as HTMLElement).style.background = 'rgba(57, 255, 20, 0.2)';
-                                    }}
-                                  >
-                                    🔗 {trimmedLine}
-                                  </button>
-                                ) : (
-                                  <div style={{fontFamily: 'inherit'}}>{trimmedLine}</div>
-                                )}
-                              </div>
-                            );
-                          })
-                        ) : (
-                          <span>{JSON.stringify(item.purchaseContent)}</span>
+                  {item.purchaseContent && item.purchaseContent.trim() && (() => {
+                    const lines: string[] = typeof item.purchaseContent === 'string' ? item.purchaseContent.split('\n') : [];
+                    const urls: string[] = lines.filter((line: string) => {
+                      const trimmed = line.trim();
+                      return trimmed.startsWith('http://') || trimmed.startsWith('https://');
+                    }).map((l: string) => l.trim());
+                    const textLines: string[] = lines.filter((line: string) => {
+                      const trimmed = line.trim();
+                      return !(trimmed.startsWith('http://') || trimmed.startsWith('https://'));
+                    }).filter((l: string) => l.trim());
+
+                    return (
+                      <>
+                        {urls.length > 0 && (
+                          <div style={{
+                            background: 'linear-gradient(135deg, rgba(57, 255, 20, 0.15) 0%, rgba(57, 255, 20, 0.08) 100%)',
+                            padding: 'clamp(14px, 3vw, 18px)',
+                            borderRadius: 10,
+                            borderLeft: '4px solid #39ff14',
+                            marginBottom: 'clamp(14px, 3vw, 20px)'
+                          }}>
+                            <p style={{color: '#39ff14', marginBottom: 12, fontSize: 'clamp(0.9em, 2.5vw, 1em)', fontWeight: 'bold', margin: 0}}>🔗 الروابط</p>
+                            <div style={{display: 'flex', flexDirection: 'column', gap: 8}}>
+                              {urls.map((url: string, i: number) => (
+                                <button
+                                  key={i}
+                                  type="button"
+                                  onClick={() => window.open(url, '_blank')}
+                                  style={{
+                                    background: 'transparent',
+                                    border: '2px solid #39ff14',
+                                    color: '#39ff14',
+                                    padding: '10px 14px',
+                                    borderRadius: '8px',
+                                    cursor: 'pointer',
+                                    fontSize: 'clamp(0.8em, 2vw, 0.9em)',
+                                    fontWeight: 600,
+                                    transition: 'all 0.2s ease',
+                                    textAlign: 'center',
+                                    minHeight: 44,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    zIndex: 10
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    const btn = e.currentTarget;
+                                    btn.style.background = 'rgba(57, 255, 20, 0.2)';
+                                    btn.style.transform = 'translateY(-2px)';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    const btn = e.currentTarget;
+                                    btn.style.background = 'transparent';
+                                    btn.style.transform = 'translateY(0)';
+                                  }}
+                                >
+                                  🌐 فتح الرابط {i + 1}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
                         )}
-                      </div>
-                    </div>
-                  )}
+
+                        {textLines.length > 0 && (
+                          <div style={{
+                            background: 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%)',
+                            padding: 'clamp(14px, 3vw, 18px)',
+                            borderRadius: 10,
+                            borderLeft: '4px solid #ffd700',
+                            marginBottom: 'clamp(14px, 3vw, 20px)',
+                            wordBreak: 'break-word'
+                          }}>
+                            <p style={{color: '#ffd700', marginBottom: 10, fontSize: 'clamp(0.9em, 2.5vw, 1em)', fontWeight: 'bold'}}>📋 محتوى الشراء</p>
+                            <div style={{
+                              color: 'rgba(255,255,255,0.8)',
+                              fontSize: 'clamp(0.85em, 2.5vw, 0.95em)',
+                              lineHeight: 1.8,
+                              whiteSpace: 'pre-wrap'
+                            }}>
+                              {textLines.map((line: string, idx: number) => (
+                                <div key={idx} style={{marginBottom: 8}}>
+                                  {line}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                 </>
               ) : (
                 <>
