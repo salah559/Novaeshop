@@ -9,6 +9,8 @@ export default function Checkout(){
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
   const toast = useToast();
 
   useEffect(()=> {
@@ -21,6 +23,24 @@ export default function Checkout(){
     });
     return ()=>unsub();
   },[]);
+
+  useEffect(() => {
+    const updateCart = () => {
+      const items = JSON.parse(localStorage.getItem('cart') || '[]');
+      setCartItems(items);
+      const newTotal = items.reduce((s: any, i: any) => s + (i.price || 0), 0);
+      setTotal(newTotal);
+    };
+
+    updateCart();
+    const interval = setInterval(updateCart, 500);
+    window.addEventListener('storage', updateCart);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', updateCart);
+    };
+  }, []);
 
   async function handleSubmit(e:any){
     e.preventDefault();
@@ -252,7 +272,7 @@ export default function Checkout(){
             paddingLeft: 'clamp(20px, 3vw, 28px)',
             fontSize: 'clamp(0.95em, 2.5vw, 1.05em)'
           }}>
-            <li style={{marginBottom: '12px'}}>حول المبلغ <strong style={{color: '#ffd700'}}>{JSON.parse(localStorage.getItem('cart')||'[]').reduce((s:any,i:any)=>s+(i.price||0),0)} دج</strong> إلى رقم الحساب أعلاه</li>
+            <li style={{marginBottom: '12px'}}>حول المبلغ <strong style={{color: '#ffd700'}}>{total} دج</strong> إلى رقم الحساب أعلاه</li>
             <li style={{marginBottom: '12px'}}>خذ صورة واضحة لإيصال التحويل (يظهر رقم الملف والمبلغ والتاريخ)</li>
             <li>أرفقها هنا وسيتم التحقق منها من قبل الفريق</li>
           </ol>
