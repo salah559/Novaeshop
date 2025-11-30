@@ -116,7 +116,6 @@ export const translations = {
     tip2: 'احرص على أن تكون صورة الإيصال واضحة',
     tip3: 'تواصل معنا عبر الدردشة إذا واجهت أي مشكلة',
     tip4: 'المنتجات متاحة للتحميل فوراً بعد التأكيد',
-    readyToStart: 'هل انت مستعد للبدء؟',
     browseNow: 'تصفح المنتجات الآن',
     
     // Home page - missing
@@ -256,7 +255,6 @@ export const translations = {
     tip2: 'Ensure the receipt photo is clear',
     tip3: 'Contact us via chat if you encounter any issues',
     tip4: 'Products are available for download immediately after confirmation',
-    readyToStart: 'Ready to get started?',
     browseNow: 'Browse Products Now',
     
     // Home page - missing
@@ -396,7 +394,6 @@ export const translations = {
     tip2: 'Assurez-vous que la photo du reçu est claire',
     tip3: 'Contactez-nous via le chat si vous rencontrez des problèmes',
     tip4: 'Les produits sont disponibles en téléchargement immédiatement après la confirmation',
-    readyToStart: 'Prêt à commencer?',
     browseNow: 'Parcourir les Produits Maintenant',
     
     // Home page - missing
