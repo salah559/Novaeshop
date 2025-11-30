@@ -182,23 +182,44 @@ export default function MyPurchases(){
                             const trimmedLine = line.trim();
                             const isUrl = trimmedLine.startsWith('http://') || trimmedLine.startsWith('https://');
                             return (
-                              <div key={idx} style={{marginBottom: 8, wordBreak: 'break-word'}}>
+                              <div key={idx} style={{marginBottom: 12}}>
                                 {isUrl ? (
-                                  <a
-                                    href={trimmedLine}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                  <button
+                                    type="button"
+                                    onClick={() => { 
+                                      const link = document.createElement('a');
+                                      link.href = trimmedLine;
+                                      link.target = '_blank';
+                                      link.rel = 'noopener noreferrer';
+                                      document.body.appendChild(link);
+                                      link.click();
+                                      document.body.removeChild(link);
+                                    }}
                                     style={{
+                                      background: 'rgba(57, 255, 20, 0.2)',
+                                      border: '1px solid #39ff14',
                                       color: '#39ff14',
-                                      textDecoration: 'underline',
+                                      padding: '8px 12px',
+                                      borderRadius: '6px',
                                       cursor: 'pointer',
-                                      display: 'inline-block'
+                                      fontSize: 'inherit',
+                                      maxWidth: '100%',
+                                      wordBreak: 'break-word',
+                                      textAlign: 'left',
+                                      fontFamily: 'monospace',
+                                      transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      (e.target as HTMLElement).style.background = 'rgba(57, 255, 20, 0.4)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      (e.target as HTMLElement).style.background = 'rgba(57, 255, 20, 0.2)';
                                     }}
                                   >
                                     🔗 {trimmedLine}
-                                  </a>
+                                  </button>
                                 ) : (
-                                  trimmedLine
+                                  <div style={{fontFamily: 'inherit'}}>{trimmedLine}</div>
                                 )}
                               </div>
                             );
