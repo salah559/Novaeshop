@@ -4,6 +4,7 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/how-to-buy": "pages/how-to-buy.js",
-  "/contact": "pages/contact.js",
-  "/account": "pages/account.js"
+  "/account": "pages/account.js",
+  "/products": "pages/products.js",
+  "/contact": "pages/contact.js"
 }
