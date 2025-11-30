@@ -22,7 +22,7 @@ export default function BottomNavigation() {
   const navItems = [
     { href: '/', icon: '🏠', label: language === 'ar' ? 'الرئيسية' : 'Home' },
     { href: '/products', icon: '🛍️', label: language === 'ar' ? 'المنتجات' : 'Products' },
-    { href: '/how-to-buy', icon: '❓', label: language === 'ar' ? 'كيف تشتري؟' : 'How to Buy' },
+    { href: '/how-to-buy', icon: '❓', label: language === 'ar' ? 'الشراء' : 'Guide' },
     { href: '/contact', icon: '📞', label: language === 'ar' ? 'تواصل' : 'Contact' },
     ...(user ? [{ href: '/account', icon: '👤', label: language === 'ar' ? 'حسابي' : 'Account' }] : [])
   ];

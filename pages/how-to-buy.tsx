@@ -19,7 +19,7 @@ export default function HowToBuy() {
           WebkitTextFillColor: 'transparent',
           backgroundClip: 'text',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>كيف تشتري من Enova؟</h2>
+        }}>دليل الشراء</h2>
         <p style={{color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1em, 2.5vw, 1.15em)'}}>دليل سهل وبسيط للشراء من متجرنا</p>
       </div>
 
