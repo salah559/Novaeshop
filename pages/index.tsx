@@ -241,7 +241,7 @@ export default function Home(){
         }}></div>
         
         <span className="tag" style={{marginBottom: 20, display: 'inline-block'}}>
-          🚀 كيفية الاستخدام
+          🚀 {t('howToUseTag')}
         </span>
         <h2 style={{
           marginBottom: 'clamp(25px, 5vw, 40px)',
@@ -357,20 +357,20 @@ export default function Home(){
           marginBottom: 20,
           fontSize: 'clamp(1.8em, 6vw, 2.4em)',
           textShadow: '0 0 30px rgba(57, 255, 20, 0.3)'
-        }}>هل أنت مستعد للبدء؟</h2>
+        }}>{t('readyToStart')}</h2>
         <p style={{
           color: 'rgba(255,255,255,0.7)',
           marginBottom: 35,
           fontSize: '1.1em',
           lineHeight: 1.8
         }}>
-          انضم إلى آلاف العملاء الراضين واحصل على منتجاتك الرقمية الآن
+          {t('joinCustomers')}
         </p>
         <Link href="/products" className="btn animate-pulse" style={{
           fontSize: '1.15em',
           padding: '16px 45px'
         }}>
-          ابدأ التسوق الآن ← 
+          {t('startShopping')} ← 
         </Link>
       </section>
 

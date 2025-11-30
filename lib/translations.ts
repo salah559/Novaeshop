@@ -31,12 +31,18 @@ export const translations = {
     
     // How it works
     howItWorks: 'كيف يعمل الموقع؟',
+    howToUseTag: 'كيفية الاستخدام',
     step1: 'اختر المنتج المناسب',
     step1Desc: 'تصفح مكتبتنا الرقمية واختر المنتج الذي يناسب احتياجاتك',
     step2: 'ادفع عبر بريدي موب',
     step2Desc: 'أتمم عملية الدفع بأمان وارفع إيصال الدفع للتأكيد',
     step3: 'احصل على منتجك فوراً',
     step3Desc: 'بعد التحقق من الدفع، قم بتحميل منتجك الرقمي مباشرة',
+    
+    // CTA section
+    readyToStart: 'هل أنت مستعد للبدء؟',
+    joinCustomers: 'انضم إلى آلاف العملاء الراضين واحصل على منتجاتك الرقمية الآن',
+    startShopping: 'ابدأ التسوق الآن',
     
     // Cart
     shoppingCart: 'سلة التسوق',
@@ -165,12 +171,18 @@ export const translations = {
     
     // How it works
     howItWorks: 'How Does It Work?',
+    howToUseTag: 'How to Use',
     step1: 'Choose Your Product',
     step1Desc: 'Browse our digital library and select the product that fits your needs',
     step2: 'Pay with Baridi Mob',
     step2Desc: 'Complete the payment securely and upload your receipt for verification',
     step3: 'Get Your Product Instantly',
     step3Desc: 'After payment verification, download your digital product immediately',
+    
+    // CTA section
+    readyToStart: 'Are You Ready to Get Started?',
+    joinCustomers: 'Join thousands of satisfied customers and get your digital products now',
+    startShopping: 'Start Shopping Now',
     
     // Cart
     shoppingCart: 'Shopping Cart',
@@ -299,12 +311,18 @@ export const translations = {
     
     // How it works
     howItWorks: 'Comment Ça Marche ?',
+    howToUseTag: 'Comment Utiliser',
     step1: 'Choisissez Votre Produit',
     step1Desc: 'Parcourez notre bibliothèque numérique et sélectionnez le produit qui correspond à vos besoins',
     step2: 'Payez avec Baridi Mob',
     step2Desc: 'Effectuez le paiement en toute sécurité et téléchargez votre reçu pour vérification',
     step3: 'Obtenez Votre Produit Instantanément',
     step3Desc: 'Après vérification du paiement, téléchargez votre produit numérique immédiatement',
+    
+    // CTA section
+    readyToStart: 'Êtes-vous Prêt à Commencer ?',
+    joinCustomers: 'Rejoignez des milliers de clients satisfaits et obtenez vos produits numériques maintenant',
+    startShopping: 'Commencer les Achats',
     
     // Cart
     shoppingCart: 'Panier d\'Achat',
