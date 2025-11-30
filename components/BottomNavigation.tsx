@@ -37,25 +37,15 @@ export default function BottomNavigation() {
       right: 0,
       display: 'flex',
       justifyContent: 'space-around',
-      alignItems: 'flex-end',
-      background: 'transparent',
-      padding: '0 20px 25px 20px',
+      alignItems: 'center',
+      background: 'rgba(5, 7, 8, 0.95)',
+      backdropFilter: 'blur(20px)',
+      borderTop: '2px solid rgba(57, 255, 20, 0.15)',
+      padding: '8px 0',
       zIndex: 95,
-      height: 'auto',
-      pointerEvents: 'none'
+      boxShadow: '0 -4px 30px rgba(57, 255, 20, 0.1)',
+      height: '70px'
     }} className="bottom-nav">
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        background: 'rgba(5, 7, 8, 0.95)',
-        backdropFilter: 'blur(20px)',
-        borderRadius: '30px 30px 0 0',
-        boxShadow: '0 -10px 50px rgba(57, 255, 20, 0.15)',
-        height: '90px',
-        zIndex: -1
-      }} />
       {navItems.map((item, idx) => (
         <Link
           key={idx}
@@ -66,39 +56,34 @@ export default function BottomNavigation() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '6px',
-            padding: '12px 16px 8px 16px',
+            gap: '4px',
+            padding: '8px 12px',
             textDecoration: 'none',
-            color: isActive(item.href) ? '#39ff14' : 'rgba(255, 255, 255, 0.5)',
-            transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            borderRadius: '16px',
+            color: isActive(item.href) ? '#39ff14' : 'rgba(255, 255, 255, 0.6)',
+            transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            borderRadius: '12px',
             flex: 1,
-            fontSize: '0.65em',
-            fontWeight: isActive(item.href) ? 700 : 500,
-            background: isActive(item.href) ? 'rgba(57, 255, 20, 0.12)' : 'transparent',
-            border: 'none',
-            boxShadow: isActive(item.href) ? '0 8px 25px rgba(57, 255, 20, 0.3), inset 0 0 15px rgba(57, 255, 20, 0.1)' : 'none',
-            transform: isActive(item.href) ? 'translateY(-12px) scale(1.12)' : 'translateY(0) scale(1)',
+            fontSize: '0.7em',
+            fontWeight: isActive(item.href) ? 600 : 500,
+            background: isActive(item.href) ? 'rgba(57, 255, 20, 0.08)' : 'transparent',
+            border: isActive(item.href) ? '1px solid rgba(57, 255, 20, 0.2)' : '1px solid transparent',
+            boxShadow: isActive(item.href) ? '0 0 20px rgba(57, 255, 20, 0.25)' : 'none',
+            transform: isActive(item.href) ? 'scale(1.1) translateY(-2px)' : 'scale(1)',
             position: 'relative',
-            overflow: 'visible',
-            pointerEvents: 'all',
-            cursor: 'pointer'
+            overflow: 'hidden'
           }}
         >
           <span style={{ 
-            fontSize: '1.8em',
-            transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            transform: isActive(item.href) ? 'scale(1.3) rotate(0deg)' : 'scale(1) rotate(0deg)',
-            display: 'inline-block',
-            filter: isActive(item.href) ? 'drop-shadow(0 0 12px rgba(57, 255, 20, 0.5))' : 'none'
+            fontSize: '1.4em',
+            transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            transform: isActive(item.href) ? 'scale(1.15) rotate(10deg)' : 'scale(1) rotate(0deg)',
+            display: 'inline-block'
           }}>
             {item.icon}
           </span>
           <span style={{
-            transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            opacity: isActive(item.href) ? 1 : 0.7,
-            letterSpacing: isActive(item.href) ? '0.5px' : '0px',
-            fontWeight: isActive(item.href) ? 700 : 500
+            transition: 'all 0.4s ease',
+            opacity: 1
           }}>
             {item.label}
           </span>
@@ -109,7 +94,7 @@ export default function BottomNavigation() {
         @keyframes slideInUp {
           from {
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(20px);
           }
           to {
             opacity: 1;
@@ -117,44 +102,41 @@ export default function BottomNavigation() {
           }
         }
 
-        @keyframes floatUp {
+        @keyframes pulse-glow {
           0%, 100% {
-            transform: translateY(0px);
+            box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
           }
           50% {
-            transform: translateY(-8px);
+            box-shadow: 0 0 24px rgba(57, 255, 20, 0.35);
           }
         }
 
-        @keyframes ripple {
-          0% {
-            box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.6);
+        @keyframes icon-bounce {
+          0%, 100% {
+            transform: scale(1) rotate(0deg);
           }
-          70% {
-            box-shadow: 0 0 0 10px rgba(57, 255, 20, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(57, 255, 20, 0);
+          50% {
+            transform: scale(1.2) rotate(15deg);
           }
         }
 
         .nav-item {
-          animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+          animation: slideInUp 0.5s ease-out both;
         }
 
-        .nav-item-0 { animation-delay: 0.1s; }
-        .nav-item-1 { animation-delay: 0.15s; }
-        .nav-item-2 { animation-delay: 0.2s; }
-        .nav-item-3 { animation-delay: 0.25s; }
-        .nav-item-4 { animation-delay: 0.3s; }
+        .nav-item-0 { animation-delay: 0.05s; }
+        .nav-item-1 { animation-delay: 0.1s; }
+        .nav-item-2 { animation-delay: 0.15s; }
+        .nav-item-3 { animation-delay: 0.2s; }
+        .nav-item-4 { animation-delay: 0.25s; }
 
         .nav-item:hover {
-          transform: translateY(-16px) scale(1.15) !important;
+          transform: scale(1.15) translateY(-4px) !important;
           color: #ffd700 !important;
         }
 
         .nav-item:active {
-          animation: ripple 0.6s ease-out;
+          animation: icon-bounce 0.6s ease-in-out;
         }
 
         @media (max-width: 768px) {
@@ -170,17 +152,17 @@ export default function BottomNavigation() {
         }
 
         @media (max-width: 480px) {
-          .nav-item {
-            padding: 10px 12px 6px 12px;
-            font-size: 0.6em;
+          .bottom-nav {
+            height: 65px;
+            padding: 6px 0;
           }
 
-          .nav-item span:first-child {
-            font-size: 1.5em !important;
+          .bottom-nav a span:last-child {
+            font-size: 0.65em;
           }
 
           .nav-item:hover {
-            transform: translateY(-14px) scale(1.12) !important;
+            transform: scale(1.12) translateY(-3px) !important;
           }
         }
       `}</style>

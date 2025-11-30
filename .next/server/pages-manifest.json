@@ -2,8 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/how-to-buy": "pages/how-to-buy.js",
   "/": "pages/index.js",
+  "/how-to-buy": "pages/how-to-buy.js",
   "/products": "pages/products.js",
   "/account": "pages/account.js",
   "/contact": "pages/contact.js"
