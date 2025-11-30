@@ -42,6 +42,8 @@ export default function AdminProducts(){
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
   
   const [formData, setFormData] = useState<Product>({
     name: '',
@@ -80,9 +82,89 @@ export default function AdminProducts(){
     }
   }
 
+  async function uploadImageFile(file: File): Promise<string> {
+    try {
+      const reader = new FileReader();
+      const base64 = await new Promise<string>((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64str = (reader.result as string).split(',')[1];
+          resolve(base64str);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64 }),
+      });
+
+      const data = await response.json();
+      if (!data.success) throw new Error(data.error || 'Upload failed');
+      return data.url;
+    } catch (err: any) {
+      throw new Error(err.message || 'Failed to upload image');
+    }
+  }
+
+  async function handleImageChange(e: any) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setUploadingImage(true);
+    try {
+      const url = await uploadImageFile(file);
+      setFormData({...formData, imageUrl: url});
+      alert('✅ تم رفع الصورة بنجاح');
+    } catch (err: any) {
+      alert(`❌ خطأ: ${err.message}`);
+    } finally {
+      setUploadingImage(false);
+    }
+  }
+
+  async function handleFileChange(e: any) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setUploadingFile(true);
+    try {
+      const reader = new FileReader();
+      const base64 = await new Promise<string>((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64str = (reader.result as string).split(',')[1];
+          resolve(base64str);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64 }),
+      });
+
+      const data = await response.json();
+      if (!data.success) throw new Error(data.error || 'Upload failed');
+      setFormData({...formData, fileUrl: data.url});
+      alert('✅ تم رفع الملف بنجاح');
+    } catch (err: any) {
+      alert(`❌ خطأ: ${err.message}`);
+    } finally {
+      setUploadingFile(false);
+    }
+  }
+
   async function handleSubmit(e: any){
     e.preventDefault();
     try {
+      if (!formData.imageUrl || !formData.fileUrl) {
+        alert('❌ يرجى رفع الصورة والملف');
+        return;
+      }
+      
       const { id, ...productData } = formData as any;
       if (editingProduct?.id) {
         await updateDoc(doc(db, 'products', editingProduct.id), productData);
@@ -340,14 +422,13 @@ export default function AdminProducts(){
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  رابط الصورة (URL)
+                  📸 الصورة
                 </label>
                 <input 
-                  type="url"
-                  value={formData.imageUrl}
-                  onChange={e => setFormData({...formData, imageUrl: e.target.value})}
-                  required
-                  placeholder="https://example.com/image.jpg"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  disabled={uploadingImage}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
@@ -358,18 +439,19 @@ export default function AdminProducts(){
                     fontSize: '1rem'
                   }}
                 />
+                {uploadingImage && <p style={{color: '#39ff14', marginTop: 8}}>⏳ جاري رفع الصورة...</p>}
+                {formData.imageUrl && <p style={{color: '#39ff14', marginTop: 8}}>✅ تم رفع الصورة</p>}
               </div>
 
               <div>
                 <label style={{display: 'block', color: '#39ff14', marginBottom: 8, fontWeight: 600}}>
-                  رابط التحميل (URL)
+                  📁 الملف (صورة أو PDF)
                 </label>
                 <input 
-                  type="url"
-                  value={formData.fileUrl}
-                  onChange={e => setFormData({...formData, fileUrl: e.target.value})}
-                  required
-                  placeholder="https://drive.google.com/..."
+                  type="file"
+                  accept="image/*,.pdf"
+                  onChange={handleFileChange}
+                  disabled={uploadingFile}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
@@ -380,6 +462,8 @@ export default function AdminProducts(){
                     fontSize: '1rem'
                   }}
                 />
+                {uploadingFile && <p style={{color: '#39ff14', marginTop: 8}}>⏳ جاري رفع الملف...</p>}
+                {formData.fileUrl && <p style={{color: '#39ff14', marginTop: 8}}>✅ تم رفع الملف</p>}
               </div>
 
               <div style={{display: 'flex', gap: 15, marginTop: 10}}>
