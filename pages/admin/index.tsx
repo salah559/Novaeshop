@@ -128,14 +128,14 @@ export default function Admin(){
         const productDoc = await getDoc(doc(db, 'products', item.id));
         const productData = productDoc.exists() ? productDoc.data() : {};
         
-        console.log('Creating purchase for:', item.id, 'userId:', order.userId);
+        console.log('Creating purchase for:', item.id, 'userId:', order.userId, 'purchaseContent:', productData.purchaseContent);
         
         await addDoc(collection(db, 'purchases'), {
           userId: order.userId,
           productId: item.id,
           name: productData.name || item.name,
           downloadUrl: productData.fileUrl || null,
-          purchaseContent: productData.purchaseContent || null,
+          purchaseContent: productData.purchaseContent !== undefined ? productData.purchaseContent : null,
           createdAt: new Date()
         });
       }
