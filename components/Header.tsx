@@ -202,20 +202,6 @@ export default function Header(){
               </div>
             )}
           </div>
-
-          <Link 
-            href="/login"
-            className="btn"
-            style={{
-              fontSize: 'clamp(0.85em, 1.5vw, 0.95em)',
-              padding: 'clamp(8px, 1.5vw, 10px) clamp(14px, 3vw, 18px)',
-              whiteSpace: 'nowrap',
-              textDecoration: 'none',
-              display: 'inline-block'
-            } as any}
-          >
-            🔑 دخول
-          </Link>
         </div>
       </div>
 
